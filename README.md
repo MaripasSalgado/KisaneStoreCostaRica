@@ -5,4 +5,4 @@ Proyecto Final para la Clase de Lenguajes de Base de Datos
 Joel
 Robinson Corrales Rodriguez  
 Maripas Salgado Fernández
-Marcel
+Marcel Zapata Castro

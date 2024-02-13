@@ -3,7 +3,7 @@ Proyecto Final para la Clase de Lenguajes de Base de Datos
 
 Integrantes
 
-Joel
+Joel Solano Robles
 
 Robinson Corrales Rodriguez  
 

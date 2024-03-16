@@ -10,3 +10,5 @@ Robinson Corrales Rodriguez
 Maripas Salgado Fernández
 
 Marcel Zapata Castro
+
+Josua Alpizar

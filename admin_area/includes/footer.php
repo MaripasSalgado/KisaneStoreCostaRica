@@ -12,7 +12,7 @@
 					</li>
 
 					<li class="footer-nav__item">
-						<a href="#" class="footer-nav__link">View cart</a>
+						<a href="/FinalProyect/Ecommerce-Zara/cart.php" class="footer-nav__link">View cart</a>
 					</li>
 					<li class="footer-nav__item">
 						<a href="#" class="footer-nav__link">Track Order</a>

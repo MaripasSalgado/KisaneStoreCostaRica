@@ -9,13 +9,13 @@
 				<ul class="footer-nav__list">
 
 					<li class="footer-nav__item">
-						<a href="/FinalProyect/Ecommerce-Zara/cart.php" class="footer-nav__link">View cart</a>
+						<a href="#" class="footer-nav__link">View cart</a>
 					</li>
 					<li class="footer-nav__item">
-						<a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?my_orders" class="footer-nav__link">Track Order</a>
+						<a href="#" class="footer-nav__link">Track Order</a>
 					</li>
 					<li class="footer-nav__item">
-						<a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?edit_account" class="footer-nav__link">Update information</a>
+						<a href="#" class="footer-nav__link">Update information</a>
 					</li>
 				</ul>
 			</div>
@@ -24,7 +24,7 @@
 			<div class="footer-nav__col footer-nav__col--contacts">
 				<div class="footer-nav__heading">Contact details</div>
 				<address class="address">
-					Head Office: Zara.<br>
+					Head Office: KisaneStoreCR.<br>
 					San Jose Costa Rica
 				</address>
 				<div class="phone">
@@ -33,7 +33,7 @@
 				</div>
 				<div class="email">
 					Email:
-					<a href="mailto:support@zara.com" class="email__addr">support@zara.com</a>
+					<a href="mailto:support@KisaneStoreCR.com" class="email__addr">support@KisaneStoreCR.com</a>
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@
 		<div class="container clearfix">
 
 			<div class="copyright">
-				&copy; <?php echo date("Y"); ?> Zara-Ecommerce&trade;
+				&copy; <?php echo date("Y"); ?> KisaneStoreCR-Ecommerce&trade;
 			</div>
 
 		</div>

@@ -11,4 +11,4 @@ Maripas Salgado Fernández
 
 Marcel Zapata Castro
 
-Josua Alpizar
+Joshua Alpizar

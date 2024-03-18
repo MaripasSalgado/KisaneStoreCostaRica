@@ -2,32 +2,37 @@
 
 session_start();
 
-include ("includes/db.php");
+include("includes/db.php");
 
-include ("functions/functions.php");
 
 ?>
 
 <?php
 
 
-$ip_add = getRealUserIp();
+$ip = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 
-if (isset ($_POST['id'])) {
+return $ip;
+
+if (isset($_POST['id'])) {
 
     $id = $_POST['id'];
 
     $qty = $_POST['quantity'];
 
-    $change_qty = "update cart set qty='$qty' where p_id='$id' AND ip_add='$ip_add'";
+    // PL/SQL Update statement
+    $change_qty = "BEGIN update_cart_quantity(:id, :qty, :ip); END;";
 
-    $run_qty = mysqli_query($con, $change_qty);
+    // Prepare the statement
+    $stmt = oci_parse($con, $change_qty);
 
+    // Bind the parameters
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_bind_by_name($stmt, ':qty', $qty);
+    oci_bind_by_name($stmt, ':ip', $ip);
 
+    // Execute the statement
+    oci_execute($stmt);
 }
-
-
-
-
 
 ?>

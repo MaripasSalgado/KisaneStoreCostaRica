@@ -1,141 +1,95 @@
-</head>
+<?php
 
-<body>
+session_start();
 
-  <header class="page-header">
-    <!-- topline -->
-    <div class="page-header__topline">
-      <div class="container clearfix">
+include("includes/db.php");
+include("./includes/header.php");
+include("includes/main.php");
 
-        <div class="currency">
-          <a class="currency__change" href="customer/my_account.php?my_orders">
-            <?php
-            if (!isset($_SESSION['customer_email'])) {
-              echo "Welcome :Guest";
-            } else {
-              echo "Welcome : " . $_SESSION['customer_email'] . "";
-            }
-            ?>
-          </a>
-        </div>
-
-        <div class="basket">
-          <a href="./cart.php" class="btn btn--basket">
-            <i class="icon-basket"></i>
-            <?php items(); ?> items
-          </a>
-        </div>
-
-
-        <ul class="login">
-
-          <li class="login__item">
-            <?php
-            if (!isset($_SESSION['customer_email'])) {
-              echo '<a href="customer_register.php" class="login__link">Register</a>';
-            } else {
-              echo '<a href="customer/my_account.php?my_orders" class="login__link">My Account</a>';
-            }
-            ?>
-          </li>
-
-
-          <li class="login__item">
-            <?php
-            if (!isset($_SESSION['customer_email'])) {
-              echo '<a href="checkout.php" class="login__link">Sign In</a>';
-            } else {
-              echo '<a href="./logout.php" class="login__link">Logout</a>';
-            }
-            ?>
-
-          </li>
-        </ul>
-
-      </div>
+?>
+<!-- MAIN -->
+<main>
+  <!-- HERO -->
+  <div class="nero">
+    <div class="nero__heading">
+      <span class="nero__bold">shop</span> AT AVE
     </div>
-    <!-- bottomline -->
-    <div class="page-header__bottomline">
-      <div class="container clearfix">
-
-        <div class="logo">
-          <a class="logo__link" href="/FinalProyect/Ecommerce-Zara/index.php">
-            <img class="logo__img" src="images/logo.png" alt="Zara logotype" width="200" height="10">
-          </a>
-        </div>
-
-        <nav class="main-nav">
-          <ul class="categories">
-
-            <li class="categories__item">
-              <a class="categories__link" href="/FinalProyect/Ecommerce-Zara/shop.php">
-                Mens
-
-              </a>
-            </li>
-
-            <li class="categories__item">
-              <a class="categories__link" href="/FinalProyect/Ecommerce-Zara/shop.php">
-                Womens
-
-              </a>
-            </li>
-
-            <li class="categories__item">
-              <a class="categories__link categories__link--active" href="/FinalProyect/Ecommerce-Zara/shop.php">
-                Shop
-              </a>
-            </li>
-            <li class="categories__item">
-              <a class="categories__link" href="/FinalProyect/Ecommerce-Zara/about.php">
-                About us
-              </a>
-            </li>
-
-            <li class="categories__item">
-              <a class="categories__link" href="customer/my_account.php?my_orders">
-                My Account
-                <i class="icon-down-open-1"></i>
-              </a>
-              <div class="dropdown dropdown--lookbook">
-                <div class="clearfix">
-                  <div class="dropdown__half">
-                    <div class="dropdown__heading">Account Settings</div>
-                    <ul class="dropdown__items">
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?my_wishlist" class="dropdown__link">My Wishlist</a>
-                      </li>
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?my_orders" class="dropdown__link">My Orders</a>
-                      </li>
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/cart.php" class="dropdown__link">View Shopping Cart</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="dropdown__half">
-                    <div class="dropdown__heading"></div>
-                    <ul class="dropdown__items">
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?edit_account" class="dropdown__link">Edit Your Account</a>
-                      </li>
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?change_pass" class="dropdown__link">Change Password</a>
-                      </li>
-                      <li class="dropdown__item">
-                        <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?delete_account" class="dropdown__link">Delete Account</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+    <p class="nero__text">
+    </p>
+  </div>
+</main>
 
 
-              </div>
+<div id="content"><!-- content Starts -->
+  <div class="container"><!-- container Starts -->
 
-            </li>
+    <div class="col-md-12"><!--- col-md-12 Starts -->
 
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
+
+
+    </div><!--- col-md-12 Ends -->
+
+    <div class="col-md-3"><!-- col-md-3 Starts -->
+
+      <?php include("includes/sidebar.php"); ?>
+
+    </div><!-- col-md-3 Ends -->
+
+    <div class="col-md-9"><!-- col-md-9 Starts --->
+      <!--Get products -->
+      <div id="Products">
+        <?php
+        // Llamar al procedimiento almacenado para obtener los productos
+        $sql = "BEGIN
+                  get_products();
+                END;";
+        $stmt = oci_parse($conn, $sql);
+        oci_execute($stmt);
+
+        // Mostrar los productos
+        while (($row = oci_fetch_array($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) !== false) {
+          echo "<p>Product ID: " . $row['PRODUCT_ID'] . ", Product Title: " . $row['PRODUCT_TITLE'] . ", Product Price: " . $row['PRODUCT_PRICE'] . "</p>";
+        }
+        ?>
+      </div><!-- End Products -->
+
+    </div><!-- row Ends -->
+
+    <center><!-- center Starts -->
+
+      <ul class="pagination"><!-- pagination Starts -->
+        <!-- Aquí se incluirá la paginación si lo deseas -->
+      </ul><!-- pagination Ends -->
+
+    </center><!-- center Ends -->
+
+  </div><!-- col-md-9 Ends --->
+
+</div><!--- wait Ends -->
+
+</div><!-- container Ends -->
+</div><!-- content Ends -->
+
+<?php include("includes/footer.php"); ?>
+
+<script src="js/jquery.min.js"> </script>
+
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Tu código JavaScript aquí si es necesario
+  });
+</script>
+
+<?php
+// Llamar al procedimiento almacenado para obtener el conteo de elementos del carrito
+$sql = "BEGIN
+          get_items_count;
+        END;";
+$stmt = oci_parse($conn, $sql);
+oci_execute($stmt);
+?>
+</body>
+
+</html>

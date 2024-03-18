@@ -9,53 +9,38 @@ include("includes/main.php");
 
 ?>
 
-  <main>
-    <!-- HERO -->
-    <div class="nero">
-      <div class="nero__heading">
-        <span class="nero__bold">About</span> us
-      </div>
-      <p class="nero__text">
-      </p>
+<main>
+  <!-- HERO -->
+  <div class="nero">
+    <div class="nero__heading">
+      <span class="nero__bold">About</span> us
     </div>
-  </main>
+    <p class="nero__text">
+    </p>
+  </div>
+</main>
 
-<div id="content" ><!-- content Starts -->
-<div class="container" ><!-- container Starts -->
+<div id="content"><!-- content Starts -->
+  <div class="container"><!-- container Starts -->
 
-<div class="col-md-12" ><!-- col-md-12 Starts -->
+    <div class="col-md-12"><!-- col-md-12 Starts -->
 
-<div class="box" ><!-- box Starts -->
+      <div class="box"><!-- box Starts -->
 
-<?php
 
-$get_about_us = "select * from about_us";
+        <h1> </h1>
 
-$run_about_us = mysqli_query($con,$get_about_us);
+        <p class="lead"> </p>
 
-$row_about_us = mysqli_fetch_array($run_about_us);
+        <p></p>
 
-$about_heading = $row_about_us['about_heading'];
+      </div><!-- box Ends -->
 
-$about_short_desc = $row_about_us['about_short_desc'];
-
-$about_desc = $row_about_us['about_desc'];
-
-?>
-
-<h1> <?php echo $about_heading; ?> </h1>
-
-<p class="lead"> <?php echo $about_short_desc; ?> </p>
-
-<p> <?php echo $about_desc; ?> </p>
-
-</div><!-- box Ends -->
-
-</div><!-- col-md-12 Ends -->
+    </div><!-- col-md-12 Ends -->
 
 
 
-</div><!-- container Ends -->
+  </div><!-- container Ends -->
 </div><!-- content Ends -->
 
 
@@ -71,4 +56,5 @@ include("includes/footer.php");
 <script src="js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

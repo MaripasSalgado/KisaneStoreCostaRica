@@ -2,10 +2,10 @@
 
 session_start();
 
-include ("includes/db.php");
-include ("includes/header.php");
-include ("functions/functions.php");
-include ("includes/main.php");
+include("includes/db.php");
+include("includes/header.php");
+include("functions/functions.php");
+include("includes/main.php");
 
 
 ?>
@@ -13,192 +13,192 @@ include ("includes/main.php");
 
 <!-- MAIN -->
 <main>
-    <!-- HERO -->
-    <div class="nero">
-        <div class="nero__heading">
-            <span class="nero__bold">Register</span> AT AVE
-        </div>
-        <p class="nero__text">
-        </p>
+  <!-- HERO -->
+  <div class="nero">
+    <div class="nero__heading">
+      <span class="nero__bold">Register</span> AT AVE
     </div>
+    <p class="nero__text">
+    </p>
+  </div>
 </main>
 
 
 <div id="content"><!-- content Starts -->
-    <div class="container"><!-- container Starts -->
+  <div class="container"><!-- container Starts -->
 
 
 
 
 
-        <div class="col-md-12"><!-- col-md-12 Starts -->
+    <div class="col-md-12"><!-- col-md-12 Starts -->
 
-            <div class="box"><!-- box Starts -->
+      <div class="box"><!-- box Starts -->
 
-                <div class="box-header"><!-- box-header Starts -->
+        <div class="box-header"><!-- box-header Starts -->
 
-                    <center><!-- center Starts -->
+          <center><!-- center Starts -->
 
-                        <h2> Register A New Account </h2>
+            <h2> Register A New Account </h2>
 
 
 
-                    </center><!-- center Ends -->
+          </center><!-- center Ends -->
 
-                </div><!-- box-header Ends -->
+        </div><!-- box-header Ends -->
 
-                <form action="customer_register.php" method="post" enctype="multipart/form-data"><!-- form Starts -->
+        <form action="customer_register.php" method="post" enctype="multipart/form-data"><!-- form Starts -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label>Customer Name</label>
+            <label>Customer Name</label>
 
-                        <input type="text" class="form-control" name="c_name" required>
+            <input type="text" class="form-control" name="c_name" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Email</label>
+            <label> Customer Email</label>
 
-                        <input type="text" class="form-control" name="c_email" required>
+            <input type="text" class="form-control" name="c_email" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Password </label>
+            <label> Customer Password </label>
 
-                        <div class="input-group"><!-- input-group Starts -->
+            <div class="input-group"><!-- input-group Starts -->
 
-                            <span class="input-group-addon"><!-- input-group-addon Starts -->
+              <span class="input-group-addon"><!-- input-group-addon Starts -->
 
-                                <i class="fa fa-check tick1"> </i>
+                <i class="fa fa-check tick1"> </i>
 
-                                <i class="fa fa-times cross1"> </i>
+                <i class="fa fa-times cross1"> </i>
 
-                            </span><!-- input-group-addon Ends -->
+              </span><!-- input-group-addon Ends -->
 
-                            <input type="password" class="form-control" id="pass" name="c_pass" required>
+              <input type="password" class="form-control" id="pass" name="c_pass" required>
 
-                            <span class="input-group-addon"><!-- input-group-addon Starts -->
+              <span class="input-group-addon"><!-- input-group-addon Starts -->
 
-                                <div id="meter_wrapper"><!-- meter_wrapper Starts -->
+                <div id="meter_wrapper"><!-- meter_wrapper Starts -->
 
-                                    <span id="pass_type"> </span>
+                  <span id="pass_type"> </span>
 
-                                    <div id="meter"> </div>
+                  <div id="meter"> </div>
 
-                                </div><!-- meter_wrapper Ends -->
+                </div><!-- meter_wrapper Ends -->
 
-                            </span><!-- input-group-addon Ends -->
+              </span><!-- input-group-addon Ends -->
 
-                        </div><!-- input-group Ends -->
+            </div><!-- input-group Ends -->
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Confirm Password </label>
+            <label> Confirm Password </label>
 
-                        <div class="input-group"><!-- input-group Starts -->
+            <div class="input-group"><!-- input-group Starts -->
 
-                            <span class="input-group-addon"><!-- input-group-addon Starts -->
+              <span class="input-group-addon"><!-- input-group-addon Starts -->
 
-                                <i class="fa fa-check tick2"> </i>
+                <i class="fa fa-check tick2"> </i>
 
-                                <i class="fa fa-times cross2"> </i>
+                <i class="fa fa-times cross2"> </i>
 
-                            </span><!-- input-group-addon Ends -->
+              </span><!-- input-group-addon Ends -->
 
-                            <input type="password" class="form-control confirm" id="con_pass" required>
+              <input type="password" class="form-control confirm" id="con_pass" required>
 
-                        </div><!-- input-group Ends -->
+            </div><!-- input-group Ends -->
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Country </label>
+            <label> Customer Country </label>
 
-                        <input type="text" class="form-control" name="c_country" required>
+            <input type="text" class="form-control" name="c_country" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer City </label>
+            <label> Customer City </label>
 
-                        <input type="text" class="form-control" name="c_city" required>
+            <input type="text" class="form-control" name="c_city" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Contact </label>
+            <label> Customer Contact </label>
 
-                        <input type="text" class="form-control" name="c_contact" required>
+            <input type="text" class="form-control" name="c_contact" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Address </label>
+            <label> Customer Address </label>
 
-                        <input type="text" class="form-control" name="c_address" required>
+            <input type="text" class="form-control" name="c_address" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <label> Customer Image </label>
+            <label> Customer Image </label>
 
-                        <input type="file" class="form-control" name="c_image" required>
+            <input type="file" class="form-control" name="c_image" required>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
 
-                    <div class="form-group"><!-- form-group Starts -->
+          <div class="form-group"><!-- form-group Starts -->
 
-                        <center>
+            <center>
 
-                            <!-- <label> Captcha Verification </label> -->
+              <!-- <label> Captcha Verification </label> -->
 
-                            <!-- <div class="g-recaptcha" data-sitekey="6LcHnoQaAAAAAF_WTAEPkd_XO_9XC80G6N1MjrH2"></div> -->
+              <!-- <div class="g-recaptcha" data-sitekey="6LcHnoQaAAAAAF_WTAEPkd_XO_9XC80G6N1MjrH2"></div> -->
 
-                        </center>
+            </center>
 
-                    </div><!-- form-group Ends -->
+          </div><!-- form-group Ends -->
 
 
-                    <div class="text-center"><!-- text-center Starts -->
+          <div class="text-center"><!-- text-center Starts -->
 
-                        <button type="submit" name="register" class="btn btn-primary">
+            <button type="submit" name="register" class="btn btn-primary">
 
-                            <i class="fa fa-user-md"></i> Register
+              <i class="fa fa-user-md"></i> Register
 
-                        </button>
+            </button>
 
-                    </div><!-- text-center Ends -->
+          </div><!-- text-center Ends -->
 
-                </form><!-- form Ends -->
+        </form><!-- form Ends -->
 
-            </div><!-- box Ends -->
+      </div><!-- box Ends -->
 
-        </div><!-- col-md-12 Ends -->
+    </div><!-- col-md-12 Ends -->
 
 
 
-    </div><!-- container Ends -->
+  </div><!-- container Ends -->
 </div><!-- content Ends -->
 
 
 
 <?php
 
-include ("includes/footer.php");
+include("includes/footer.php");
 
 ?>
 
@@ -207,112 +207,113 @@ include ("includes/footer.php");
 <script src="js/bootstrap.min.js"></script>
 
 <script>
+  $(document).ready(function() {
 
-    $(document).ready(function () {
+    $('.tick1').hide();
+    $('.cross1').hide();
 
-        $('.tick1').hide();
+    $('.tick2').hide();
+    $('.cross2').hide();
+
+
+    $('.confirm').focusout(function() {
+
+      var password = $('#pass').val();
+
+      var confirmPassword = $('#con_pass').val();
+
+      if (password == confirmPassword) {
+
+        $('.tick1').show();
         $('.cross1').hide();
 
-        $('.tick2').hide();
+        $('.tick2').show();
         $('.cross2').hide();
 
 
-        $('.confirm').focusout(function () {
 
-            var password = $('#pass').val();
+      } else {
 
-            var confirmPassword = $('#con_pass').val();
+        $('.tick1').hide();
+        $('.cross1').show();
 
-            if (password == confirmPassword) {
-
-                $('.tick1').show();
-                $('.cross1').hide();
-
-                $('.tick2').show();
-                $('.cross2').hide();
+        $('.tick2').hide();
+        $('.cross2').show();
 
 
-
-            }
-            else {
-
-                $('.tick1').hide();
-                $('.cross1').show();
-
-                $('.tick2').hide();
-                $('.cross2').show();
-
-
-            }
-
-
-        });
+      }
 
 
     });
 
+
+  });
 </script>
 
 <script>
+  $(document).ready(function() {
 
-    $(document).ready(function () {
+    $("#pass").keyup(function() {
 
-        $("#pass").keyup(function () {
-
-            check_pass();
-
-        });
+      check_pass();
 
     });
 
-    function check_pass() {
-        var val = document.getElementById("pass").value;
-        var meter = document.getElementById("meter");
-        var no = 0;
-        if (val != "") {
-            // If the password length is less than or equal to 6
-            if (val.length <= 6) no = 1;
+  });
 
-            // If the password length is greater than 6 and contain any lowercase alphabet or any number or any special character
-            if (val.length > 6 && (val.match(/[a-z]/) || val.match(/\d+/) || val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) no = 2;
+  function check_pass() {
+    var val = document.getElementById("pass").value;
+    var meter = document.getElementById("meter");
+    var no = 0;
+    if (val != "") {
+      // If the password length is less than or equal to 6
+      if (val.length <= 6) no = 1;
 
-            // If the password length is greater than 6 and contain alphabet,number,special character respectively
-            if (val.length > 6 && ((val.match(/[a-z]/) && val.match(/\d+/)) || (val.match(/\d+/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) || (val.match(/[a-z]/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)))) no = 3;
+      // If the password length is greater than 6 and contain any lowercase alphabet or any number or any special character
+      if (val.length > 6 && (val.match(/[a-z]/) || val.match(/\d+/) || val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) no = 2;
 
-            // If the password length is greater than 6 and must contain alphabets,numbers and special characters
-            if (val.length > 6 && val.match(/[a-z]/) && val.match(/\d+/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) no = 4;
+      // If the password length is greater than 6 and contain alphabet,number,special character respectively
+      if (val.length > 6 && ((val.match(/[a-z]/) && val.match(/\d+/)) || (val.match(/\d+/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) || (val.match(/[a-z]/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)))) no = 3;
 
-            if (no == 1) {
-                $("#meter").animate({ width: '50px' }, 300);
-                meter.style.backgroundColor = "red";
-                document.getElementById("pass_type").innerHTML = "Very Weak";
-            }
+      // If the password length is greater than 6 and must contain alphabets,numbers and special characters
+      if (val.length > 6 && val.match(/[a-z]/) && val.match(/\d+/) && val.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) no = 4;
 
-            if (no == 2) {
-                $("#meter").animate({ width: '100px' }, 300);
-                meter.style.backgroundColor = "#F5BCA9";
-                document.getElementById("pass_type").innerHTML = "Weak";
-            }
+      if (no == 1) {
+        $("#meter").animate({
+          width: '50px'
+        }, 300);
+        meter.style.backgroundColor = "red";
+        document.getElementById("pass_type").innerHTML = "Very Weak";
+      }
 
-            if (no == 3) {
-                $("#meter").animate({ width: '150px' }, 300);
-                meter.style.backgroundColor = "#FF8000";
-                document.getElementById("pass_type").innerHTML = "Good";
-            }
+      if (no == 2) {
+        $("#meter").animate({
+          width: '100px'
+        }, 300);
+        meter.style.backgroundColor = "#F5BCA9";
+        document.getElementById("pass_type").innerHTML = "Weak";
+      }
 
-            if (no == 4) {
-                $("#meter").animate({ width: '200px' }, 300);
-                meter.style.backgroundColor = "#00FF40";
-                document.getElementById("pass_type").innerHTML = "Strong";
-            }
-        }
+      if (no == 3) {
+        $("#meter").animate({
+          width: '150px'
+        }, 300);
+        meter.style.backgroundColor = "#FF8000";
+        document.getElementById("pass_type").innerHTML = "Good";
+      }
 
-        else {
-            meter.style.backgroundColor = "";
-            document.getElementById("pass_type").innerHTML = "";
-        }
+      if (no == 4) {
+        $("#meter").animate({
+          width: '200px'
+        }, 300);
+        meter.style.backgroundColor = "#00FF40";
+        document.getElementById("pass_type").innerHTML = "Strong";
+      }
+    } else {
+      meter.style.backgroundColor = "";
+      document.getElementById("pass_type").innerHTML = "";
     }
-
+  }
 </script>
 
 </body>
@@ -321,63 +322,56 @@ include ("includes/footer.php");
 
 <?php
 
-if (isset ($_POST['register'])) {
+if (isset($_POST['register'])) {
 
-    // $secret = "6LcHnoQaAAAAAF3_pqQ55sZMDgaWCGcXq4ucLgkH";
+  $c_name = $_POST['c_name'];
 
-    // $response = $_POST['g-recaptcha-response'];
+  $c_email = $_POST['c_email'];
 
-    $remoteip = $_SERVER['REMOTE_ADDR'];
+  $c_pass = $_POST['c_pass'];
 
-    // $url = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response&remoteip=$remoteip");
+  $c_country = $_POST['c_country'];
 
-    // $result = json_decode($url, TRUE);
+  $c_city = $_POST['c_city'];
 
-    if ($result['success'] == 0) {
+  $c_contact = $_POST['c_contact'];
 
-        $c_name = $_POST['c_name'];
+  $c_address = $_POST['c_address'];
 
-        $c_email = $_POST['c_email'];
+  $c_image = $_FILES['c_image']['name'];
 
-        $c_pass = $_POST['c_pass'];
+  $c_image_tmp = $_FILES['c_image']['tmp_name'];
 
-        $c_country = $_POST['c_country'];
+  $c_ip = $_SERVER['REMOTE_ADDR'];
 
-        $c_city = $_POST['c_city'];
+  move_uploaded_file($c_image_tmp, "customer/customer_images/$c_image");
 
-        $c_contact = $_POST['c_contact'];
+  $get_email = "BEGIN
+                OPEN :p_result_set FOR
+                SELECT * FROM customers WHERE customer_email = :p_email;
+              END;";
 
-        $c_address = $_POST['c_address'];
+  $statement = oci_parse($conn, $get_email);
+  oci_bind_by_name($statement, ":p_email", $c_email);
+  oci_execute($statement);
 
-        $c_image = $_FILES['c_image']['name'];
+  $p_result_set = oci_new_cursor($conn);
+  oci_bind_by_name($statement, ":p_result_set", $p_result_set, -1, OCI_B_CURSOR);
 
-        $c_image_tmp = $_FILES['c_image']['tmp_name'];
+  oci_execute($statement);
 
-        $c_ip = getRealUserIp();
+  if (oci_fetch($p_result_set)) {
+    echo "<script>alert('This email is already registered, try another one')</script>";
+    exit();
+  }
 
-        move_uploaded_file($c_image_tmp, "customer/customer_images/$c_image");
+  $customer_confirm_code = mt_rand();
 
-        $get_email = "select * from customers where customer_email='$c_email'";
+  $subject = "Email Confirmation Message";
 
-        $run_email = mysqli_query($con, $get_email);
+  $from = "sad.ahmed22224@gmail.com";
 
-        $check_email = mysqli_num_rows($run_email);
-
-        if ($check_email == 1) {
-
-            echo "<script>alert('This email is already registered, try another one')</script>";
-
-            exit();
-
-        }
-
-        $customer_confirm_code = mt_rand();
-
-        $subject = "Email Confirmation Message";
-
-        $from = "sad.ahmed22224@gmail.com";
-
-        $message = "
+  $message = "
 
 <h2>
 Email Confirmation By Computerfever.com $c_name
@@ -391,50 +385,53 @@ Click Here To Confirm Email
 
 ";
 
-        $headers = "From: $from \r\n";
+  $headers = "From: $from \r\n";
 
-        $headers .= "Content-type: text/html\r\n";
+  $headers .= "Content-type: text/html\r\n";
 
-        mail($c_email, $subject, $message, $headers);
+  mail($c_email, $subject, $message, $headers);
 
-        $insert_customer = "insert into customers (customer_name,customer_email,customer_pass,customer_country,customer_city,customer_contact,customer_address,customer_image,customer_ip,customer_confirm_code) values ('$c_name','$c_email','$c_pass','$c_country','$c_city','$c_contact','$c_address','$c_image','$c_ip','$customer_confirm_code')";
+  $insert_customer = "BEGIN
+                      INSERT INTO customers (customer_name,customer_email,customer_pass,customer_country,customer_city,customer_contact,customer_address,customer_image,customer_ip,customer_confirm_code)
+                      VALUES (:p_name, :p_email, :p_pass, :p_country, :p_city, :p_contact, :p_address, :p_image, :p_ip, :p_confirm_code);
+                    END;";
 
+  $statement = oci_parse($conn, $insert_customer);
+  oci_bind_by_name($statement, ":p_name", $c_name);
+  oci_bind_by_name($statement, ":p_email", $c_email);
+  oci_bind_by_name($statement, ":p_pass", $c_pass);
+  oci_bind_by_name($statement, ":p_country", $c_country);
+  oci_bind_by_name($statement, ":p_city", $c_city);
+  oci_bind_by_name($statement, ":p_contact", $c_contact);
+  oci_bind_by_name($statement, ":p_address", $c_address);
+  oci_bind_by_name($statement, ":p_image", $c_image);
+  oci_bind_by_name($statement, ":p_ip", $c_ip);
+  oci_bind_by_name($statement, ":p_confirm_code", $customer_confirm_code);
 
-        $run_customer = mysqli_query($con, $insert_customer);
+  oci_execute($statement);
 
-        $sel_cart = "select * from cart where ip_add='$c_ip'";
+  $sel_cart = "BEGIN
+                OPEN :p_result_set FOR
+                SELECT * FROM cart WHERE ip_add = :p_ip;
+            END;";
 
-        $run_cart = mysqli_query($con, $sel_cart);
+  $statement = oci_parse($conn, $sel_cart);
+  oci_bind_by_name($statement, ":p_ip", $c_ip);
+  oci_execute($statement);
 
-        $check_cart = mysqli_num_rows($run_cart);
+  $p_result_set = oci_new_cursor($conn);
+  oci_bind_by_name($statement, ":p_result_set", $p_result_set, -1, OCI_B_CURSOR);
 
-        if ($check_cart > 0) {
+  oci_execute($statement);
 
-            $_SESSION['customer_email'] = $c_email;
-
-            echo "<script>alert('You have been Registered Successfully')</script>";
-
-            echo "<script>window.open('checkout.php','_self')</script>";
-
-        } else {
-
-            $_SESSION['customer_email'] = $c_email;
-
-            echo "<script>alert('You have been Registered Successfully')</script>";
-
-            echo "<script>window.open('index.php','_self')</script>";
-
-
-        }
-
-
-    } else {
-
-        echo "<script>alert('Please Select Captcha, Try Again')</script>";
-
-    }
-
-
+  if (oci_fetch($p_result_set)) {
+    $_SESSION['customer_email'] = $c_email;
+    echo "<script>alert('You have been Registered Successfully')</script>";
+    echo "<script>window.open('checkout.php','_self')</script>";
+  } else {
+    $_SESSION['customer_email'] = $c_email;
+    echo "<script>alert('You have been Registered Successfully')</script>";
+    echo "<script>window.open('index.php','_self')</script>";
+  }
 }
-
 ?>

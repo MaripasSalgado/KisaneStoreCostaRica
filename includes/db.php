@@ -7,12 +7,11 @@ $host = 'localhost';
 $port = '1521';
 $sid = 'orcl';
 
-// Construye la cadena de conexión
+global $con;
 $tns = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port)))(CONNECT_DATA=(SID=$sid)))";
-$db_conn = oci_connect($user, $pass, $tns);
-
+$conn = oci_connect($user, $pass, $tns);
 // Verifica si la conexión fue exitosa
-if (!$db_conn) {
+if (!$conn) {
     $error = oci_error();
     echo "Error de conexión: " . $error['message'];
 } else {

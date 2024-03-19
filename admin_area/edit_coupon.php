@@ -1,256 +1,165 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<?php
+    <?php
 
-if(isset($_GET['edit_coupon'])){
+    //PL/SQL
 
-$edit_id = $_GET['edit_coupon'];
+    ?>
 
-$edit_coupon = "select * from coupons where coupon_id='$edit_id'";
+    <div class="row"><!-- 1 row Starts -->
 
-$run_edit = mysqli_query($con,$edit_coupon);
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-$row_edit = mysqli_fetch_array($run_edit);
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-$c_id = $row_edit['coupon_id'];
+                <li class="active">
 
-$c_title = $row_edit['coupon_title'];
+                    <i class="fa fa-dashboard"> </i> Dashboard / Edit Coupon
 
-$c_price = $row_edit['coupon_price'];
+                </li>
 
-$c_code = $row_edit['coupon_code'];
+            </ol><!-- breadcrumb Ends -->
 
-$c_limit = $row_edit['coupon_limit'];
+        </div><!-- col-lg-12 Ends -->
 
-$c_used = $row_edit['coupon_used'];
+    </div><!-- 1 row Ends -->
 
-$p_id = $row_edit['product_id'];
+    <div class="row"><!-- 2 row Starts --->
 
-$get_products = "select * from products where product_id='$p_id'";
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-$run_products = mysqli_query($con,$get_products);
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-$row_products = mysqli_fetch_array($run_products);
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-$product_id = $row_products['product_id'];
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-$product_title = $row_products['product_title'];
+                        <i class="fa fa-money fa-fw"> </i> Edit Coupon
 
+                    </h3><!-- panel-title Ends -->
 
-}
+                </div><!-- panel-heading Ends -->
 
+                <div class="panel-body"><!--panel-body Starts -->
 
-?>
+                    <form class="form-horizontal" method="post" action=""><!-- form-horizontal Starts -->
 
-<div class="row"><!-- 1 row Starts -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+                            <label class="col-md-3 control-label"> Coupon Title </label>
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+                            <div class="col-md-6">
 
-<li class="active">
+                                <input type="text" name="coupon_title" class="form-control" value="<?php echo $c_title; ?>">
 
-<i class="fa fa-dashboard"> </i> Dashboard / Edit Coupon
+                            </div>
 
-</li>
+                        </div><!-- form-group Ends -->
 
-</ol><!-- breadcrumb Ends -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-</div><!-- col-lg-12 Ends -->
+                            <label class="col-md-3 control-label"> Coupon Price </label>
 
-</div><!-- 1 row Ends -->
+                            <div class="col-md-6">
 
-<div class="row"><!-- 2 row Starts --->
+                                <input type="text" name="coupon_price" class="form-control" value="<?php echo $c_price; ?>">
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+                            </div>
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+                        </div><!-- form-group Ends -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                            <label class="col-md-3 control-label"> Coupon Code </label>
 
-<i class="fa fa-money fa-fw"> </i> Edit Coupon
+                            <div class="col-md-6">
 
-</h3><!-- panel-title Ends -->
+                                <input type="text" name="coupon_code" class="form-control" value="<?php echo $c_code; ?> ">
 
-</div><!-- panel-heading Ends -->
+                            </div>
 
-<div class="panel-body"><!--panel-body Starts -->
+                        </div><!-- form-group Ends -->
 
-<form class="form-horizontal" method="post" action=""><!-- form-horizontal Starts -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<div class="form-group" ><!-- form-group Starts -->
+                            <label class="col-md-3 control-label"> Coupon Limit </label>
 
-<label class="col-md-3 control-label"> Coupon Title </label>
+                            <div class="col-md-6">
 
-<div class="col-md-6">
+                                <input type="number" name="coupon_limit" value="<?php echo $c_limit; ?>" class="form-control">
 
-<input type="text" name="coupon_title" class="form-control" value="<?php echo $c_title; ?>" >
+                            </div>
 
-</div>
+                        </div><!-- form-group Ends -->
 
-</div><!-- form-group Ends -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<div class="form-group" ><!-- form-group Starts -->
+                            <label class="col-md-3 control-label"> Select Coupon For Product or Bundle </label>
 
-<label class="col-md-3 control-label"> Coupon Price </label>
+                            <div class="col-md-6">
 
-<div class="col-md-6">
+                                <select name="product_id" class="form-control">
 
-<input type="text" name="coupon_price" class="form-control" value="<?php echo $c_price; ?>">
+                                    <option value="<?php echo $product_id; ?>"> <?php echo $product_title; ?> </option>
 
-</div>
 
-</div><!-- form-group Ends -->
+                                    <?php
 
-<div class="form-group" ><!-- form-group Starts -->
+                                    //PL/SQL
 
-<label class="col-md-3 control-label"> Coupon Code </label>
+                                    ?>
 
-<div class="col-md-6">
+                                    <option></option>
 
-<input type="text" name="coupon_code" class="form-control" value="<?php echo $c_code; ?> ">
+                                    <option>Select Coupon for bundle</option>
 
-</div>
+                                    <option></option>
 
-</div><!-- form-group Ends -->
+                                    <?php
+                                    //PL/SQL
 
-<div class="form-group" ><!-- form-group Starts -->
+                                    ?>
 
-<label class="col-md-3 control-label"> Coupon Limit </label>
+                                </select>
 
-<div class="col-md-6">
+                            </div>
 
-<input type="number" name="coupon_limit" value="<?php echo $c_limit; ?>" class="form-control">
+                        </div><!-- form-group Ends -->
 
-</div>
+                        <div class="form-group"><!-- form-group Starts -->
 
-</div><!-- form-group Ends -->
+                            <label class="col-md-3 control-label"> </label>
 
-<div class="form-group" ><!-- form-group Starts -->
+                            <div class="col-md-6">
 
-<label class="col-md-3 control-label"> Select Coupon For Product or Bundle </label>
+                                <input type="submit" name="update" class=" btn btn-primary form-control" value=" Update Coupon ">
 
-<div class="col-md-6">
+                            </div>
 
-<select name="product_id" class="form-control">
+                        </div><!-- form-group Ends -->
 
-<option value="<?php echo $product_id; ?>"> <?php echo $product_title; ?> </option>
+                    </form><!-- form-horizontal Ends -->
 
+                </div><!--panel-body Ends -->
 
-<?php
+            </div><!-- panel panel-default Ends -->
 
-$get_p = "select * from products where status='product'";
+        </div><!-- col-lg-12 Ends -->
 
-$run_p = mysqli_query($con,$get_p);
+    </div><!-- 2 row Ends --->
 
-while($row_p = mysqli_fetch_array($run_p)){
+    <?php
+    //PL/SQL
 
-$p_id = $row_p['product_id'];
-
-$p_title = $row_p['product_title'];
-
-echo "<option value='$p_id'> $p_title </option>";
-
-}
-
-?>
-
-<option></option>
-
-<option>Select Coupon for bundle</option>
-
-<option></option>
-
-<?php
-
-$get_p = "select * from products where status='bundle'";
-
-$run_p = mysqli_query($con,$get_p);
-
-while($row_p = mysqli_fetch_array($run_p)){
-
-$p_id = $row_p['product_id'];
-
-$p_title = $row_p['product_title'];
-
-echo "<option value='$p_id'> $p_title </option>";
-
-}
-
-?>
-
-</select>
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label"> </label>
-
-<div class="col-md-6">
-
-<input type="submit" name="update" class=" btn btn-primary form-control" value=" Update Coupon ">
-
-</div>
-
-</div><!-- form-group Ends -->
-
-</form><!-- form-horizontal Ends -->
-
-</div><!--panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends --->
-
-<?php
-
-if(isset($_POST['update'])){
-
-$coupon_title = $_POST['coupon_title'];
-
-$coupon_price = $_POST['coupon_price'];
-
-$coupon_code = $_POST['coupon_code'];
-
-$coupon_limit = $_POST['coupon_limit'];
-
-$product_id = $_POST['product_id'];
-
-$update_coupon = "update coupons set product_id='$product_id',coupon_title='$coupon_title',coupon_price='$coupon_price',coupon_code='$coupon_code',coupon_limit='$coupon_limit',coupon_used='$c_used' where coupon_id='$c_id'";
-
-$run_coupon = mysqli_query($con,$update_coupon);
-
-
-if($run_coupon){
-
-echo "<script>alert('One Coupon Has Been Updated')</script>";
-
-echo "<script>window.open('index.php?view_coupons','_self')</script>";
-
-}
-
-
-}
-
-?>
+    ?>
 
 <?php } ?>

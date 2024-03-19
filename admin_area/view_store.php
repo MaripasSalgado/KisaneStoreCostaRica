@@ -1,13 +1,10 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
@@ -15,122 +12,104 @@ else {
 
 
 
-<div class="row" ><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts --> 
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard" ></i> Dashboard / View store
+                    <i class="fa fa-dashboard"></i> Dashboard / View store
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
-</div><!-- col-lg-12 Ends --> 
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title">
+                    <h3 class="panel-title">
 
-<i class="fa fa-money fa-fw"></i> View store 
+                        <i class="fa fa-money fa-fw"></i> View store
 
-</h3>
+                    </h3>
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<?php
+                    <?php
 
-$get_store = "select * from store";
+                    //PL/SQL
+                    ?>
 
-$run_store = mysqli_query($con,$get_store);
+                    <div class="col-lg-4 col-md-4"><!-- col-lg-4 col-md-4 Starts -->
 
-while($row_store = mysqli_fetch_array($run_store)){
+                        <div class="panel panel-primary"><!-- panel panel-primary Starts -->
 
-$store_id = $row_store['store_id'];
+                            <div class="panel-heading"><!-- panel-heading Starts -->
 
-$store_title = $row_store['store_title'];
+                                <h3 class="panel-title" align="center">
 
-$store_image = $row_store['store_image'];
+                                    <?php echo $store_title; ?>
 
-$store_desc = substr($row_store['store_desc'],0,400);
+                                </h3>
 
-$store_button = $row_store['store_button'];
+                            </div><!-- panel-heading Ends -->
 
-$store_url = $row_store['store_url'];
+                            <div class="panel-body"><!-- panel-body Starts -->
 
+                                <img src="store_images/<?php echo $store_image; ?>" class="img-responsive">
 
-?>
+                                <br>
 
-<div class="col-lg-4 col-md-4"><!-- col-lg-4 col-md-4 Starts -->
+                                <p><?php echo $store_desc; ?></p>
 
-<div class="panel panel-primary"><!-- panel panel-primary Starts -->
+                            </div><!-- panel-body Ends -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                            <div class="panel-footer"><!-- panel-footer Starts -->
 
-<h3 class="panel-title" align="center">
+                                <a href="index.php?delete_store=<?php echo $store_id; ?>" class="pull-left">
 
-<?php echo $store_title; ?>
+                                    <i class="fa fa-trash-o"></i> Delete
 
-</h3>
+                                </a>
 
-</div><!-- panel-heading Ends -->
+                                <a href="index.php?edit_store=<?php echo $store_id; ?>" class="pull-right">
 
-<div class="panel-body"><!-- panel-body Starts -->
+                                    <i class="fa fa-pencil"></i> Edit
 
-<img src="store_images/<?php echo $store_image; ?>" class="img-responsive">
+                                </a>
 
-<br>
+                                <div class="clearfix"> </div>
 
-<p><?php echo $store_desc; ?></p>
+                            </div><!-- panel-footer Ends -->
 
-</div><!-- panel-body Ends -->
+                        </div><!-- panel panel-primary Ends -->
 
-<div class="panel-footer"><!-- panel-footer Starts -->
+                    </div><!-- col-lg-4 col-md-4 Ends -->
 
-<a href="index.php?delete_store=<?php echo $store_id; ?>" class="pull-left">
+                <?php } ?>
 
-<i class="fa fa-trash-o"></i> Delete
+                </div><!-- panel-body Ends -->
 
-</a>
+            </div><!-- panel panel-default Ends -->
 
-<a href="index.php?edit_store=<?php echo $store_id; ?>" class="pull-right">
+        </div><!-- col-lg-12 Ends -->
 
-<i class="fa fa-pencil"></i> Edit
-
-</a>
-
-<div class="clearfix"> </div>
-
-</div><!-- panel-footer Ends -->
-
-</div><!-- panel panel-primary Ends -->
-
-</div><!-- col-lg-4 col-md-4 Ends -->
-
-<?php } ?>
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
+    </div><!-- 2 row Ends -->
 
 
 
 
-<?php } ?>
+    <?php  ?>

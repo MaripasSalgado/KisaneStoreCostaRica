@@ -12,7 +12,7 @@ include("includes/main.php");
 <!-- Cover -->
 <main>
   <div class="hero">
-    <a href="/FinalProyect/Ecommerce-Zara/shop.php" class="btn1">View all products
+    <a href="#" class="btn1">View all products
     </a>
   </div>
   <!-- Main -->
@@ -85,10 +85,10 @@ include("includes/main.php");
               <a href="cart.php" class="footer-nav__link">View cart</a>
             </li>
             <li class="footer-nav__item">
-              <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?my_orders" class="footer-nav__link">Track Order</a>
+              <a href="#" class="footer-nav__link">Track Order</a>
             </li>
             <li class="footer-nav__item">
-              <a href="/FinalProyect/Ecommerce-Zara/customer/my_account.php?edit_account" class="footer-nav__link">Update information</a>
+              <a href="#" class="footer-nav__link">Update information</a>
             </li>
           </ul>
         </div>
@@ -97,7 +97,7 @@ include("includes/main.php");
         <div class="footer-nav__col footer-nav__col--contacts">
           <div class="footer-nav__heading">Contact details</div>
           <address class="address">
-            Head Office: Zara.<br>
+            Head Office: KisaneStoreCR.<br>
             San Jose Costa Rica
           </address>
           <div class="phone">
@@ -106,7 +106,7 @@ include("includes/main.php");
           </div>
           <div class="email">
             Email:
-            <a href="mailto:support@zara.com" class="email__addr">support@zara.com</a>
+            <a href="mailto:support@KisaneStoreCR.com" class="email__addr">support@KisaneStoreCR.com</a>
           </div>
         </div>
 
@@ -117,7 +117,7 @@ include("includes/main.php");
       <div class="container clearfix">
 
         <div class="copyright">
-          &copy; <?php echo date("Y"); ?> Zara-Ecommerce&trade;
+          &copy; <?php echo date("Y"); ?> KisaneStoreCR &trade;
         </div>
 
       </div>

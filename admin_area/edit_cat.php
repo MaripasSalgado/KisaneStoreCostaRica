@@ -1,188 +1,136 @@
 <?php
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<?php
+    <?php
+    //PL/SQL
 
-if(isset($_GET['edit_cat'])){
+    ?>
 
-$edit_id = $_GET['edit_cat'];
+    <div class="row"><!-- 1 row Starts -->
 
-$edit_cat = "select * from categories where cat_id='$edit_id'";
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-$run_edit = mysqli_query($con,$edit_cat);
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-$row_edit = mysqli_fetch_array($run_edit);
+                <li>
 
-$c_id = $row_edit['cat_id'];
+                    <i class="fa fa-dashboard"></i> Dashboard / Edit Category
 
-$c_title = $row_edit['cat_title'];
+                </li>
 
-$c_top = $row_edit['cat_top'];
+            </ol><!-- breadcrumb Ends -->
 
-$c_image = $row_edit['cat_image'];
+        </div><!-- col-lg-12 Ends -->
 
-$new_c_image = $row_edit['cat_image'];
+    </div><!-- 1 row Ends -->
 
-}
 
-?>
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="row"><!-- 1 row Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<li>
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i class="fa fa-dashboard"></i> Dashboard / Edit Category
+                        <i class="fa fa-money fa-fw"></i> Edit Category
 
-</li>
+                    </h3><!-- panel-title Ends -->
 
-</ol><!-- breadcrumb Ends -->
+                </div><!-- panel-heading Ends -->
 
-</div><!-- col-lg-12 Ends -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-</div><!-- 1 row Ends -->
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data"><!-- form-horizontal Starts -->
 
+                        <div class="form-group"><!-- form-group Starts -->
 
-<div class="row"><!-- 2 row Starts -->
+                            <label class="col-md-3 control-label">Category Title</label>
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+                            <div class="col-md-6">
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+                                <input type="text" name="cat_title" class="form-control" value="<?php echo $c_title; ?>">
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                            </div>
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                        </div><!-- form-group Ends -->
 
-<i class="fa fa-money fa-fw"></i> Edit Category
+                        <div class="form-group"><!-- form-group Starts -->
 
-</h3><!-- panel-title Ends -->
+                            <label class="col-md-3 control-label">Show as Category Top</label>
 
-</div><!-- panel-heading Ends -->
+                            <div class="col-md-6">
 
-<div class="panel-body"><!-- panel-body Starts -->
+                                <input type="radio" name="cat_top" value="yes" <?php if ($c_top == 'no') {
+                                                                                } else {
+                                                                                    echo "checked='checked'";
+                                                                                } ?>>
 
-<form class="form-horizontal" action="" method="post" enctype="multipart/form-data"><!-- form-horizontal Starts -->
+                                <label>Yes</label>
 
-<div class="form-group"><!-- form-group Starts -->
+                                <input type="radio" name="cat_top" value="no" <?php if ($c_top == 'no') {
+                                                                                    echo "checked='checked'";
+                                                                                } else {
+                                                                                } ?>>
 
-<label class="col-md-3 control-label">Category Title</label>
+                                <label>No</label>
 
-<div class="col-md-6">
+                            </div>
 
-<input type="text" name="cat_title" class="form-control" value="<?php echo $c_title; ?>">
+                        </div><!-- form-group Ends -->
 
-</div>
+                        <div class="form-group"><!-- form-group Starts -->
 
-</div><!-- form-group Ends -->
+                            <label class="col-md-3 control-label">Select Category Image</label>
 
-<div class="form-group"><!-- form-group Starts -->
+                            <div class="col-md-6">
 
-<label class="col-md-3 control-label">Show as Category Top</label>
+                                <input type="file" name="cat_image" class="form-control">
 
-<div class="col-md-6">
+                                <br>
 
-<input type="radio" name="cat_top" value="yes" 
-<?php if($c_top == 'no'){}else{ echo "checked='checked'"; } ?>>
+                                <img src="other_images/<?php echo $c_image; ?>" width="70" height="70">
 
-<label>Yes</label>
+                            </div>
 
-<input type="radio" name="cat_top" value="no" 
-<?php if($c_top == 'no'){ echo "checked='checked'"; }else{} ?>>
+                        </div><!-- form-group Ends -->
 
-<label>No</label>
 
-</div>
+                        <div class="form-group"><!-- form-group Starts -->
 
-</div><!-- form-group Ends -->
+                            <label class="col-md-3 control-label"></label>
 
-<div class="form-group"><!-- form-group Starts -->
+                            <div class="col-md-6">
 
-<label class="col-md-3 control-label">Select Category Image</label>
+                                <input type="submit" name="update" value="Update Category" class="btn btn-primary form-control">
 
-<div class="col-md-6">
+                            </div>
 
-<input type="file" name="cat_image" class="form-control">
+                        </div><!-- form-group Ends -->
 
-<br>
+                    </form><!-- form-horizontal Ends -->
 
-<img src="other_images/<?php echo $c_image; ?>" width="70" height="70" >
+                </div><!-- panel-body Ends -->
 
-</div>
+            </div><!-- panel panel-default Ends -->
 
-</div><!-- form-group Ends -->
+        </div><!-- col-lg-12 Ends -->
 
+    </div><!-- 2 row Ends -->
 
-<div class="form-group"><!-- form-group Starts -->
+    <?php
 
-<label class="col-md-3 control-label"></label>
+    //PL/SQL
 
-<div class="col-md-6">
-
-<input type="submit" name="update" value="Update Category" class="btn btn-primary form-control">
-
-</div>
-
-</div><!-- form-group Ends -->
-
-</form><!-- form-horizontal Ends -->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-<?php
-
-if(isset($_POST['update'])){
-
-$cat_title = $_POST['cat_title'];
-
-$cat_top = $_POST['cat_top'];
-
-$cat_image = $_FILES['cat_image']['name'];
-
-$temp_name = $_FILES['cat_image']['tmp_name'];
-
-move_uploaded_file($temp_name,"other_images/$cat_image");
-
-if(empty($cat_image)){
-
-$cat_image= $new_c_image;
-
-}
-
-$update_cat = "update categories set cat_title='$cat_title',cat_top='$cat_top',cat_image='$cat_image' where cat_id='$c_id'";
-
-$run_cat = mysqli_query($con,$update_cat);
-
-if($run_cat){
-
-echo "<script>alert('One Category Has Been Updated')</script>";
-
-echo "<script>window.open('index.php?view_cats','_self')</script>";
-
-}
-
-}
-
-
-
-?>
+    ?>
 
 <?php } ?>

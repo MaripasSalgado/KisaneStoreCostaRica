@@ -2,159 +2,134 @@
 
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 ?>
 
-<div class="row" ><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb" ><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active" >
+                <li class="active">
 
-<i class="fa fa-dashboard" ></i> Dashboard / View Users
+                    <i class="fa fa-dashboard"></i> Dashboard / View Users
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
 
-<div class="row" ><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default" ><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading" ><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title" ><!-- panel-title Starts -->
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i class="fa fa-money fa-fw" ></i> View Users
+                        <i class="fa fa-money fa-fw"></i> View Users
 
-</h3><!-- panel-title Ends -->
+                    </h3><!-- panel-title Ends -->
 
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body" ><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive" ><!-- table-responsive Starts -->
+                    <div class="table-responsive"><!-- table-responsive Starts -->
 
-<table class="table table-bordered table-hover table-striped" ><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>User Name</th>
+                                    <th>User Name</th>
 
-<th>Email</th>
+                                    <th>Email</th>
 
-<th>Image</th>
+                                    <th>Image</th>
 
-<th>Country</th>
+                                    <th>Country</th>
 
-<th>Job</th>
+                                    <th>Job</th>
 
-<th>Delete</th>
+                                    <th>Delete</th>
 
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
+                                //PL/SQL
+                                ?>
 
-$get_admin = "select * from admins";
+                                <tr>
 
-$run_admin = mysqli_query($con,$get_admin);
+                                    <td><?php echo $admin_name; ?></td>
 
-while($row_admin = mysqli_fetch_array($run_admin)){
+                                    <td><?php echo $admin_email; ?></td>
 
-$admin_id = $row_admin['admin_id'];
+                                    <td><img src="admin_images/<?php echo $admin_image; ?>" width="60" height="60"></td>
 
-$admin_name = $row_admin['admin_name'];
+                                    <td><?php echo $admin_country; ?></td>
 
-$admin_email = $row_admin['admin_email'];
+                                    <td><?php echo $admin_job; ?></td>
 
-$admin_image = $row_admin['admin_image'];
+                                    <td>
 
-$admin_country = $row_admin['admin_country'];
+                                        <a href="index.php?user_delete=<?php echo $admin_id; ?>">
 
-$admin_job = $row_admin['admin_job'];
+                                            <i class="fa fa-trash-o"></i> Delete
 
+                                        </a>
 
+                                    </td>
 
 
+                                </tr>
 
-?>
 
-<tr>
+                            <?php } ?>
 
-<td><?php echo $admin_name; ?></td>
+                            </tbody><!-- tbody Ends -->
 
-<td><?php echo $admin_email; ?></td>
 
-<td><img src="admin_images/<?php echo $admin_image; ?>" width="60" height="60" ></td>
 
-<td><?php echo $admin_country; ?></td>
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-<td><?php echo $admin_job; ?></td>
+                    </div><!-- table-responsive Ends -->
 
-<td>
 
-<a href="index.php?user_delete=<?php echo $admin_id; ?>" >
+                </div><!-- panel-body Ends -->
 
-<i class="fa fa-trash-o" ></i> Delete
 
-</a>
+            </div><!-- panel panel-default Ends -->
 
-</td>
 
+        </div><!-- col-lg-12 Ends -->
 
-</tr>
 
 
-<?php } ?>
+    </div><!-- 2 row Ends -->
 
-</tbody><!-- tbody Ends -->
 
 
 
-</table><!-- table table-bordered table-hover table-striped Ends -->
 
-</div><!-- table-responsive Ends -->
-
-
-</div><!-- panel-body Ends -->
-
-
-</div><!-- panel panel-default Ends -->
-
-
-</div><!-- col-lg-12 Ends -->
-
-
-
-</div><!-- 2 row Ends -->
-
-
-
-
-
-<?php }  ?>
+    <?php   ?>

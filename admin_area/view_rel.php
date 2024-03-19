@@ -1,173 +1,136 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts --->
+            <ol class="breadcrumb"><!-- breadcrumb Starts --->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / View Relations
+                    <i class="fa fa-dashboard"></i> Dashboard / View Relations
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends --->
+            </ol><!-- breadcrumb Ends --->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title">
+                    <h3 class="panel-title">
 
-<i class="fa fa-money fa-fw"></i> View Relations
+                        <i class="fa fa-money fa-fw"></i> View Relations
 
-</h3>
+                    </h3>
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive"><!-- table-responsive Starts -->
+                    <div class="table-responsive"><!-- table-responsive Starts -->
 
 
-<table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>#</th>
+                                    <th>#</th>
 
-<th>Title</th>
+                                    <th>Title</th>
 
-<th>Product</th>
+                                    <th>Product</th>
 
-<th>Bundle</th>
+                                    <th>Bundle</th>
 
-<th>Delete</th>
+                                    <th>Delete</th>
 
-<th>Edit</th>
+                                    <th>Edit</th>
 
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
 
-$i = 0;
+                                //PL/SQL
 
+                                ?>
 
-$get_rel = "select * from bundle_product_relation";
+                                <tr>
 
-$run_rel = mysqli_query($con,$get_rel);
+                                    <td> <?php echo $i; ?> </td>
 
-while($row_rel = mysqli_fetch_array($run_rel)){
+                                    <td> <?php echo $rel_title; ?> </td>
 
-$rel_id = $row_rel['rel_id'];
+                                    <td> <?php echo $p_title; ?> </td>
 
-$rel_title = $row_rel['rel_title'];
+                                    <td> <?php echo $b_title; ?> </td>
 
-$bundle_id = $row_rel['bundle_id'];
+                                    <td>
 
-$product_id = $row_rel['product_id'];
+                                        <a href="index.php?delete_rel=<?php echo $rel_id; ?>">
 
-$get_p = "select * from products where product_id='$product_id'";
+                                            <i class="fa fa-trash-o"></i> Delete
 
-$run_p = mysqli_query($con,$get_p);
+                                        </a>
 
-$row_p = mysqli_fetch_array($run_p);
+                                    </td>
 
-$p_title = $row_p['product_title'];
+                                    <td>
 
+                                        <a href="index.php?edit_rel=<?php echo $rel_id; ?>">
 
-$get_b = "select * from products where product_id='$bundle_id'";
+                                            <i class="fa fa-pencil"></i> Edit
 
-$run_b = mysqli_query($con,$get_b);
+                                        </a>
 
-$row_b = mysqli_fetch_array($run_b);
+                                    </td>
 
-$b_title = $row_b['product_title'];
 
-$i++;
 
-?>
+                                </tr>
 
-<tr>
+                            <?php } ?>
 
-<td> <?php echo $i; ?> </td>
+                            </tbody><!-- tbody Ends -->
 
-<td> <?php echo $rel_title; ?> </td>
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-<td> <?php echo $p_title; ?> </td>
+                    </div><!-- table-responsive Ends -->
 
-<td> <?php echo $b_title; ?> </td>
+                </div><!-- panel-body Ends -->
 
-<td>
+            </div><!-- panel panel-default Ends -->
 
-<a href="index.php?delete_rel=<?php echo $rel_id; ?>">
+        </div><!-- col-lg-12 Ends -->
 
-<i class="fa fa-trash-o"></i> Delete
+    </div><!-- 2 row Ends -->
 
-</a>
 
-</td>
 
-<td>
-
-<a href="index.php?edit_rel=<?php echo $rel_id; ?>">
-
-<i class="fa fa-pencil"></i> Edit
-
-</a>
-
-</td>
-
-
-
-</tr>
-
-<?php } ?>
-
-</tbody><!-- tbody Ends -->
-
-</table><!-- table table-bordered table-hover table-striped Ends -->
-
-</div><!-- table-responsive Ends -->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-
-
-<?php } ?>
+    <?php  ?>

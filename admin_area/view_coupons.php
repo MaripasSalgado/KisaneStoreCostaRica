@@ -1,166 +1,132 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / View Coupons
+                    <i class="fa fa-dashboard"></i> Dashboard / View Coupons
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
-<div class="row" ><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i class="fa fa-money fa-fw"></i> View Coupons
+                        <i class="fa fa-money fa-fw"></i> View Coupons
 
-</h3><!-- panel-title Ends -->
+                    </h3><!-- panel-title Ends -->
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive"><!-- table-responsive Starts -->
+                    <div class="table-responsive"><!-- table-responsive Starts -->
 
-<table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>#</th>
-<th>Title  </th>
-<th>Product  </th>
-<th>Coupon Price  </th>
-<th>Code  </th>
-<th>Limit  </th>
-<th>Used  </th>
-<th>Delete  </th>
-<th>Edit  </th>
+                                    <th>#</th>
+                                    <th>Title </th>
+                                    <th>Product </th>
+                                    <th>Coupon Price </th>
+                                    <th>Code </th>
+                                    <th>Limit </th>
+                                    <th>Used </th>
+                                    <th>Delete </th>
+                                    <th>Edit </th>
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
 
-$i = 0;
+                                //PL/SQL
 
-$get_coupons = "select * from coupons";
+                                ?>
 
-$run_coupons = mysqli_query($con,$get_coupons);
+                                <tr>
 
-while($row_coupons = mysqli_fetch_array($run_coupons)){
+                                    <td></td>
 
-$coupon_id = $row_coupons['coupon_id'];
+                                    <td></td>
 
-$product_id = $row_coupons['product_id'];
+                                    <td></td>
 
-$coupon_title = $row_coupons['coupon_title'];
+                                    <td></td>
 
-$coupon_price = $row_coupons['coupon_price'];
+                                    <td></td>
 
-$coupon_code = $row_coupons['coupon_code'];
+                                    <td></td>
 
-$coupon_limit = $row_coupons['coupon_limit'];
+                                    <td></td>
 
-$coupon_used = $row_coupons['coupon_used'];
+                                    <td>
 
+                                        <a href="index.php?delete_coupon=<?php echo $coupon_id; ?>">
 
-$get_products = "select * from products where product_id='$product_id'";
+                                            <i class="fa fa-trash-o"></i> Delete
 
-$run_products = mysqli_query($con,$get_products);
+                                        </a>
 
-$row_products = mysqli_fetch_array($run_products);
+                                    </td>
 
-$product_title = $row_products['product_title'];
+                                    <td>
 
-$i++;
+                                        <a href="index.php?edit_coupon=<?php echo $coupon_id; ?>">
 
-?>
+                                            <i class="fa fa-pencil"></i> Edit
 
-<tr>
+                                        </a>
 
-<td><?php echo $i; ?></td>
+                                    </td>
 
-<td><?php echo $coupon_title; ?></td>
+                                </tr>
 
-<td><?php echo $product_title; ?></td>
+                            <?php } ?>
 
-<td><?php echo "$$coupon_price"; ?></td>
+                            </tbody><!-- tbody Ends -->
 
-<td><?php echo $coupon_code; ?></td>
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-<td><?php echo $coupon_limit; ?></td>
+                    </div><!-- table-responsive Ends -->
 
-<td><?php echo $coupon_used; ?></td>
+                </div><!-- panel-body Ends -->
 
-<td>
+            </div><!-- panel panel-default Ends -->
 
-<a href="index.php?delete_coupon=<?php echo $coupon_id; ?>">
+        </div><!-- col-lg-12 Ends -->
 
-<i class="fa fa-trash-o"></i> Delete
+    </div><!-- 2 row Ends -->
 
-</a>
-
-</td>
-
-<td>
-
-<a href="index.php?edit_coupon=<?php echo $coupon_id; ?>">
-
-<i class="fa fa-pencil"></i> Edit
-
-</a>
-
-</td>
-
-</tr>
-
-<?php } ?>
-
-</tbody><!-- tbody Ends -->
-
-</table><!-- table table-bordered table-hover table-striped Ends -->
-
-</div><!-- table-responsive Ends -->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-<?php } ?>
+    <?php  ?>

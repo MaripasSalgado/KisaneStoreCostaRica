@@ -1,559 +1,373 @@
 <?php
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+  echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 ?>
 
-<?php
+  <?php
+  //PL/SQL
 
-if(isset($_GET['edit_bundle'])){
+  ?>
 
-$edit_id = $_GET['edit_bundle'];
 
-$get_p = "select * from products where product_id='$edit_id'";
+  <!DOCTYPE html>
 
-$run_edit = mysqli_query($con,$get_p);
+  <html>
 
-$row_edit = mysqli_fetch_array($run_edit);
+  <head>
 
-$p_id = $row_edit['product_id'];
+    <title> Edit Bundle </title>
 
-$p_title = $row_edit['product_title'];
 
-$p_cat = $row_edit['p_cat_id'];
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: '#product_desc,#product_features'
+      });
+    </script>
 
-$cat = $row_edit['cat_id'];
+  </head>
 
-$m_id = $row_edit['manufacturer_id'];
+  <body>
 
-$p_image1 = $row_edit['product_img1'];
+    <div class="row"><!-- row Starts -->
 
-$p_image2 = $row_edit['product_img2'];
+      <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-$p_image3 = $row_edit['product_img3'];
+        <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-$new_p_image1 = $row_edit['product_img1'];
+          <li class="active">
 
-$new_p_image2 = $row_edit['product_img2'];
+            <i class="fa fa-dashboard"> </i> Dashboard / Edit Bundle
 
-$new_p_image3 = $row_edit['product_img3'];
+          </li>
 
-$p_price = $row_edit['product_price'];
+        </ol><!-- breadcrumb Ends -->
 
-$p_desc = $row_edit['product_desc'];
+      </div><!-- col-lg-12 Ends -->
 
-$p_keywords = $row_edit['product_keywords'];
+    </div><!-- row Ends -->
 
-$psp_price = $row_edit['product_psp_price'];
 
-$p_label = $row_edit['product_label'];
+    <div class="row"><!-- 2 row Starts -->
 
-$p_url = $row_edit['product_url'];
+      <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-$p_features = $row_edit['product_features'];
+        <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-$p_video = $row_edit['product_video'];
+          <div class="panel-heading"><!-- panel-heading Starts -->
 
-}
+            <h3 class="panel-title">
 
-$get_manufacturer = "select * from manufacturers where manufacturer_id='$m_id'";
+              <i class="fa fa-money fa-fw"></i> Edit Bundle
 
-$run_manufacturer = mysqli_query($con,$get_manufacturer);
+            </h3>
 
-$row_manfacturer = mysqli_fetch_array($run_manufacturer);
+          </div><!-- panel-heading Ends -->
 
-$manufacturer_id = $row_manfacturer['manufacturer_id'];
+          <div class="panel-body"><!-- panel-body Starts -->
 
-$manufacturer_title = $row_manfacturer['manufacturer_title'];
+            <form class="form-horizontal" method="post" enctype="multipart/form-data"><!-- form-horizontal Starts -->
 
+              <div class="form-group"><!-- form-group Starts -->
 
-$get_p_cat = "select * from product_categories where p_cat_id='$p_cat'";
+                <label class="col-md-3 control-label"> Bundle Title </label>
 
-$run_p_cat = mysqli_query($con,$get_p_cat);
+                <div class="col-md-6">
 
-$row_p_cat = mysqli_fetch_array($run_p_cat);
+                  <input type="text" name="product_title" class="form-control" required value="<?php echo $p_title; ?>">
 
-$p_cat_title = $row_p_cat['p_cat_title'];
+                </div>
 
-$get_cat = "select * from categories where cat_id='$cat'";
+              </div><!-- form-group Ends -->
 
-$run_cat = mysqli_query($con,$get_cat);
 
-$row_cat = mysqli_fetch_array($run_cat);
+              <div class="form-group"><!-- form-group Starts -->
 
-$cat_title = $row_cat['cat_title'];
+                <label class="col-md-3 control-label"> Bundle Url </label>
 
-?>
+                <div class="col-md-6">
 
+                  <input type="text" name="product_url" class="form-control" required value="<?php echo $p_url; ?>">
 
-<!DOCTYPE html>
+                  <br>
 
-<html>
+                  <p style="font-size:15px; font-weight:bold;">
 
-<head>
+                    Bundle Url Example : navy-blue-t-shirt
 
-<title> Edit Bundle </title>
+                  </p>
 
+                </div>
 
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script>tinymce.init({ selector:'#product_desc,#product_features' });</script>
+              </div><!-- form-group Ends -->
 
-</head>
+              <div class="form-group"><!-- form-group Starts -->
 
-<body>
+                <label class="col-md-3 control-label"> Select A Manufacturer </label>
 
-<div class="row"><!-- row Starts -->
+                <div class="col-md-6">
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+                  <select name="manufacturer" class="form-control">
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+                    <option value="<?php echo $manufacturer_id; ?>">
+                      <?php echo $manufacturer_title; ?>
+                    </option>
 
-<li class="active">
+                    <?php
+                    //PL/SQL
 
-<i class="fa fa-dashboard"> </i> Dashboard / Edit Bundle
+                    ?>
 
-</li>
+                  </select>
 
-</ol><!-- breadcrumb Ends -->
+                </div>
 
-</div><!-- col-lg-12 Ends -->
+              </div><!-- form-group Ends -->
 
-</div><!-- row Ends -->
+              <div class="form-group"><!-- form-group Starts -->
 
+                <label class="col-md-3 control-label"> Product Category </label>
 
-<div class="row"><!-- 2 row Starts --> 
+                <div class="col-md-6">
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+                  <select name="product_cat" class="form-control">
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+                    <option value="<?php echo $p_cat; ?>"> <?php echo $p_cat_title; ?> </option>
 
-<div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title">
+                    <?php
+                    //PL/SQL
 
-<i class="fa fa-money fa-fw"></i> Edit Bundle
+                    ?>
 
-</h3>
 
-</div><!-- panel-heading Ends -->
+                  </select>
 
-<div class="panel-body"><!-- panel-body Starts -->
+                </div>
 
-<form class="form-horizontal" method="post" enctype="multipart/form-data"><!-- form-horizontal Starts -->
+              </div><!-- form-group Ends -->
 
-<div class="form-group" ><!-- form-group Starts -->
+              <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label" > Bundle Title </label>
+                <label class="col-md-3 control-label"> Category </label>
 
-<div class="col-md-6" >
+                <div class="col-md-6">
 
-<input type="text" name="product_title" class="form-control" required value="<?php echo $p_title; ?>">
 
-</div>
+                  <select name="cat" class="form-control">
 
-</div><!-- form-group Ends -->
+                    <option value="<?php echo $cat; ?>"> <?php echo $cat_title; ?> </option>
 
+                    <?php
+                    //PL/SQL
+                    ?>
 
-<div class="form-group" ><!-- form-group Starts -->
 
-<label class="col-md-3 control-label" > Bundle Url </label>
+                  </select>
 
-<div class="col-md-6" >
+                </div>
 
-<input type="text" name="product_url" class="form-control" required value="<?php echo $p_url; ?>" >
+              </div><!-- form-group Ends -->
 
-<br>
+              <div class="form-group"><!-- form-group Starts -->
 
-<p style="font-size:15px; font-weight:bold;">
+                <label class="col-md-3 control-label"> Bundle Image 1 </label>
 
-Bundle Url Example : navy-blue-t-shirt
+                <div class="col-md-6">
 
-</p>
+                  <input type="file" name="product_img1" class="form-control">
+                  <br><img src="product_images/<?php echo $p_image1; ?>" width="70" height="70">
 
-</div>
+                </div>
 
-</div><!-- form-group Ends -->
+              </div><!-- form-group Ends -->
 
-<div class="form-group" ><!-- form-group Starts -->
+              <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label" > Select A Manufacturer </label>
+                <label class="col-md-3 control-label"> Bundle Image 2 </label>
 
-<div class="col-md-6" >
+                <div class="col-md-6">
 
-<select name="manufacturer" class="form-control">
+                  <input type="file" name="product_img2" class="form-control">
+                  <br><img src="product_images/<?php echo $p_image2; ?>" width="70" height="70">
 
-<option value="<?php echo $manufacturer_id; ?>">
-<?php echo $manufacturer_title; ?>
-</option>
+                </div>
 
-<?php
+              </div><!-- form-group Ends -->
 
-$get_manufacturer = "select * from manufacturers";
+              <div class="form-group"><!-- form-group Starts -->
 
-$run_manufacturer = mysqli_query($con,$get_manufacturer);
+                <label class="col-md-3 control-label"> Bundle Image 3 </label>
 
-while($row_manfacturer = mysqli_fetch_array($run_manufacturer)){
+                <div class="col-md-6">
 
-$manufacturer_id = $row_manfacturer['manufacturer_id'];
+                  <input type="file" name="product_img3" class="form-control">
+                  <br><img src="product_images/<?php echo $p_image3; ?>" width="70" height="70">
 
-$manufacturer_title = $row_manfacturer['manufacturer_title'];
+                </div>
 
-echo "
-<option value='$manufacturer_id'>
-$manufacturer_title
-</option>
-";
+              </div><!-- form-group Ends -->
 
-}
+              <div class="form-group"><!-- form-group Starts -->
 
-?>
+                <label class="col-md-3 control-label"> Bundle Price </label>
 
-</select>
+                <div class="col-md-6">
 
-</div>
+                  <input type="text" name="product_price" class="form-control" required value="<?php echo $p_price; ?>">
 
-</div><!-- form-group Ends -->
+                </div>
 
-<div class="form-group" ><!-- form-group Starts -->
+              </div><!-- form-group Ends -->
 
-<label class="col-md-3 control-label" > Product Category </label>
+              <div class="form-group"><!-- form-group Starts -->
 
-<div class="col-md-6" >
+                <label class="col-md-3 control-label"> Bundle Sale Price </label>
 
-<select name="product_cat" class="form-control" >
+                <div class="col-md-6">
 
-<option value="<?php echo $p_cat; ?>" > <?php echo $p_cat_title; ?> </option>
+                  <input type="text" name="psp_price" class="form-control" required value="<?php echo $psp_price; ?>">
 
+                </div>
 
-<?php
+              </div><!-- form-group Ends -->
 
-$get_p_cats = "select * from product_categories";
+              <div class="form-group"><!-- form-group Starts -->
 
-$run_p_cats = mysqli_query($con,$get_p_cats);
+                <label class="col-md-3 control-label"> Bundle Keywords </label>
 
-while ($row_p_cats=mysqli_fetch_array($run_p_cats)) {
+                <div class="col-md-6">
 
-$p_cat_id = $row_p_cats['p_cat_id'];
+                  <input type="text" name="product_keywords" class="form-control" required value="<?php echo $p_keywords; ?>">
 
-$p_cat_title = $row_p_cats['p_cat_title'];
+                </div>
 
-echo "<option value='$p_cat_id' >$p_cat_title</option>";
+              </div><!-- form-group Ends -->
 
-}
+              <div class="form-group"><!-- form-group Starts -->
 
+                <label class="col-md-3 control-label"> Bundle Tabs </label>
 
-?>
+                <div class="col-md-6">
 
+                  <ul class="nav nav-tabs"><!-- nav nav-tabs Starts -->
 
-</select>
+                    <li class="active">
 
-</div>
+                      <a data-toggle="tab" href="#description"> Bundle Description </a>
 
-</div><!-- form-group Ends -->
+                    </li>
 
-<div class="form-group" ><!-- form-group Starts -->
+                    <li>
 
-<label class="col-md-3 control-label" > Category </label>
+                      <a data-toggle="tab" href="#features"> Bundle Features </a>
 
-<div class="col-md-6" >
+                    </li>
 
+                    <li>
 
-<select name="cat" class="form-control" >
+                      <a data-toggle="tab" href="#video"> Sounds And Videos </a>
 
-<option value="<?php echo $cat; ?>" > <?php echo $cat_title; ?> </option>
+                    </li>
 
-<?php
+                  </ul><!-- nav nav-tabs Ends -->
 
-$get_cat = "select * from categories ";
+                  <div class="tab-content"><!-- tab-content Starts -->
 
-$run_cat = mysqli_query($con,$get_cat);
+                    <div id="description" class="tab-pane fade in active"><!-- description tab-pane fade in active Starts -->
 
-while ($row_cat=mysqli_fetch_array($run_cat)) {
+                      <br>
 
-$cat_id = $row_cat['cat_id'];
-
-$cat_title = $row_cat['cat_title'];
-
-echo "<option value='$cat_id'>$cat_title</option>";
-
-}
-
-?>
-
-
-</select>
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Image 1 </label>
-
-<div class="col-md-6" >
-
-<input type="file" name="product_img1" class="form-control" >
-<br><img src="product_images/<?php echo $p_image1; ?>" width="70" height="70" >
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Image 2 </label>
-
-<div class="col-md-6" >
-
-<input type="file" name="product_img2" class="form-control" >
-<br><img src="product_images/<?php echo $p_image2; ?>" width="70" height="70" >
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Image 3 </label>
-
-<div class="col-md-6" >
-
-<input type="file" name="product_img3" class="form-control" >
-<br><img src="product_images/<?php echo $p_image3; ?>" width="70" height="70" >
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Price </label>
-
-<div class="col-md-6" >
-
-<input type="text" name="product_price" class="form-control" required value="<?php echo $p_price; ?>" >
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Sale Price </label>
-
-<div class="col-md-6" >
-
-<input type="text" name="psp_price" class="form-control" required value="<?php echo $psp_price; ?>">
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Keywords </label>
-
-<div class="col-md-6" >
-
-<input type="text" name="product_keywords" class="form-control" required value="<?php echo $p_keywords; ?>" >
-
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group" ><!-- form-group Starts -->
-
-<label class="col-md-3 control-label" > Bundle Tabs </label>
-
-<div class="col-md-6" >
-
-<ul class="nav nav-tabs"><!-- nav nav-tabs Starts -->
-
-<li class="active">
-
-<a data-toggle="tab" href="#description"> Bundle Description </a>
-
-</li>
-
-<li>
-
-<a data-toggle="tab" href="#features"> Bundle Features </a>
-
-</li>
-
-<li>
-
-<a data-toggle="tab" href="#video"> Sounds And Videos </a>
-
-</li>
-
-</ul><!-- nav nav-tabs Ends -->
-
-<div class="tab-content"><!-- tab-content Starts -->
-
-<div id="description" class="tab-pane fade in active"><!-- description tab-pane fade in active Starts -->
-
-<br>
-
-<textarea name="product_desc" class="form-control" rows="15" id="product_desc">
+                      <textarea name="product_desc" class="form-control" rows="15" id="product_desc">
 
 <?php echo $p_desc; ?>
 
 </textarea>
 
-</div><!-- description tab-pane fade in active Ends -->
+                    </div><!-- description tab-pane fade in active Ends -->
 
 
-<div id="features" class="tab-pane fade in"><!-- features tab-pane fade in Starts -->
+                    <div id="features" class="tab-pane fade in"><!-- features tab-pane fade in Starts -->
 
-<br>
+                      <br>
 
-<textarea name="product_features" class="form-control" rows="15" id="product_features">
+                      <textarea name="product_features" class="form-control" rows="15" id="product_features">
 
 <?php echo $p_features; ?>
 
 </textarea>
 
-</div><!-- features tab-pane fade in Ends -->
+                    </div><!-- features tab-pane fade in Ends -->
 
 
-<div id="video" class="tab-pane fade in"><!-- video tab-pane fade in Starts -->
+                    <div id="video" class="tab-pane fade in"><!-- video tab-pane fade in Starts -->
 
-<br>
+                      <br>
 
-<textarea name="product_video" class="form-control" rows="15">
+                      <textarea name="product_video" class="form-control" rows="15">
 
 <?php echo $p_video; ?>
 
 </textarea>
 
-</div><!-- video tab-pane fade in Ends -->
+                    </div><!-- video tab-pane fade in Ends -->
 
 
-</div><!-- tab-content Ends -->
+                  </div><!-- tab-content Ends -->
 
-</div>
+                </div>
 
-</div><!-- form-group Ends -->
+              </div><!-- form-group Ends -->
 
-<div class="form-group" ><!-- form-group Starts -->
+              <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label" > Bundle Label </label>
+                <label class="col-md-3 control-label"> Bundle Label </label>
 
-<div class="col-md-6" >
+                <div class="col-md-6">
 
-<input type="text" name="product_label" class="form-control" required value="<?php echo $p_label; ?>">
+                  <input type="text" name="product_label" class="form-control" required value="<?php echo $p_label; ?>">
 
-</div>
+                </div>
 
-</div><!-- form-group Ends -->
+              </div><!-- form-group Ends -->
 
-<div class="form-group" ><!-- form-group Starts -->
+              <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label" ></label>
+                <label class="col-md-3 control-label"></label>
 
-<div class="col-md-6" >
+                <div class="col-md-6">
 
-<input type="submit" name="update" value="Update Bundle" class="btn btn-primary form-control" >
+                  <input type="submit" name="update" value="Update Bundle" class="btn btn-primary form-control">
 
-</div>
+                </div>
 
-</div><!-- form-group Ends -->
+              </div><!-- form-group Ends -->
 
-</form><!-- form-horizontal Ends -->
+            </form><!-- form-horizontal Ends -->
 
-</div><!-- panel-body Ends -->
+          </div><!-- panel-body Ends -->
 
-</div><!-- panel panel-default Ends -->
+        </div><!-- panel panel-default Ends -->
 
-</div><!-- col-lg-12 Ends -->
+      </div><!-- col-lg-12 Ends -->
 
-</div><!-- 2 row Ends --> 
-
-
+    </div><!-- 2 row Ends -->
 
 
-</body>
-
-</html>
-
-<?php
-
-if(isset($_POST['update'])){
-
-$product_title = $_POST['product_title'];
-$product_cat = $_POST['product_cat'];
-$cat = $_POST['cat'];
-$manufacturer_id = $_POST['manufacturer'];
-$product_price = $_POST['product_price'];
-$product_desc = $_POST['product_desc'];
-$product_keywords = $_POST['product_keywords'];
-
-$psp_price = $_POST['psp_price'];
-
-$product_label = $_POST['product_label'];
-
-$product_url = $_POST['product_url'];
-
-$product_features = $_POST['product_features'];
-
-$product_video = $_POST['product_video'];
-
-$status = "bundle";
-
-$product_img1 = $_FILES['product_img1']['name'];
-$product_img2 = $_FILES['product_img2']['name'];
-$product_img3 = $_FILES['product_img3']['name'];
-
-$temp_name1 = $_FILES['product_img1']['tmp_name'];
-$temp_name2 = $_FILES['product_img2']['tmp_name'];
-$temp_name3 = $_FILES['product_img3']['tmp_name'];
-
-if(empty($product_img1)){
-
-$product_img1 = $new_p_image1;
-
-}
 
 
-if(empty($product_img2)){
+  </body>
 
-$product_img2 = $new_p_image2;
+  </html>
 
-}
+  <?php
 
-if(empty($product_img3)){
+  //PL/SQL
 
-$product_img3 = $new_p_image3;
-
-}
-
-
-move_uploaded_file($temp_name1,"product_images/$product_img1");
-move_uploaded_file($temp_name2,"product_images/$product_img2");
-move_uploaded_file($temp_name3,"product_images/$product_img3");
-
-$update_product = "update products set p_cat_id='$product_cat',cat_id='$cat',manufacturer_id='$manufacturer_id',date=NOW(),product_title='$product_title',product_url='$product_url',product_img1='$product_img1',product_img2='$product_img2',product_img3='$product_img3',product_price='$product_price',product_psp_price='$psp_price',product_desc='$product_desc',product_features='$product_features',product_video='$product_video',product_keywords='$product_keywords',product_label='$product_label',status='$status' where product_id='$p_id'";
-
-$run_product = mysqli_query($con,$update_product);
-
-if($run_product){
-
-echo "<script> alert('Bundle has been updated successfully') </script>";
-
-echo "<script>window.open('index.php?view_bundles','_self')</script>";
-
-}
-
-}
-
-?>
+  ?>
 
 <?php } ?>

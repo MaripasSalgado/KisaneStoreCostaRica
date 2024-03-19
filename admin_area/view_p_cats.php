@@ -1,138 +1,122 @@
 <?php
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 ?>
 
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / View Products Categories
+                    <i class="fa fa-dashboard"></i> Dashboard / View Products Categories
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i class="fa fa-money fa-fw"> </i> View Products Categories
+                        <i class="fa fa-money fa-fw"> </i> View Products Categories
 
-</h3><!-- panel-title Ends -->
+                    </h3><!-- panel-title Ends -->
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive"><!-- table-responsive Starts -->
+                    <div class="table-responsive"><!-- table-responsive Starts -->
 
-<table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>#</th>
-<th>Name</th>
-<th>Delete</th>
-<th>Edit</th>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
 
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
 
-$i=0;
+                                //PL/SQL
 
-$get_p_cats = "select * from product_categories";
+                                ?>
 
-$run_p_cats = mysqli_query($con,$get_p_cats);
+                                <tr>
 
-while($row_p_cats = mysqli_fetch_array($run_p_cats)){
+                                    <td> <?php echo $i; ?> </td>
 
-$p_cat_id = $row_p_cats['p_cat_id'];
+                                    <td> <?php echo $p_cat_title; ?> </td>
 
-$p_cat_title = $row_p_cats['p_cat_title'];
 
+                                    <td>
 
-$i++;
+                                        <a href="index.php?delete_p_cat=<?php echo $p_cat_id; ?>">
 
-?>
+                                            <i class="fa fa-trash-o"></i> Delete
 
-<tr>
+                                        </a>
 
-<td> <?php echo $i; ?> </td>
+                                    </td>
 
-<td> <?php echo $p_cat_title; ?> </td>
+                                    <td>
 
+                                        <a href="index.php?edit_p_cat=<?php echo $p_cat_id; ?>">
 
-<td> 
+                                            <i class="fa fa-pencil"></i> Edit
 
-<a href="index.php?delete_p_cat=<?php echo $p_cat_id; ?>">
+                                        </a>
 
-<i class="fa fa-trash-o"></i> Delete
+                                    </td>
 
-</a>
 
-</td>
+                                </tr>
 
-<td> 
+                            <?php } ?>
 
-<a href="index.php?edit_p_cat=<?php echo $p_cat_id; ?>">
+                            </tbody><!-- tbody Ends -->
 
-<i class="fa fa-pencil"></i> Edit
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-</a>
+                    </div><!-- table-responsive Ends -->
 
-</td>
+                </div><!-- panel-body Ends -->
 
+            </div><!-- panel panel-default Ends -->
 
-</tr>
+        </div><!-- col-lg-12 Ends -->
 
-<?php } ?>
+    </div><!-- 2 row Ends -->
 
-</tbody><!-- tbody Ends -->
 
-</table><!-- table table-bordered table-hover table-striped Ends -->
 
-</div><!-- table-responsive Ends -->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-
-
-<?php } ?>
+    <?php ?>

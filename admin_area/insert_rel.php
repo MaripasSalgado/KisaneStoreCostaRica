@@ -1,185 +1,146 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / Insert Relation
+                    <i class="fa fa-dashboard"></i> Dashboard / Insert Relation
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i  class="fa fa-money fa-fw"></i> Insert Relation
+                        <i class="fa fa-money fa-fw"></i> Insert Relation
 
-</h3><!-- panel-title Ends -->
+                    </h3><!-- panel-title Ends -->
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<form class="form-horizontal" action="" method="post"><!-- form-horizontal Starts -->
+                    <form class="form-horizontal" action="" method="post"><!-- form-horizontal Starts -->
 
-<div class="form-group"><!-- form-group Starts -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label"> Relation Title  </label>
+                            <label class="col-md-3 control-label"> Relation Title </label>
 
-<div class="col-md-6">
+                            <div class="col-md-6">
 
-<input type="text" name="rel_title" class="form-control">
+                                <input type="text" name="rel_title" class="form-control">
 
-</div>
+                            </div>
 
-</div><!-- form-group Ends -->
+                        </div><!-- form-group Ends -->
 
-<div class="form-group"><!-- form-group Starts -->
+                        <div class="form-group"><!-- form-group Starts -->
 
-<label class="col-md-3 control-label"> Select Product  </label>
+                            <label class="col-md-3 control-label"> Select Product </label>
 
-<div class="col-md-6">
+                            <div class="col-md-6">
 
-<select name="product_id" class="form-control">
+                                <select name="product_id" class="form-control">
 
-<option> Select Product </option>
+                                    <option> Select Product </option>
 
-<?php
+                                <?php
 
-$get_p = "select * from products where status='product'";
+                                //PL/SQL
 
-$run_p = mysqli_query($con,$get_p);
+                            }
 
-while($row_p = mysqli_fetch_array($run_p)){
+                                ?>
 
-$p_id = $row_p['product_id'];
+                                </select>
 
-$p_title = $row_p['product_title'];
+                            </div>
 
-echo "<option value='$p_id'> $p_title </option>";
+                        </div><!-- form-group Ends -->
 
-}
+                        <div class="form-group"><!-- form-group Starts -->
 
-?>
+                            <label class="col-md-3 control-label"> Select Bundle </label>
 
-</select>
+                            <div class="col-md-6">
 
-</div>
+                                <select name="bundle_id" class="form-control">
 
-</div><!-- form-group Ends -->
+                                    <option> Select Bundle </option>
 
-<div class="form-group"><!-- form-group Starts -->
+                                    <?php
 
-<label class="col-md-3 control-label"> Select Bundle  </label>
+                                    //PL/SQL
 
-<div class="col-md-6">
 
-<select name="bundle_id" class="form-control">
 
-<option> Select Bundle </option>
+                                    ?>
 
-<?php
+                                </select>
 
-$get_p = "select * from products where status='bundle'";
+                            </div>
 
-$run_p = mysqli_query($con,$get_p);
+                        </div><!-- form-group Ends -->
 
-while($row_p = mysqli_fetch_array($run_p)){
 
-$p_id = $row_p['product_id'];
+                        <div class="form-group"><!-- form-group Starts -->
 
-$p_title = $row_p['product_title'];
+                            <label class="col-md-3 control-label"> </label>
 
-echo "<option value='$p_id'> $p_title </option>";
+                            <div class="col-md-6">
 
-}
+                                <input type="submit" name="submit" class="btn btn-primary form-control" value="Insert Relation">
 
-?>
+                            </div>
 
-</select>
+                        </div><!-- form-group Ends -->
 
-</div>
+                    </form><!-- form-horizontal Ends -->
 
-</div><!-- form-group Ends -->
+                </div><!-- panel-body Ends -->
 
+            </div><!-- panel panel-default Ends -->
 
-<div class="form-group"><!-- form-group Starts -->
+        </div><!-- col-lg-12 Ends -->
 
-<label class="col-md-3 control-label"> </label>
+    </div><!-- 2 row Ends -->
 
-<div class="col-md-6">
 
-<input type="submit" name="submit" class="btn btn-primary form-control" value="Insert Relation">
+    <?php
+    //PL/SQL
 
-</div>
+    echo "<script>alert('New Relation Has Been Inserted')</script>";
 
-</div><!-- form-group Ends -->
+    echo "<script>window.open('index.php?view_rel','_self')</script>";
 
-</form><!-- form-horizontal Ends -->
 
-</div><!-- panel-body Ends -->
+    ?>
 
-</div><!-- panel panel-default Ends -->
 
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-
-<?php
-
-if(isset($_POST['submit'])){
-
-$rel_title = $_POST['rel_title'];
-
-$product_id = $_POST['product_id'];
-
-$bundle_id = $_POST['bundle_id'];
-
-$insert_rel = "insert into bundle_product_relation (rel_title,product_id,bundle_id) values ('$rel_title','$product_id','$bundle_id')";
-
-$run_rel = mysqli_query($con,$insert_rel);
-
-if($run_rel){
-
-echo "<script>alert('New Relation Has Been Inserted')</script>";
-
-echo "<script>window.open('index.php?view_rel','_self')</script>";
-
-}
-
-}
-
-?>
-
-
-<?php } ?>
+    <?php  ?>

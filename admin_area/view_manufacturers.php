@@ -2,131 +2,114 @@
 
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 ?>
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts -->
+            <ol class="breadcrumb"><!-- breadcrumb Starts -->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / View Manufacturers
+                    <i class="fa fa-dashboard"></i> Dashboard / View Manufacturers
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends -->
+            </ol><!-- breadcrumb Ends -->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title">
+                    <h3 class="panel-title">
 
-<i class="fa fa-money fa-fw"></i> View Manufacturers
+                        <i class="fa fa-money fa-fw"></i> View Manufacturers
 
-</h3>
+                    </h3>
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive"><!-- table-responsive Starts --->
+                    <div class="table-responsive"><!-- table-responsive Starts --->
 
-<table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>#</th>
-<th>Manufacturer</th>
-<th>Delete</th>
-<th>Edit</th>
+                                    <th>#</th>
+                                    <th>Manufacturer</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
+                                //PL/SQL
+                                ?>
 
-$i = 0;
+                                <tr>
 
-$get_manufacturers = "select * from manufacturers";
+                                    <td><?php echo $i; ?></td>
 
-$run_manufacturers = mysqli_query($con,$get_manufacturers);
+                                    <td><?php echo $manufacturer_title; ?></td>
 
-while($row_manufacturers = mysqli_fetch_array($run_manufacturers)){
+                                    <td>
 
-$manufacturer_id = $row_manufacturers['manufacturer_id'];
+                                        <a href="index.php?delete_manufacturer=<?php echo $manufacturer_id; ?>">
 
-$manufacturer_title = $row_manufacturers['manufacturer_title'];
+                                            <i class="fa fa-trash-o"></i> Delete
 
-$i++;
+                                        </a>
 
-?>
+                                    </td>
 
-<tr>
+                                    <td>
 
-<td><?php echo $i; ?></td>
+                                        <a href="index.php?edit_manufacturer=<?php echo $manufacturer_id; ?>">
 
-<td><?php echo $manufacturer_title; ?></td>
+                                            <i class="fa fa-pencil"></i> Edit
 
-<td>
+                                        </a>
 
-<a href="index.php?delete_manufacturer=<?php echo $manufacturer_id; ?>">
+                                    </td>
 
-<i class="fa fa-trash-o"></i> Delete
+                                </tr>
 
-</a>
+                            <?php } ?>
 
-</td>
+                            </tbody><!-- tbody Ends -->
 
-<td>
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-<a href="index.php?edit_manufacturer=<?php echo $manufacturer_id; ?>">
+                    </div><!-- table-responsive Ends --->
 
-<i class="fa fa-pencil"></i> Edit
+                </div><!-- panel-body Ends -->
 
-</a>
+            </div><!-- panel panel-default Ends -->
 
-</td>
+        </div><!-- col-lg-12 Ends -->
 
-</tr>
+    </div><!-- 2 row Ends -->
 
-<?php } ?>
-
-</tbody><!-- tbody Ends -->
-
-</table><!-- table table-bordered table-hover table-striped Ends -->
-
-</div><!-- table-responsive Ends --->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-<?php } ?>
+    <?php  ?>

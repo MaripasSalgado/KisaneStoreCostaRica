@@ -1,211 +1,148 @@
 <?php
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
-
-}
-
-else {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
 
 ?>
 
-<div class="row"><!-- 1 row Starts -->
+    <div class="row"><!-- 1 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<ol class="breadcrumb"><!-- breadcrumb Starts  --->
+            <ol class="breadcrumb"><!-- breadcrumb Starts  --->
 
-<li class="active">
+                <li class="active">
 
-<i class="fa fa-dashboard"></i> Dashboard / View Orders
+                    <i class="fa fa-dashboard"></i> Dashboard / View Orders
 
-</li>
+                </li>
 
-</ol><!-- breadcrumb Ends  --->
+            </ol><!-- breadcrumb Ends  --->
 
-</div><!-- col-lg-12 Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- 1 row Ends -->
+    </div><!-- 1 row Ends -->
 
 
-<div class="row"><!-- 2 row Starts -->
+    <div class="row"><!-- 2 row Starts -->
 
-<div class="col-lg-12"><!-- col-lg-12 Starts -->
+        <div class="col-lg-12"><!-- col-lg-12 Starts -->
 
-<div class="panel panel-default"><!-- panel panel-default Starts -->
+            <div class="panel panel-default"><!-- panel panel-default Starts -->
 
-<div class="panel-heading"><!-- panel-heading Starts -->
+                <div class="panel-heading"><!-- panel-heading Starts -->
 
-<h3 class="panel-title"><!-- panel-title Starts -->
+                    <h3 class="panel-title"><!-- panel-title Starts -->
 
-<i class="fa fa-money fa-fw"></i> View Orders
+                        <i class="fa fa-money fa-fw"></i> View Orders
 
-</h3><!-- panel-title Ends -->
+                    </h3><!-- panel-title Ends -->
 
-</div><!-- panel-heading Ends -->
+                </div><!-- panel-heading Ends -->
 
-<div class="panel-body"><!-- panel-body Starts -->
+                <div class="panel-body"><!-- panel-body Starts -->
 
-<div class="table-responsive"><!-- table-responsive Starts -->
+                    <div class="table-responsive"><!-- table-responsive Starts -->
 
-<table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
+                        <table class="table table-bordered table-hover table-striped"><!-- table table-bordered table-hover table-striped Starts -->
 
-<thead><!-- thead Starts -->
+                            <thead><!-- thead Starts -->
 
-<tr>
+                                <tr>
 
-<th>#</th>
-<th>Customer</th>
-<th>Invoice</th>
-<th>Product</th>
-<th>Qty</th>
-<th>Size</th>
-<th>Order Date</th>
-<th>Total Amount</th>
-<th>Status</th>
-<th>Action</th>
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>Invoice</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Size</th>
+                                    <th>Order Date</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
 
 
-</tr>
+                                </tr>
 
-</thead><!-- thead Ends -->
+                            </thead><!-- thead Ends -->
 
 
-<tbody><!-- tbody Starts -->
+                            <tbody><!-- tbody Starts -->
 
-<?php
+                                <?php
 
-$i = 0;
+                                //PL/SQL
 
-$get_orders = "select * from pending_orders";
+                                ?>
 
-$run_orders = mysqli_query($con,$get_orders);
+                                <tr>
 
-while ($row_orders = mysqli_fetch_array($run_orders)) {
+                                    <td><?php echo $i; ?></td>
 
-$order_id = $row_orders['order_id'];
+                                    <td>
+                                        <?php
+                                        //PL/SQL
 
-$c_id = $row_orders['customer_id'];
+                                        ?>
+                                    </td>
 
-$invoice_no = $row_orders['invoice_no'];
+                                    <td bgcolor="orange"><?php echo $invoice_no; ?></td>
 
-$product_id = $row_orders['product_id'];
+                                    <td><?php //PL/SQL 
+                                        ?></td>
 
-$qty = $row_orders['qty'];
+                                    <td><?php //PL/SQL
+                                        ?></td>
 
-$size = $row_orders['size'];
+                                    <td><?php //PL/SQL 
+                                        ?></td>
 
-$order_status = $row_orders['order_status'];
+                                    <td>
+                                        <?php
+                                        //PL/SQL
+                                        ?>
+                                    </td>
 
-$get_products = "select * from products where product_id='$product_id'";
+                                    <td>$<?php echo $due_amount; ?></td>
 
-$run_products = mysqli_query($con,$get_products);
+                                    <td>
+                                        //PL/SQL
 
-$row_products = mysqli_fetch_array($run_products);
+                                        ?>
+                                    </td>
 
-$product_title = $row_products['product_title'];
+                                    <td>
 
-$i++;
+                                        <a href="index.php?order_delete=<?php echo $order_id; ?>">
 
-?>
+                                            <i class="fa fa-trash-o"></i> Delete
 
-<tr>
+                                        </a>
 
-<td><?php echo $i; ?></td>
+                                    </td>
 
-<td>
-<?php 
 
-$get_customer = "select * from customers where customer_id='$c_id'";
+                                </tr>
 
-$run_customer = mysqli_query($con,$get_customer);
+                            <?php } ?>
 
-$row_customer = mysqli_fetch_array($run_customer);
+                            </tbody><!-- tbody Ends -->
 
-$customer_email = $row_customer['customer_email'];
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-echo $customer_email;
+                    </div><!-- table-responsive Ends -->
 
- ?>
- </td>
+                </div><!-- panel-body Ends -->
 
-<td bgcolor="orange" ><?php echo $invoice_no; ?></td>
+            </div><!-- panel panel-default Ends -->
 
-<td><?php echo $product_title; ?></td>
+        </div><!-- col-lg-12 Ends -->
 
-<td><?php echo $qty; ?></td>
+    </div><!-- 2 row Ends -->
 
-<td><?php echo $size; ?></td>
 
-<td>
-<?php
-
-$get_customer_order = "select * from customer_orders where order_id='$order_id'";
-
-$run_customer_order = mysqli_query($con,$get_customer_order);
-
-$row_customer_order = mysqli_fetch_array($run_customer_order);
-
-$order_date = $row_customer_order['order_date'];
-
-$due_amount = $row_customer_order['due_amount'];
-
-echo $order_date;
-
-?>
-</td>
-
-<td>$<?php echo $due_amount; ?></td>
-
-<td>
-<?php
-
-if($order_status=='pending'){
-
-echo $order_status='<div style="color:red;">Pending</div>';
-
-}
-else{
-
-echo $order_status='Completed';
-
-}
-
-
-?>
-</td>
-
-<td>
-
-<a href="index.php?order_delete=<?php echo $order_id; ?>" >
-
-<i class="fa fa-trash-o" ></i> Delete
-
-</a>
-
-</td>
-
-
-</tr>
-
-<?php } ?>
-
-</tbody><!-- tbody Ends -->
-
-</table><!-- table table-bordered table-hover table-striped Ends -->
-
-</div><!-- table-responsive Ends -->
-
-</div><!-- panel-body Ends -->
-
-</div><!-- panel panel-default Ends -->
-
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
-
-
-<?php } ?>
+    <?php  ?>

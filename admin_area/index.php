@@ -15,69 +15,7 @@ if (!isset($_SESSION['admin_email'])) {
 ?>
 
     <?php
-
-    $admin_session = $_SESSION['admin_email'];
-
-    $get_admin = "select * from admins  where admin_email='$admin_session'";
-
-    $run_admin = mysqli_query($con, $get_admin);
-
-    $row_admin = mysqli_fetch_array($run_admin);
-
-    $admin_id = $row_admin['admin_id'];
-
-    $admin_name = $row_admin['admin_name'];
-
-    $admin_email = $row_admin['admin_email'];
-
-    $admin_image = $row_admin['admin_image'];
-
-    $admin_country = $row_admin['admin_country'];
-
-    $admin_job = $row_admin['admin_job'];
-
-    $admin_contact = $row_admin['admin_contact'];
-
-    $admin_about = $row_admin['admin_about'];
-
-
-    $get_products = "SELECT * FROM products";
-    $run_products = mysqli_query($con, $get_products);
-    $count_products = mysqli_num_rows($run_products);
-
-    $get_customers = "SELECT * FROM customers";
-    $run_customers = mysqli_query($con, $get_customers);
-    $count_customers = mysqli_num_rows($run_customers);
-
-    $get_p_categories = "SELECT * FROM product_categories";
-    $run_p_categories = mysqli_query($con, $get_p_categories);
-    $count_p_categories = mysqli_num_rows($run_p_categories);
-
-
-    $get_total_orders = "SELECT * FROM customer_orders";
-    $run_total_orders = mysqli_query($con, $get_total_orders);
-    $count_total_orders = mysqli_num_rows($run_total_orders);
-
-
-    $get_pending_orders = "SELECT * FROM customer_orders WHERE order_status='pending'";
-    $run_pending_orders = mysqli_query($con, $get_pending_orders);
-    $count_pending_orders = mysqli_num_rows($run_pending_orders);
-
-    $get_completed_orders = "SELECT * FROM customer_orders WHERE order_status='Complete'";
-    $run_completed_orders = mysqli_query($con, $get_completed_orders);
-    $count_completed_orders = mysqli_num_rows($run_completed_orders);
-
-
-    $get_total_earnings = "SELECT SUM( due_amount) as Total FROM customer_orders WHERE order_status = 'Complete'";
-    $run_total_earnings = mysqli_query($con, $get_total_earnings);
-    $row = mysqli_fetch_assoc($run_total_earnings);
-    $count_total_earnings = $row['Total'];
-
-
-    $get_coupons = "SELECT * FROM coupons";
-    $run_coupons = mysqli_query($con, $get_coupons);
-    $count_coupons = mysqli_num_rows($run_coupons);
-
+    //PL/SQL
 
     ?>
 

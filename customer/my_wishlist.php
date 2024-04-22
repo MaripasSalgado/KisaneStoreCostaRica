@@ -1,61 +1,66 @@
-<center><!-- center Starts -->
+<?php
+
+session_start();
+include("includes/db.php");
+include("functions/functions.php");
+
+
+$customer_session = $_SESSION['customer_email'];
+
+// Llamada al procedimiento almacenado para obtener el ID del cliente
+$procedure_customer_id = oci_parse($db, "BEGIN get_customer_id(:customer_email, :customer_id); END;");
+oci_bind_by_name($procedure_customer_id, ":customer_email", $customer_session);
+oci_bind_by_name($procedure_customer_id, ":customer_id", $customer_id,  SQLT_INT);
+oci_execute($procedure_customer_id);
+
+$i = 0;
+
+while ($row_wishlist = oci_fetch_array($customer_wishlist, OCI_ASSOC + OCI_RETURN_NULLS)) {
+
+    $wishlist_id = $row_wishlist['WISHLIST_ID'];
+    $product_id = $row_wishlist['PRODUCT_ID'];
+
+    // Llamada al procedimiento almacenado para obtener la información del producto
+    $procedure_product_info = oci_parse($db, "BEGIN get_product_info(:product_id, :product_title, :product_url); END;");
+    oci_bind_by_name($procedure_product_info, ":product_id", $product_id);
+    oci_bind_by_name($procedure_product_info, ":product_title", $product_title,  SQLT_CHR);
+    oci_bind_by_name($procedure_product_info, ":product_url", $product_url,  SQLT_CHR);
+    oci_execute($procedure_product_info);
+
+    $i++;
+
+?>
 
     <h1> My Wishlist </h1>
 
     <p class="lead"> Your all Wishlist Products on one place. </p>
 
-</center><!-- center Ends -->
+    </center><!-- center Ends -->
 
-<hr>
+    <hr>
 
-<div class="table-responsive"><!-- table-responsive Starts -->
+    <div class="table-responsive"><!-- table-responsive Starts -->
 
-    <table class="table table-bordered table-hover"><!-- table table-bordered table-hover Starts -->
+        <table class="table table-bordered table-hover"><!-- table table-bordered table-hover Starts -->
 
-        <thead>
+            <thead>
 
-            <tr>
+                <tr>
 
-                <th> Wishlist No: </th>
+                    <th> Wishlist No: </th>
 
-                <th> Wishlist Product </th>
+                    <th> Wishlist Product </th>
 
-                <th> Delete Wishlist </th>
+                    <th> Delete Wishlist </th>
 
-            </tr>
+                </tr>
 
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-            <?php
-            // Obtener el ID del cliente por su correo electrónico
-            $customer_email = $_SESSION['customer_email'];
-            $stmt_customer_id = oci_parse($con, 'BEGIN get_customer_id(:p_customer_email, :p_customer_id); END;');
-            oci_bind_by_name($stmt_customer_id, ':p_customer_email', $customer_email);
-            oci_bind_by_name($stmt_customer_id, ':p_customer_id', $customer_id);
-            oci_execute($stmt_customer_id);
 
-            $i = 0;
 
-            // Obtener los productos de la lista de deseos del cliente
-            $stmt_wishlist = oci_parse($con, 'BEGIN get_customer_wishlist(:p_customer_id, :p_wishlist_id, :p_product_id); END;');
-            oci_bind_by_name($stmt_wishlist, ':p_customer_id', $customer_id);
-            oci_bind_array_by_name($stmt_wishlist, ':p_wishlist_id', $wishlist_ids, 100, -1, SQLT_INT);
-            oci_bind_array_by_name($stmt_wishlist, ':p_product_id', $product_ids, 100, -1, SQLT_INT);
-            oci_execute($stmt_wishlist);
-
-            foreach ($wishlist_ids as $key => $wishlist_id) {
-                $product_id = $product_ids[$key];
-                $stmt_product = oci_parse($con, 'BEGIN get_product_details(:p_product_id, :p_product_title, :p_product_url, :p_product_img1); END;');
-                oci_bind_by_name($stmt_product, ':p_product_id', $product_id);
-                oci_bind_by_name($stmt_product, ':p_product_title', $product_title);
-                oci_bind_by_name($stmt_product, ':p_product_url', $product_url);
-                oci_bind_by_name($stmt_product, ':p_product_img1', $product_img1);
-                oci_execute($stmt_product);
-
-                $i++;
-            ?>
 
                 <tr>
 
@@ -89,8 +94,8 @@
 
             <?php } ?>
 
-        </tbody>
+            </tbody>
 
-    </table><!-- table table-bordered table-hover Ends -->
+        </table><!-- table table-bordered table-hover Ends -->
 
-</div><!-- table-responsive Ends -->
+    </div><!-- table-responsive Ends -->

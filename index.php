@@ -4,6 +4,7 @@ session_start();
 
 include("includes/db.php");
 include("includes/header.php");
+include("functions/functions.php");
 include("includes/main.php");
 
 ?>
@@ -12,7 +13,7 @@ include("includes/main.php");
 <!-- Cover -->
 <main>
   <div class="hero">
-    <a href="#" class="btn1">View all products
+    <a href="/FinalProyect/KisaneStoreCostaRica/shop.php" class="btn1">View all products
     </a>
   </div>
   <!-- Main -->
@@ -29,42 +30,7 @@ include("includes/main.php");
 
       <?php
 
-      $sql = "BEGIN
-          get_products_cursor(:cursor);
-        END;";
-      $stmt = oci_parse($conn, $sql);
-
-      // Bind del cursor de salida
-      $cursor = oci_new_cursor($conn);
-      oci_bind_by_name($stmt, ':cursor', $cursor, -1, OCI_B_CURSOR);
-
-      // Ejecutar el procedimiento almacenado
-      oci_execute($stmt);
-
-      // Recorrer el cursor y mostrar los datos
-      while ($row = oci_fetch_array($cursor, OCI_ASSOC + OCI_RETURN_NULLS)) {
-        echo "<div class='col-md-4 col-sm-6 single'>";
-        echo "  <div class='product'>";
-        echo "    <a href='details.php?pro_id=" . $row['PRODUCT_ID'] . "'>";
-        echo "      <img src='admin_area/product_images/" . $row['PRODUCT_IMG1'] . "' class='img-responsive'>";
-        echo "    </a>";
-        echo "    <div class='text'>";
-        echo "      <h3><a href='details.php?pro_id=" . $row['PRODUCT_ID'] . "'>" . $row['PRODUCT_TITLE'] . "</a></h3>";
-        echo "      <p class='price'>$ " . $row['PRODUCT_PRICE'] . "</p>";
-        echo "      <p class='buttons'>";
-        echo "        <a href='details.php?pro_id=" . $row['PRODUCT_ID'] . "' class='btn btn-default'>View details</a>";
-        echo "        <a href='details.php?pro_id=" . $row['PRODUCT_ID'] . "' class='btn btn-primary'>";
-        echo "          <i class='fa fa-shopping-cart'></i> Add to cart";
-        echo "        </a>";
-        echo "      </p>";
-        echo "    </div>";
-        echo "  </div>";
-        echo "</div>";
-      }
-
-      // Liberar recursos
-      oci_free_statement($stmt);
-      oci_free_statement($cursor);
+      getPro();
 
       ?>
 
@@ -85,10 +51,10 @@ include("includes/main.php");
               <a href="cart.php" class="footer-nav__link">View cart</a>
             </li>
             <li class="footer-nav__item">
-              <a href="#" class="footer-nav__link">Track Order</a>
+              <a href="/FinalProyect/KisaneStoreCostaRica/customer/my_account.php?my_orders" class="footer-nav__link">Track Order</a>
             </li>
             <li class="footer-nav__item">
-              <a href="#" class="footer-nav__link">Update information</a>
+              <a href="/FinalProyect/KisaneStoreCostaRica/customer/my_account.php?edit_account" class="footer-nav__link">Update information</a>
             </li>
           </ul>
         </div>
@@ -97,17 +63,16 @@ include("includes/main.php");
         <div class="footer-nav__col footer-nav__col--contacts">
           <div class="footer-nav__heading">Contact details</div>
           <address class="address">
-            Head Office: KisaneStoreCR.<br>
+            Head Office: Kisane Store CostaRica.<br>
             San Jose Costa Rica
-          </address>
-          <div class="phone">
-            Telephone:
-            <a class="phone__number" href="tel:0123456789">0123-456-789</a>
-          </div>
-          <div class="email">
-            Email:
-            <a href="mailto:support@KisaneStoreCR.com" class="email__addr">support@KisaneStoreCR.com</a>
-          </div>
+          </address <div class="phone">
+          WhatsApp:
+          <a class="phone__number" href="tel:50663136515">50663136515</a>
+        </div>
+        <div class="instagram">
+          Instagram:
+          <a href="https://www.instagram.com/crkisanestore__?igsh=ZmhhMWtxY2NvN3dn" class="email__addr">crkisanestore__
+          </a>
         </div>
 
       </div>
@@ -117,7 +82,7 @@ include("includes/main.php");
       <div class="container clearfix">
 
         <div class="copyright">
-          &copy; <?php echo date("Y"); ?> KisaneStoreCR &trade;
+          &copy; <?php echo date("Y"); ?> Kisane Store Costa Rica-Ecommerce&trade;
         </div>
 
       </div>

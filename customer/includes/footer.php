@@ -12,13 +12,13 @@
 					</li>
 
 					<li class="footer-nav__item">
-						<a href="#" class="footer-nav__link">View cart</a>
+						<a href="/FinalProyect/KisaneStoreCostaRica/cart.php" class="footer-nav__link">View cart</a>
 					</li>
 					<li class="footer-nav__item">
-						<a href="#" class="footer-nav__link">Track Order</a>
+						<a href="/FinalProyect/KisaneStoreCostaRica/customer/my_account.php?my_orders" class="footer-nav__link">Track Order</a>
 					</li>
 					<li class="footer-nav__item">
-						<a href="#" class="footer-nav__link">Update information</a>
+						<a href="/FinalProyect/KisaneStoreCostaRica/customer/my_account.php?edit_account" class="footer-nav__link">Update information</a>
 					</li>
 
 				</ul>
@@ -28,27 +28,27 @@
 			<div class="footer-nav__col footer-nav__col--contacts">
 				<div class="footer-nav__heading">Contact details</div>
 				<address class="address">
-					Head Office: KisaneStoreCR.<br>
+					Head Office: Kisane Store CostaRica.<br>
 					San Jose Costa Rica
-				</address>
-				<div class="phone">
-					Telephone:
-					<a class="phone__number" href="tel:0123456789">0123-456-789</a>
-				</div>
-				<div class="email">
-					Email:
-					<a href="mailto:support@KisaneStoreCR.com" class="email__addr">support@KisaneStoreCR.com</a>
-				</div>
+				</address <div class="phone">
+				WhatsApp:
+				<a class="phone__number" href="tel:50663136515">50663136515</a>
 			</div>
-
+			<div class="instagram">
+				Instagram:
+				<a href="https://www.instagram.com/crkisanestore__?igsh=ZmhhMWtxY2NvN3dn" class="email__addr">crkisanestore__
+				</a>
+			</div>
 		</div>
+
+	</div>
 	</div>
 
 	<div class="page-footer__subline">
 		<div class="container clearfix">
 
 			<div class="copyright">
-				&copy; <?php echo date("Y"); ?> KisaneStoreCR&trade;
+				&copy; <?php echo date("Y"); ?> Kisane Store CostaRica&trade;
 			</div>
 
 		</div>

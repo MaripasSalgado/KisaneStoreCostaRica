@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['customer_email'])) {
@@ -9,121 +8,71 @@ if (!isset($_SESSION['customer_email'])) {
   include("../includes/header.php");
   include("functions/functions.php");
   include("includes/main.php");
-
-  $c_email = $_SESSION['customer_email'];
-
-  // Conexión a la base de datos Oracle
-  // Datos de conexión
-  $user = 'HR';
-  $pass = '123456';
-  $host = 'localhost';
-  $port = '1521';
-  $sid = 'orcl';
-
-  // Construye la cadena de conexión
-  $tns = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port)))(CONNECT_DATA=(SID=$sid)))";
-  $db_conn = oci_connect($user, $pass, $tns);
-
-  // Verifica si la conexión fue exitosa
-  if (!$db_conn) {
-    $error = oci_error();
-    echo "Error de conexión: " . $error['message'];
-  } else {
-    echo "Conexión exitosa a la base de datos Oracle.";
-  }
-  $stmt = oci_parse($con, 'BEGIN get_customer_details(:p_email, :p_customer_id, :p_customer_name, :p_customer_country, :p_customer_city, :p_customer_contact, :p_customer_address, :p_customer_image); END;');
-  oci_bind_by_name($stmt, ':p_email', $c_email);
-  oci_bind_by_name($stmt, ':p_customer_id', $customer_id, 255);
-  oci_bind_by_name($stmt, ':p_customer_name', $customer_name, 255);
-  oci_bind_by_name($stmt, ':p_customer_country', $customer_country, 255);
-  oci_bind_by_name($stmt, ':p_customer_city', $customer_city, 255);
-  oci_bind_by_name($stmt, ':p_customer_contact', $customer_contact, 255);
-  oci_bind_by_name($stmt, ':p_customer_address', $customer_address, 255);
-  oci_bind_by_name($stmt, ':p_customer_image', $customer_image, 255);
-  oci_execute($stmt);
-
-  oci_close($con);
 ?>
-
   <main>
+    <!-- HERO -->
     <div class="nero">
       <div class="nero__heading">
         <span class="nero__bold">My </span>Account
       </div>
-      <p class="nero__text"></p>
+      <p class="nero__text">
+      </p>
     </div>
   </main>
 
-  <div id="content">
-    <div class="container">
-
-      <div class="col-md-12">
+  <div id="content"><!-- content Starts -->
+    <div class="container"><!-- container Starts -->
+      <div class="col-md-12"><!-- col-md-12 Starts -->
         <?php
         $c_email = $_SESSION['customer_email'];
-
-        $get_customer = "BEGIN :result := get_customer(:p_email); END;";
-        $stmt = oci_parse($con, $get_customer);
-        oci_bind_by_name($stmt, ':p_email', $c_email);
-        oci_bind_by_name($stmt, ':result', $customer_info, 4000);
-        oci_execute($stmt);
-        $row_customer = oci_fetch_array($stmt, OCI_ASSOC);
-        $customer_confirm_code = $row_customer['CUSTOMER_CONFIRM_CODE'];
-        $c_name = $row_customer['CUSTOMER_NAME'];
+        $get_customer = "select * from customers where customer_email='$c_email'";
+        $run_customer = mysqli_query($con, $get_customer);
+        $row_customer = mysqli_fetch_array($run_customer);
+        $customer_confirm_code = $row_customer['customer_confirm_code'];
+        $c_name = $row_customer['customer_name'];
+        if (!empty($customer_confirm_code)) {
         ?>
-      </div>
+          <div class="alert alert-danger"><!-- alert alert-danger Starts -->
+            <strong> Warning! </strong> Please Confirm Your Email and if you have not received your confirmation email
+            <a href="my_account.php?send_email" class="alert-link">Send Email Again</a>
+          </div><!-- alert alert-danger Ends -->
+        <?php } ?>
+      </div><!-- col-md-12 Ends -->
 
-      <div class="col-md-3">
+      <div class="col-md-3"><!-- col-md-3 Starts -->
         <?php include("includes/sidebar.php"); ?>
-      </div>
+      </div><!-- col-md-3 Ends -->
 
-      <div class="col-md-9">
-        <div class="box">
+      <div class="col-md-9"><!--- col-md-9 Starts -->
+        <div class="box"><!-- box Starts -->
           <?php
           if (isset($_GET[$customer_confirm_code])) {
-            $update_customer = "BEGIN update_customer_confirm_code(:p_customer_confirm_code); END;";
-            $stmt = oci_parse($con, $update_customer);
-            oci_bind_by_name($stmt, ':p_customer_confirm_code', $customer_confirm_code);
-            oci_execute($stmt);
-
+            $update_customer = "update customers set customer_confirm_code='' where customer_confirm_code='$customer_confirm_code'";
+            $run_confirm = mysqli_query($con, $update_customer);
+            echo "<script>alert('Your Email Has Been Confirmed')</script>";
             echo "<script>window.open('my_account.php?my_orders','_self')</script>";
           }
-
-          if (isset($_GET['my_orders'])) {
-            include("my_orders.php");
-          }
-
-          if (isset($_GET['pay_offline'])) {
-            include("pay_offline.php");
-          }
-
-          if (isset($_GET['edit_account'])) {
-            include("edit_account.php");
-          }
-
-          if (isset($_GET['change_pass'])) {
-            include("change_pass.php");
-          }
-
-          if (isset($_GET['delete_account'])) {
-            include("delete_account.php");
-          }
-
-          if (isset($_GET['my_wishlist'])) {
-            include("my_wishlist.php");
-          }
-
-          if (isset($_GET['delete_wishlist'])) {
-            include("delete_wishlist.php");
+          if (isset($_GET['send_email'])) {
+            $subject = "Email Confirmation Message";
+            $from = "sad.ahmed22224@gmail.com";
+            $message = "
+                    <h2>Email Confirmation By Computerfever.com $c_name</h2>
+                    <a href='localhost/ecom_store/customer/my_account.php?$customer_confirm_code'>Click Here To Confirm Email</a>
+                    ";
+            $headers = "From: $from \r\n";
+            $headers .= "Content-type: text/html\r\n";
+            mail($c_email, $subject, $message, $headers);
+            echo "<script>alert('Your Confirmation Email Has Been sent to you, check your inbox')</script>";
+            echo "<script>window.open('my_account.php?my_orders','_self')</script>";
           }
           ?>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <?php include("../includes/footer.php"); ?>
-
+        </div><!-- box Ends -->
+      </div><!--- col-md-9 Ends -->
+    </div><!-- container Ends -->
+  </div><!-- content Ends -->
+  <?php
+  include("../includes/footer.php");
+  ?>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   </body>

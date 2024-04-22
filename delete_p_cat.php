@@ -1,0 +1,24 @@
+<?php
+
+if (!isset($_SESSION['admin_email'])) {
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
+    if (isset($_GET['delete_p_cat'])) {
+        // Obtener el ID de la categoría de producto a eliminar
+        $delete_p_cat_id = $_GET['delete_p_cat'];
+
+        // Llamar al procedimiento almacenado para eliminar la categoría de producto
+        $procedure = oci_parse($conn, "BEGIN delete_product_category(:delete_p_cat_id, :success); END;");
+        oci_bind_by_name($procedure, ":delete_p_cat_id", $delete_p_cat_id);
+        oci_bind_by_name($procedure, ":success", $success, 1); // 1 indica que es un valor de salida
+        oci_execute($procedure);
+
+        // Verificar si el procedimiento se ejecutó con éxito
+        if ($success == 1) {
+            echo "<script>alert('One Product Category Has been Deleted')</script>";
+            echo "<script>window.open('index.php?view_p_cats','_self')</script>";
+        } else {
+            echo "<script>alert('Error deleting product category')</script>";
+        }
+    }
+}

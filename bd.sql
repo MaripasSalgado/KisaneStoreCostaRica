@@ -1,4 +1,3 @@
-
 -- Table: product_categories
 CREATE TABLE product_categories (
   p_cat_id NUMBER(10) PRIMARY KEY,
@@ -972,3 +971,225 @@ BEGIN
   END LOOP;
 END;
 /
+
+/*FUNTIÓN*/
+
+/*change_password: Esta función permite a un cliente cambiar su contraseña. Verifica que las contraseñas nuevas coincidan, 
+valida la contraseña actual del cliente y actualiza la contraseña en la tabla de clientes.*/
+CREATE OR REPLACE FUNCTION change_password(
+  p_customer_email IN VARCHAR2,
+  p_old_password IN VARCHAR2,
+  p_new_password IN VARCHAR2,
+  p_new_password_again IN VARCHAR2
+) RETURN VARCHAR2 IS
+  v_hashed_password VARCHAR2(255);
+  v_old_password VARCHAR2(255);
+BEGIN
+  -- Verificar que las contraseñas nuevas coincidan
+  IF p_new_password <> p_new_password_again THEN
+    RETURN 'Las contraseñas nuevas no coinciden';
+  END IF;
+
+  -- Obtener la contraseña actual del cliente
+  SELECT customer_pass INTO v_old_password FROM customers WHERE customer_email = p_customer_email;
+
+  -- Verificar que la contraseña antigua coincida
+  IF NOT dbms_crypto.compare(p_old_password, v_old_password) = 0 THEN
+    RETURN 'La contraseña actual no es válida';
+  END IF;
+
+  -- Generar el hash de la nueva contraseña
+  v_hashed_password := dbms_crypto.hash(p_new_password, dbms_crypto.hash_sha256);
+
+  -- Actualizar la contraseña en la tabla de clientes
+  UPDATE customers SET customer_pass = v_hashed_password WHERE customer_email = p_customer_email;
+
+  RETURN 'Contraseña cambiada correctamente';
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al cambiar la contraseña';
+END;
+
+/*confirm_payment: Utilizada para confirmar un pago de un pedido. Inserta el pago en la tabla de pagos, actualiza el estado 
+del pedido a 'Complete' en la tabla de órdenes de clientes y en las órdenes pendientes.*/
+
+CREATE OR REPLACE FUNCTION confirm_payment(
+  p_order_id IN NUMBER,
+  p_invoice_no IN VARCHAR2,
+  p_amount IN NUMBER,
+  p_payment_mode IN VARCHAR2,
+  p_ref_no IN VARCHAR2,
+  p_code IN VARCHAR2,
+  p_payment_date IN DATE
+) RETURN VARCHAR2 IS
+BEGIN
+  -- Insertar el pago en la tabla de pagos
+  INSERT INTO payments (invoice_no, amount, payment_mode, ref_no, code, payment_date)
+  VALUES (p_invoice_no, p_amount, p_payment_mode, p_ref_no, p_code, p_payment_date);
+
+  -- Actualizar el estado del pedido en la tabla de órdenes de clientes
+  UPDATE customer_orders SET order_status = 'Complete' WHERE order_id = p_order_id;
+
+  -- Actualizar el estado del pedido en la tabla de órdenes pendientes
+  UPDATE pending_orders SET order_status = 'Complete' WHERE order_id = p_order_id;
+
+  RETURN 'Pago confirmado correctamente';
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al confirmar el pago';
+END;
+
+/*customer_login: Verifica las credenciales de inicio de sesión de un cliente. Comprueba si el correo electrónico 
+y la contraseña coinciden en la base de datos de clientes.*/
+
+CREATE OR REPLACE FUNCTION customer_login(
+  p_customer_email IN VARCHAR2,
+  p_customer_pass IN VARCHAR2
+) RETURN VARCHAR2 IS
+  v_customer_count NUMBER;
+BEGIN
+  -- Verificar las credenciales del cliente
+  SELECT COUNT(*) INTO v_customer_count FROM customers WHERE customer_email = p_customer_email AND customer_pass = p_customer_pass;
+
+  IF v_customer_count = 0 THEN
+    RETURN 'Contraseña o email incorrectos';
+  ELSE
+    RETURN 'Inicio de sesión exitoso';
+  END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al iniciar sesión';
+END;
+
+/*delete_customer_account: Elimina la cuenta de un cliente. Borra la información del cliente de la base de 
+datos y verifica si la eliminación fue exitosa.*/
+
+CREATE OR REPLACE FUNCTION delete_customer_account(
+  p_customer_email IN VARCHAR2
+) RETURN VARCHAR2 IS
+BEGIN
+  -- Eliminar la cuenta del cliente
+  DELETE FROM customers WHERE customer_email = p_customer_email;
+
+  -- Verificar si la cuenta ha sido eliminada correctamente
+  IF SQL%ROWCOUNT > 0 THEN
+    RETURN 'Cuenta eliminada correctamente';
+  ELSE
+    RETURN 'Error al eliminar la cuenta';
+  END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al eliminar la cuenta';
+END;
+
+/*delete_wishlist_item: Elimina un elemento de la lista de deseos de un cliente. Elimina el artículo 
+de la tabla de lista de deseos y verifica si se eliminó correctamente.*/
+
+CREATE OR REPLACE FUNCTION delete_wishlist_item(
+  p_wishlist_id IN NUMBER
+) RETURN VARCHAR2 IS
+BEGIN
+  -- Eliminar el elemento de la lista de deseos
+  DELETE FROM wishlist WHERE wishlist_id = p_wishlist_id;
+
+  -- Verificar si el elemento ha sido eliminado correctamente
+  IF SQL%ROWCOUNT > 0 THEN
+    RETURN 'Elemento eliminado correctamente';
+  ELSE
+    RETURN 'Error al eliminar el elemento';
+  END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al eliminar el elemento';
+END;
+
+/*get_customer_details: Obtiene los detalles de un cliente. Recupera información como el ID, nombre, país, ciudad, 
+contacto y dirección del cliente basado en su correo electrónico.*/
+
+CREATE OR REPLACE FUNCTION get_customer_details(
+  p_customer_email IN VARCHAR2
+) RETURN SYS_REFCURSOR IS
+  v_customer_details SYS_REFCURSOR;
+BEGIN
+  OPEN v_customer_details FOR
+  SELECT customer_id, customer_name, customer_country, customer_city, customer_contact, customer_address, customer_image
+  FROM customers
+  WHERE customer_email = p_customer_email;
+
+  RETURN v_customer_details;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN NULL;
+END;
+
+/*confirm_email: Confirma el correo electrónico de un cliente. Actualiza el código de confirmación del 
+cliente en la base de datos para confirmar su dirección de correo electrónico.*/
+
+CREATE OR REPLACE FUNCTION confirm_email(
+  p_customer_email IN VARCHAR2
+) RETURN VARCHAR2 IS
+BEGIN
+  -- Actualizar el código de confirmación del cliente en la base de datos para confirmar su dirección de correo electrónico
+  UPDATE customers SET email_confirmed = 'Y' WHERE customer_email = p_customer_email;
+
+  RETURN 'Correo electrónico confirmado correctamente';
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN 'Ha ocurrido un error al confirmar el correo electrónico';
+END;
+
+/*get_ related_products
+Esta función recupera los productos relacionados para un ID de producto determinado. Se basa en la tabla bundle_product_relation, que asocia productos con paquetes. 
+La función toma un product_id como entrada y devuelve un cursor de referencia que contiene los productos relacionados que pertenecen 
+al mismo paquete que el ID del producto dado.*/
+
+CREATE OR REPLACE FUNCTION get_related_products(p_product_id IN NUMBER)
+RETURN SYS_REFCURSOR IS
+  v_related_products SYS_REFCURSOR;
+BEGIN
+  OPEN v_related_products FOR
+  SELECT bpr.product_id, p.product_title, p.product_price
+  FROM bundle_product_relation bpr
+  JOIN products p ON bpr.product_id = p.product_id
+  WHERE bpr.bundle_id = (SELECT bundle_id FROM bundle_product_relation WHERE product_id = p_product_id);
+
+  RETURN v_related_products;
+END;
+
+/*get_bundle_product_details: Esta función recupera los detalles de un paquete de productos, incluido el título del paquete, el ID del producto, 
+el título del producto y el precio de cada producto del paquete.*/
+
+CREATE OR REPLACE FUNCTION get_bundle_product_details(
+  p_bundle_id IN NUMBER
+) RETURN SYS_REFCURSOR IS
+  v_bundle_product_details SYS_REFCURSOR;
+BEGIN
+  OPEN v_bundle_product_details FOR
+  SELECT bpr.rel_title AS bundle_title,
+         p.product_id,
+         p.product_title,
+         p.product_price
+  FROM bundle_product_relation bpr
+  JOIN products p ON bpr.product_id = p.product_id
+  WHERE bpr.bundle_id = p_bundle_id;
+
+  RETURN v_bundle_product_details;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN NULL;
+END;
+
+/*get_related_products: Esta función toma un ID de producto como entrada y devuelve una lista de productos relacionados que pertenecen al mismo paquete que el producto dado.
+
+CREATE OR REPLACE FUNCTION get_related_products(p_product_id IN NUMBER)
+RETURN SYS_REFCURSOR IS
+  v_related_products SYS_REFCURSOR;
+BEGIN
+  OPEN v_related_products FOR
+  SELECT bpr.product_id, p.product_title, p.product_price
+  FROM bundle_product_relation bpr
+  JOIN products p ON bpr.product_id = p.product_id
+  WHERE bpr.bundle_id = (SELECT bundle_id FROM bundle_product_relation WHERE product_id = p_product_id) AND bpr.product_id != p_product_id;
+
+  RETURN v_related_products;
+END;

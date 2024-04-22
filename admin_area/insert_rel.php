@@ -1,12 +1,8 @@
 <?php
 
-
 if (!isset($_SESSION['admin_email'])) {
-
     echo "<script>window.open('login.php','_self')</script>";
 } else {
-
-
 ?>
 
     <div class="row"><!-- 1 row Starts -->
@@ -70,13 +66,16 @@ if (!isset($_SESSION['admin_email'])) {
 
                                     <option> Select Product </option>
 
-                                <?php
+                                    <?php
 
-                                //PL/SQL
+                                    $get_p = $pdo->prepare("SELECT * FROM products WHERE status='product'");
+                                    $get_p->execute();
+                                    $products = $get_p->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach ($products as $product) {
+                                        echo "<option value='{$product['product_id']}'>{$product['product_title']}</option>";
+                                    }
 
-                            }
-
-                                ?>
+                                    ?>
 
                                 </select>
 
@@ -96,9 +95,12 @@ if (!isset($_SESSION['admin_email'])) {
 
                                     <?php
 
-                                    //PL/SQL
-
-
+                                    $get_b = $pdo->prepare("SELECT * FROM products WHERE status='bundle'");
+                                    $get_b->execute();
+                                    $bundles = $get_b->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach ($bundles as $bundle) {
+                                        echo "<option value='{$bundle['product_id']}'>{$bundle['product_title']}</option>";
+                                    }
 
                                     ?>
 
@@ -133,14 +135,27 @@ if (!isset($_SESSION['admin_email'])) {
 
 
     <?php
-    //PL/SQL
 
-    echo "<script>alert('New Relation Has Been Inserted')</script>";
+    if (isset($_POST['submit'])) {
 
-    echo "<script>window.open('index.php?view_rel','_self')</script>";
+        $rel_title = $_POST['rel_title'];
 
+        $product_id = $_POST['product_id'];
+
+        $bundle_id = $_POST['bundle_id'];
+
+        $insert_rel = $pdo->prepare("INSERT INTO bundle_product_relation (rel_title, product_id, bundle_id) VALUES (:rel_title, :product_id, :bundle_id)");
+        $insert_rel->bindParam(':rel_title', $rel_title);
+        $insert_rel->bindParam(':product_id', $product_id);
+        $insert_rel->bindParam(':bundle_id', $bundle_id);
+
+        if ($insert_rel->execute()) {
+            echo "<script>alert('New Relation Has Been Inserted')</script>";
+            echo "<script>window.open('index.php?view_rel','_self')</script>";
+        }
+    }
 
     ?>
 
 
-    <?php  ?>
+<?php } ?>

@@ -1,12 +1,8 @@
 <?php
 
-
 if (!isset($_SESSION['admin_email'])) {
-
     echo "<script>window.open('login.php','_self')</script>";
 } else {
-
-
 ?>
 
     <div class="row"><!-- 1 row Starts -->
@@ -82,20 +78,23 @@ if (!isset($_SESSION['admin_email'])) {
 
     </div><!-- 2 row Ends -->
 
-<?php
+    <?php
 
-    //PL/SQL
+    if (isset($_POST['submit'])) {
 
-    echo "<script> alert('New Enquiry Type Has Been Inserted') </script>";
-    echo "<script>window.open('index.php?view_enquiry','_self')</script>";
-}
+        $enquiry_title = $_POST['enquiry_title'];
+
+        $insert_enquiry =  $pdo->prepare("INSERT INTO enquiry_types (enquiry_title) VALUES (:enquiry_title)");
+        $insert_enquiry->bindParam(':enquiry_title', $enquiry_title);
+
+        if ($insert_enquiry->execute()) {
+
+            echo "<script> alert('New Enquiry Type Has Been Inserted') </script>";
+            echo "<script>window.open('index.php?view_enquiry','_self')</script>";
+        }
+    }
+
+    ?>
 
 
-
-
-
-
-?>
-
-
-<?php  ?>
+<?php } ?>

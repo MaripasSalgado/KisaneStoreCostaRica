@@ -1,11 +1,10 @@
 <?php
 
 if (!isset($_SESSION['admin_email'])) {
-
   echo "<script>window.open('login.php','_self')</script>";
 } else {
-
 ?>
+
   <!DOCTYPE html>
 
   <html>
@@ -110,9 +109,17 @@ if (!isset($_SESSION['admin_email'])) {
                     <option> Select A Manufacturer </option>
 
                     <?php
+                    // Llamar al procedimiento almacenado para obtener la lista de fabricantes
+                    $stmt = $pdo->prepare("CALL GetManufacturers()");
+                    $stmt->execute();
+                    while ($row_manufacturer = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                      $manufacturer_id = $row_manufacturer['manufacturer_id'];
+                      $manufacturer_title = $row_manufacturer['manufacturer_title'];
 
-                    //PL/SQL
-
+                      echo "<option value='$manufacturer_id'>
+$manufacturer_title
+</option>";
+                    }
                     ?>
 
                   </select><!-- select manufacturer Ends -->
@@ -132,12 +139,17 @@ if (!isset($_SESSION['admin_email'])) {
 
                     <option> Select a Product Category </option>
 
-
                     <?php
+                    // Llamar al procedimiento almacenado para obtener la lista de categorías de productos
+                    $stmt = $pdo->prepare("CALL GetProductCategories()");
+                    $stmt->execute();
+                    while ($row_p_cats = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                      $p_cat_id = $row_p_cats['p_cat_id'];
+                      $p_cat_title = $row_p_cats['p_cat_title'];
 
-                    //PL/SQL
+                      echo "<option value='$p_cat_id'>$p_cat_title</option>";
+                    }
                     ?>
-
 
                   </select>
 
@@ -157,11 +169,16 @@ if (!isset($_SESSION['admin_email'])) {
                     <option> Select a Category </option>
 
                     <?php
+                    // Llamar al procedimiento almacenado para obtener la lista de categorías
+                    $stmt = $pdo->prepare("CALL GetCategories()");
+                    $stmt->execute();
+                    while ($row_cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                      $cat_id = $row_cat['cat_id'];
+                      $cat_title = $row_cat['cat_title'];
 
-                    //PL/SQL
-
+                      echo "<option value='$cat_id'>$cat_title</option>";
+                    }
                     ?>
-
 
                   </select>
 
@@ -347,16 +364,71 @@ if (!isset($_SESSION['admin_email'])) {
 
     </div><!-- 2 row Ends -->
 
-
-
-
   </body>
 
   </html>
 
   <?php
 
-  //PL/SQL
+  if (isset($_POST['submit'])) {
+
+    $product_title = $_POST['product_title'];
+    $product_cat = $_POST['product_cat'];
+    $cat = $_POST['cat'];
+    $manufacturer_id = $_POST['manufacturer'];
+    $product_price = $_POST['product_price'];
+    $product_desc = $_POST['product_desc'];
+    $product_keywords = $_POST['product_keywords'];
+
+    $psp_price = $_POST['psp_price'];
+
+    $product_label = $_POST['product_label'];
+
+    $product_url = $_POST['product_url'];
+
+    $product_features = $_POST['product_features'];
+
+    $product_video = $_POST['product_video'];
+
+    $status = "bundle";
+
+    $product_img1 = $_FILES['product_img1']['name'];
+    $product_img2 = $_FILES['product_img2']['name'];
+    $product_img3 = $_FILES['product_img3']['name'];
+
+    $temp_name1 = $_FILES['product_img1']['tmp_name'];
+    $temp_name2 = $_FILES['product_img2']['tmp_name'];
+    $temp_name3 = $_FILES['product_img3']['tmp_name'];
+
+    move_uploaded_file($temp_name1, "product_images/$product_img1");
+    move_uploaded_file($temp_name2, "product_images/$product_img2");
+    move_uploaded_file($temp_name3, "product_images/$product_img3");
+
+    // Llamar al procedimiento almacenado para insertar un nuevo bundle
+    $stmt = $pdo->prepare("CALL InsertBundle(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bindParam(1, $product_cat);
+    $stmt->bindParam(2, $cat);
+    $stmt->bindParam(3, $manufacturer_id);
+    $stmt->bindParam(4, $product_title);
+    $stmt->bindParam(5, $product_url);
+    $stmt->bindParam(6, $product_img1);
+    $stmt->bindParam(7, $product_img2);
+    $stmt->bindParam(8, $product_img3);
+    $stmt->bindParam(9, $product_price);
+    $stmt->bindParam(10, $psp_price);
+    $stmt->bindParam(11, $product_desc);
+    $stmt->bindParam(12, $product_features);
+    $stmt->bindParam(13, $product_video);
+    $stmt->bindParam(14, $product_keywords);
+    $stmt->bindParam(15, $product_label);
+    $stmt->bindParam(16, $status);
+    $stmt->bindParam(17, $product_img3);
+    $stmt->execute();
+
+    echo "<script>alert('Bundle has been inserted successfully')</script>";
+
+    echo "<script>window.open('index.php?view_bundles','_self')</script>";
+  }
 
   ?>
 

@@ -1,11 +1,8 @@
 <?php
 
 if (!isset($_SESSION['admin_email'])) {
-
     echo "<script>window.open('login.php','_self')</script>";
 } else {
-
-
 ?>
 
     <div class="row"><!-- 1 row Starts -->
@@ -113,11 +110,24 @@ if (!isset($_SESSION['admin_email'])) {
 
     <?php
 
-    //PL/SQL
+    if (isset($_POST['submit'])) {
+        $cat_title = $_POST['cat_title'];
+        $cat_top = $_POST['cat_top'];
+        $cat_image = $_FILES['cat_image']['name'];
+        $temp_name = $_FILES['cat_image']['tmp_name'];
+        move_uploaded_file($temp_name, "other_images/$cat_image");
 
+        // Llamar al procedimiento almacenado para insertar una nueva categoría
+        $stmt = $pdo->prepare("CALL InsertCategory(?, ?, ?)");
+        $stmt->bindParam(1, $cat_title);
+        $stmt->bindParam(2, $cat_top);
+        $stmt->bindParam(3, $cat_image);
+        $stmt->execute();
 
+        echo "<script> alert('New Category Has Been Inserted')</script>";
 
-
+        echo "<script> window.open('index.php?view_cats','_self') </script>";
+    }
 
     ?>
 

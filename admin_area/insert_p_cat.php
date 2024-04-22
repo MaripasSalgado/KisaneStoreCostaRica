@@ -1,11 +1,8 @@
 <?php
 
 if (!isset($_SESSION['admin_email'])) {
-
     echo "<script>window.open('login.php','_self')</script>";
 } else {
-
-
 ?>
 
     <div class="row"><!-- 1 row Starts -->
@@ -113,19 +110,28 @@ if (!isset($_SESSION['admin_email'])) {
 
     </div><!-- 2 row Ends -->
 
-<?php
-    //PL/SQL
-    echo "<script>alert('New Product Category Has been Inserted')</script>";
+    <?php
 
-    echo "<script>window.open('index.php?view_p_cats','_self')</script>";
-}
+    if (isset($_POST['submit'])) {
+        $p_cat_title = $_POST['p_cat_title'];
+        $p_cat_top = $_POST['p_cat_top'];
+        $p_cat_image = $_FILES['p_cat_image']['name'];
+        $temp_name = $_FILES['p_cat_image']['tmp_name'];
+
+        move_uploaded_file($temp_name, "other_images/$p_cat_image");
+
+        $insert_p_cat = $pdo->prepare("INSERT INTO product_categories (p_cat_title, p_cat_top, p_cat_image) VALUES (:p_cat_title, :p_cat_top, :p_cat_image)");
+        $insert_p_cat->bindParam(':p_cat_title', $p_cat_title);
+        $insert_p_cat->bindParam(':p_cat_top', $p_cat_top);
+        $insert_p_cat->bindParam(':p_cat_image', $p_cat_image);
+
+        if ($insert_p_cat->execute()) {
+            echo "<script>alert('New Product Category Has been Inserted')</script>";
+            echo "<script>window.open('index.php?view_p_cats','_self')</script>";
+        }
+    }
+
+    ?>
 
 
-
-
-
-
-?>
-
-
-<?php ?>
+<?php } ?>

@@ -1,11 +1,10 @@
 <?php
 
 if (!isset($_SESSION['admin_email'])) {
-
   echo "<script>window.open('login.php','_self')</script>";
 } else {
-
 ?>
+
   <!DOCTYPE html>
 
   <html>
@@ -109,12 +108,16 @@ if (!isset($_SESSION['admin_email'])) {
 
                     <option> Select A Manufacturer </option>
 
-                  <?php
-                  //PL/SQL
+                    <?php
 
-                }
+                    $get_manufacturer = $pdo->prepare("SELECT * FROM manufacturers");
+                    $get_manufacturer->execute();
+                    $manufacturers = $get_manufacturer->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($manufacturers as $manufacturer) {
+                      echo "<option value='{$manufacturer['manufacturer_id']}'>{$manufacturer['manufacturer_title']}</option>";
+                    }
 
-                  ?>
+                    ?>
 
                   </select><!-- select manufacturer Ends -->
 
@@ -136,9 +139,12 @@ if (!isset($_SESSION['admin_email'])) {
 
                     <?php
 
-                    //PL/SQL
-
-
+                    $get_p_cats = $pdo->prepare("SELECT * FROM product_categories");
+                    $get_p_cats->execute();
+                    $p_cats = $get_p_cats->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($p_cats as $p_cat) {
+                      echo "<option value='{$p_cat['p_cat_id']}'>{$p_cat['p_cat_title']}</option>";
+                    }
 
                     ?>
 
@@ -161,9 +167,13 @@ if (!isset($_SESSION['admin_email'])) {
                     <option> Select a Category </option>
 
                     <?php
-                    //PL/SQL
 
-
+                    $get_cat = $pdo->prepare("SELECT * FROM categories");
+                    $get_cat->execute();
+                    $categories = $get_cat->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($categories as $category) {
+                      echo "<option value='{$category['cat_id']}'>{$category['cat_title']}</option>";
+                    }
 
                     ?>
 
@@ -361,17 +371,65 @@ if (!isset($_SESSION['admin_email'])) {
 
   <?php
 
-  //PL/SQL
+  if (isset($_POST['submit'])) {
 
-  if ($run_product) {
+    $product_title = $_POST['product_title'];
+    $product_cat = $_POST['product_cat'];
+    $cat = $_POST['cat'];
+    $manufacturer_id = $_POST['manufacturer'];
+    $product_price = $_POST['product_price'];
+    $product_desc = $_POST['product_desc'];
+    $product_keywords = $_POST['product_keywords'];
 
-    echo "<script>alert('Product has been inserted successfully')</script>";
+    $psp_price = $_POST['psp_price'];
 
-    echo "<script>window.open('index.php?view_products','_self')</script>";
+    $product_label = $_POST['product_label'];
+
+    $product_url = $_POST['product_url'];
+
+    $product_features = $_POST['product_features'];
+
+    $product_video = $_POST['product_video'];
+
+    $status = "product";
+
+    $product_img1 = $_FILES['product_img1']['name'];
+    $product_img2 = $_FILES['product_img2']['name'];
+    $product_img3 = $_FILES['product_img3']['name'];
+
+    $temp_name1 = $_FILES['product_img1']['tmp_name'];
+    $temp_name2 = $_FILES['product_img2']['tmp_name'];
+    $temp_name3 = $_FILES['product_img3']['tmp_name'];
+
+    move_uploaded_file($temp_name1, "product_images/$product_img1");
+    move_uploaded_file($temp_name2, "product_images/$product_img2");
+    move_uploaded_file($temp_name3, "product_images/$product_img3");
+
+    $insert_product = $pdo->prepare("INSERT INTO products (p_cat_id, cat_id, manufacturer_id, date, product_title, product_url, product_img1, product_img2, product_img3, product_price, product_psp_price, product_desc, product_features, product_video, product_keywords, product_label, status) VALUES (:product_cat, :cat, :manufacturer_id, NOW(), :product_title, :product_url, :product_img1, :product_img2, :product_img3, :product_price, :psp_price, :product_desc, :product_features, :product_video, :product_keywords, :product_label, :status)");
+
+    $insert_product->bindParam(':product_cat', $product_cat);
+    $insert_product->bindParam(':cat', $cat);
+    $insert_product->bindParam(':manufacturer_id', $manufacturer_id);
+    $insert_product->bindParam(':product_title', $product_title);
+    $insert_product->bindParam(':product_url', $product_url);
+    $insert_product->bindParam(':product_img1', $product_img1);
+    $insert_product->bindParam(':product_img2', $product_img2);
+    $insert_product->bindParam(':product_img3', $product_img3);
+    $insert_product->bindParam(':product_price', $product_price);
+    $insert_product->bindParam(':psp_price', $psp_price);
+    $insert_product->bindParam(':product_desc', $product_desc);
+    $insert_product->bindParam(':product_features', $product_features);
+    $insert_product->bindParam(':product_video', $product_video);
+    $insert_product->bindParam(':product_keywords', $product_keywords);
+    $insert_product->bindParam(':product_label', $product_label);
+    $insert_product->bindParam(':status', $status);
+
+    if ($insert_product->execute()) {
+      echo "<script>alert('Product has been inserted successfully')</script>";
+      echo "<script>window.open('index.php?view_products','_self')</script>";
+    }
   }
-
-
 
   ?>
 
-  <?php  ?>
+<?php } ?>

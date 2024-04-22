@@ -1,14 +1,9 @@
 <?php
 
-
 if (!isset($_SESSION['admin_email'])) {
-
     echo "<script>window.open('login.php','_self')</script>";
 } else {
-
-
 ?>
-
 
     <div class="row"><!-- 1 row Starts -->
 
@@ -47,8 +42,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                 <div class="panel-body"><!-- panel-body Starts -->
 
-                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        <!-- form-horizontal Starts -->
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data"><!-- form-horizontal Starts -->
 
                         <div class="form-group"><!-- form-group Starts -->
 
@@ -116,7 +110,29 @@ if (!isset($_SESSION['admin_email'])) {
 
     <?php
 
-    //PL/SQL
+    if (isset($_POST['submit'])) {
+
+        $manufacturer_name = $_POST['manufacturer_name'];
+
+        $manufacturer_top = $_POST['manufacturer_top'];
+
+        $manufacturer_image = $_FILES['manufacturer_image']['name'];
+        $tmp_name = $_FILES['manufacturer_image']['tmp_name'];
+
+        move_uploaded_file($tmp_name, "other_images/$manufacturer_image");
+
+        $insert_manufacturer = $pdo->prepare("INSERT INTO manufacturers (manufacturer_title, manufacturer_top, manufacturer_image) VALUES (:manufacturer_name, :manufacturer_top, :manufacturer_image)");
+        $insert_manufacturer->bindParam(':manufacturer_name', $manufacturer_name);
+        $insert_manufacturer->bindParam(':manufacturer_top', $manufacturer_top);
+        $insert_manufacturer->bindParam(':manufacturer_image', $manufacturer_image);
+
+        if ($insert_manufacturer->execute()) {
+
+            echo "<script>alert('New Manufacturer Has Been Inserted')</script>";
+            echo "<script>window.open('index.php?view_manufacturers','_self')</script>";
+        }
+    }
+
     ?>
 
 <?php } ?>

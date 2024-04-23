@@ -1,10 +1,209 @@
+-- Table: contact_us
+CREATE TABLE contact_us (
+  contact_id NUMBER(10) PRIMARY KEY,
+  contact_email VARCHAR2(255) NOT NULL,
+  contact_heading VARCHAR2(255) NOT NULL,
+  contact_desc CLOB NOT NULL
+);
+
+-- Table: terms
+CREATE TABLE terms (
+  term_id NUMBER(10) PRIMARY KEY,
+  term_title VARCHAR2(100) NOT NULL,
+  term_link VARCHAR2(100) NOT NULL,
+  term_desc CLOB NOT NULL
+);
+
+
+-- Table: payments
+CREATE TABLE payments (
+  payment_id NUMBER(10) PRIMARY KEY,
+  invoice_no NUMBER(10) NOT NULL,
+  amount NUMBER(10, 2) NOT NULL,
+  payment_mode VARCHAR2(255) NOT NULL,
+  ref_no NUMBER(10) NOT NULL,
+  code NUMBER(10) NOT NULL,
+  payment_date DATE NOT NULL
+);
+
+
+-- Table: store
+CREATE TABLE store (
+  store_id NUMBER(10) PRIMARY KEY,
+  store_title VARCHAR2(255) NOT NULL,
+  store_image VARCHAR2(255) NOT NULL,
+  store_desc CLOB NOT NULL,
+  store_button VARCHAR2(255) NOT NULL,
+  store_url VARCHAR2(255) NOT NULL
+);
+-- Table: about_us
+CREATE TABLE about_us (
+  about_id NUMBER(10) PRIMARY KEY,
+  about_heading VARCHAR2(255) NOT NULL,
+  about_short_desc VARCHAR2(4000) NOT NULL,
+  about_desc CLOB NOT NULL
+);
+
+CREATE TABLE products (
+  product_id INT NOT NULL PRIMARY KEY,
+  p_cat_id INT NOT NULL,
+  cat_id INT NOT NULL,
+  manufacturer_id INT NOT NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  product_title VARCHAR2(4000) NOT NULL,
+  product_url VARCHAR2(4000) NOT NULL,
+  product_img1 VARCHAR2(4000) NOT NULL,
+  product_img2 VARCHAR2(4000) NOT NULL,
+  product_img3 VARCHAR2(4000) NOT NULL,
+  product_price INT NOT NULL,
+  product_psp_price INT NOT NULL,
+  product_desc VARCHAR2(400) NOT NULL,
+  product_features VARCHAR2(400) NOT NULL,
+  product_video VARCHAR2(400) NOT NULL,
+  product_keywords VARCHAR2(400) NOT NULL,
+  product_label VARCHAR2(400) NOT NULL,
+  status VARCHAR2(255) NOT NULL
+);
+
+-- Table: categories
+CREATE TABLE categories (
+  cat_id NUMBER(10) PRIMARY KEY,
+  cat_title VARCHAR2(100) NOT NULL,
+  cat_top VARCHAR2(100) NOT NULL,
+  cat_image VARCHAR2(100) NOT NULL
+);
+
+
+-- Table: manufacturers
+CREATE TABLE manufacturers (
+  manufacturer_id NUMBER(10) PRIMARY KEY,
+  manufacturer_title VARCHAR2(255) NOT NULL,
+  manufacturer_top VARCHAR2(100) NOT NULL,
+  manufacturer_image VARCHAR2(100) NOT NULL
+);
+
+
+-- Table: admins
+CREATE TABLE admins (
+  admin_id NUMBER(10) PRIMARY KEY,
+  admin_name VARCHAR2(255) NOT NULL,
+  admin_email VARCHAR2(255) NOT NULL,
+  admin_pass VARCHAR2(255) NOT NULL,
+  admin_image VARCHAR2(255) NOT NULL,
+  admin_contact VARCHAR2(255) NOT NULL,
+  admin_country VARCHAR2(255) NOT NULL,
+  admin_job VARCHAR2(255) NOT NULL,
+  admin_about VARCHAR2(4000) NOT NULL
+);
+
+-- Table: customers
+CREATE TABLE customers (
+  customer_id NUMBER(10) PRIMARY KEY,
+  customer_name VARCHAR2(255) NOT NULL,
+  customer_email VARCHAR2(255) NOT NULL,
+  customer_pass VARCHAR2(255) NOT NULL,
+  customer_country VARCHAR2(255) NOT NULL,
+  customer_city VARCHAR2(255) NOT NULL,
+  customer_contact VARCHAR2(255) NOT NULL,
+  customer_address VARCHAR2(4000) NOT NULL,
+  customer_image VARCHAR2(255) NOT NULL,
+  customer_ip VARCHAR2(255) NOT NULL,
+  customer_confirm_code VARCHAR2(255) NOT NULL
+);
 -- Table: product_categories
 CREATE TABLE product_categories (
   p_cat_id NUMBER(10) PRIMARY KEY,
   p_cat_title VARCHAR2(255) NOT NULL,
   p_cat_top VARCHAR2(100) NOT NULL,
   p_cat_image VARCHAR2(100) NOT NULL,
-  CONSTRAINT fk_product_categories_p_cat_id FOREIGN KEY (p_cat_id) REFERENCES products(p_cat_id)
+  CONSTRAINT fk_product_categories_p_cat_id FOREIGN KEY (p_cat_id) REFERENCES products(product_id)
+);
+
+-- Table: customer_orders
+CREATE TABLE customer_orders (
+  order_id NUMBER(10) PRIMARY KEY,
+  customer_id NUMBER(10) NOT NULL,
+  due_amount NUMBER(10, 2) NOT NULL,
+  invoice_no NUMBER(10) NOT NULL,
+  qty NUMBER(10) NOT NULL,
+  talla VARCHAR2(100) NOT NULL,
+  order_status VARCHAR2(100) NOT NULL,
+  CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+-- Table: pending_orders
+CREATE TABLE pending_orders (
+  order_id NUMBER (10) PRIMARY KEY,
+  customer_id NUMBER(10) NOT NULL,
+  invoice_no NUMBER(10) NOT NULL,
+  product_id NUMBER(10) NOT NULL,
+  qty NUMBER (10)NOT NULL,
+  talla VARCHAR2(255) NOT NULL,
+  order_status VARCHAR2(255) NOT NULL,
+  CONSTRAINT fk_pending_orders_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+  CONSTRAINT fk_pending_orders_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+-- Table: wishlist
+CREATE TABLE wishlist (
+  wishlist_id NUMBER(10) PRIMARY KEY,
+  customer_id NUMBER(10) NOT NULL,
+  product_id NUMBER(10) NOT NULL,
+  CONSTRAINT fk_wishlist_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+  CONSTRAINT fk_wishlist_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+-- Table: cart
+CREATE TABLE cart (
+  cart_id NUMBER(10) PRIMARY KEY,
+  customer_id NUMBER(10) NOT NULL,
+  p_id NUMBER(10) NOT NULL,
+  ip_add VARCHAR2(255) NOT NULL,
+  qty NUMBER(10) NOT NULL,
+  p_price NUMBER(10, 2) NOT NULL,
+  talla VARCHAR2(255) NOT NULL,
+  CONSTRAINT fk_cart_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+  CONSTRAINT fk_cart_product_id FOREIGN KEY (p_id) REFERENCES products(product_id)
+);
+
+
+
+-- Table: coupons
+CREATE TABLE coupons (
+  coupon_id NUMBER(10) PRIMARY KEY,
+  product_id NUMBER(10) NOT NULL,
+  coupon_title VARCHAR2(255) NOT NULL,
+  coupon_price NUMBER(10, 2) NOT NULL,
+  coupon_code VARCHAR2(255) NOT NULL,
+  coupon_limit NUMBER(10) NOT NULL,
+  coupon_used NUMBER(10) NOT NULL,
+  CONSTRAINT fk_coupons_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+-- Table: bundle_product_relation
+CREATE TABLE bundle_product_relation (
+  rel_id NUMBER(10) PRIMARY KEY,
+  rel_title VARCHAR2(255) NOT NULL,
+  product_id NUMBER(10) NOT NULL,
+  bundle_id NUMBER(10) NOT NULL,
+  CONSTRAINT fk_bundle_product_relation_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+-- Table: bundle_product_relation_mapping
+CREATE TABLE bundle_product_relation_mapping (
+  product_id NUMBER(10) NOT NULL,
+  bundle_id NUMBER(10) NOT NULL,
+  PRIMARY KEY (product_id, bundle_id),
+  CONSTRAINT fk_bundle_product_relation_mapping_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+-- Table: coupon_product_relation
+CREATE TABLE coupon_product_relation (
+  coupon_id NUMBER(10) NOT NULL,
+  product_id NUMBER(10) NOT NULL,
+  PRIMARY KEY (coupon_id, product_id),
+  CONSTRAINT fk_coupon_product_relation_coupon_id FOREIGN KEY (coupon_id) REFERENCES coupons(coupon_id),
+  CONSTRAINT fk_coupon_product_relation_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 --Insert: product_categories
@@ -27,13 +226,7 @@ VALUES (5, 'Deportes', 'Principal', 'sports.jpg');
 
 
 
--- Table: categories
-CREATE TABLE categories (
-  cat_id NUMBER(10) PRIMARY KEY,
-  cat_title VARCHAR2(100) NOT NULL,
-  cat_top VARCHAR2(100) NOT NULL,
-  cat_image VARCHAR2(100) NOT NULL
-);
+
 
 --Inserts
 INSERT INTO categories (cat_id, cat_title, cat_top, cat_image)
@@ -54,13 +247,6 @@ VALUES (5, 'Deportes', 'Principal', 'sports_cat.jpg');
 
 
 
--- Table: manufacturers
-CREATE TABLE manufacturers (
-  manufacturer_id NUMBER(10) PRIMARY KEY,
-  manufacturer_title VARCHAR2(255) NOT NULL,
-  manufacturer_top VARCHAR2(100) NOT NULL,
-  manufacturer_image VARCHAR2(100) NOT NULL
-);
 
 --Inserts
 INSERT INTO manufacturers (manufacturer_id, manufacturer_title, manufacturer_top, manufacturer_image)
@@ -81,19 +267,6 @@ VALUES (5, 'Nike', 'Principal', 'nike_logo.jpg');
 
 
 
--- Table: admins
-CREATE TABLE admins (
-  admin_id NUMBER(10) PRIMARY KEY,
-  admin_name VARCHAR2(255) NOT NULL,
-  admin_email VARCHAR2(255) NOT NULL,
-  admin_pass VARCHAR2(255) NOT NULL,
-  admin_image VARCHAR2(255) NOT NULL,
-  admin_contact VARCHAR2(255) NOT NULL,
-  admin_country VARCHAR2(255) NOT NULL,
-  admin_job VARCHAR2(255) NOT NULL,
-  admin_about VARCHAR2(4000) NOT NULL
-);
-
 --Inserts
 INSERT INTO admins (admin_id, admin_name, admin_email, admin_pass, admin_image, admin_contact, admin_country, admin_job, admin_about)
 VALUES (1, 'Admin1', 'admin1@example.com', 'password1', 'admin1.jpg', '123456789', 'Country1', 'Job1', 'About Admin1');
@@ -113,20 +286,6 @@ VALUES (5, 'Admin5', 'admin5@example.com', 'password5', 'admin5.jpg', '777888999
 
 
 
--- Table: customers
-CREATE TABLE customers (
-  customer_id NUMBER(10) PRIMARY KEY,
-  customer_name VARCHAR2(255) NOT NULL,
-  customer_email VARCHAR2(255) NOT NULL,
-  customer_pass VARCHAR2(255) NOT NULL,
-  customer_country VARCHAR2(255) NOT NULL,
-  customer_city VARCHAR2(255) NOT NULL,
-  customer_contact VARCHAR2(255) NOT NULL,
-  customer_address VARCHAR2(4000) NOT NULL,
-  customer_image VARCHAR2(255) NOT NULL,
-  customer_ip VARCHAR2(255) NOT NULL,
-  customer_confirm_code VARCHAR2(255) NOT NULL
-);
 
 --Inserts
 INSERT INTO customers (customer_id, customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact, customer_address, customer_image, customer_ip, customer_confirm_code)
@@ -147,18 +306,6 @@ VALUES (5, 'Customer5', 'customer5@example.com', 'password5', 'Country5', 'City5
 
 
 
--- Table: customer_orders
-CREATE TABLE customer_orders (
-  order_id NUMBER(10) PRIMARY KEY,
-  customer_id NUMBER(10) NOT NULL,
-  due_amount NUMBER(10, 2) NOT NULL,
-  invoice_no NUMBER(10) NOT NULL,
-  qty NUMBER(10) NOT NULL,
-  size VARCHAR2(100) NOT NULL,
-  order_status VARCHAR2(100) NOT NULL,
-  CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
-);
-
 --Inserts
 INSERT INTO customer_orders (order_id, customer_id, due_amount, invoice_no, qty, size, order_status)
 VALUES (1, 1, 100.00, 12345, 2, 'M', 'Pendiente');
@@ -177,14 +324,7 @@ VALUES (5, 5, 80.25, 12349, 1, 'M', 'En Proceso');
 
 
 
--- Table: wishlist
-CREATE TABLE wishlist (
-  wishlist_id NUMBER(10) PRIMARY KEY,
-  customer_id NUMBER(10) NOT NULL,
-  product_id NUMBER(10) NOT NULL,
-  CONSTRAINT fk_wishlist_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-  CONSTRAINT fk_wishlist_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
+
 
 --inserts
 INSERT INTO wishlist (wishlist_id, customer_id, product_id)
@@ -204,18 +344,6 @@ VALUES (5, 5, 105);
 
 
 
--- Table: cart
-CREATE TABLE cart (
-  cart_id NUMBER(10) PRIMARY KEY,
-  customer_id NUMBER(10) NOT NULL,
-  p_id NUMBER(10) NOT NULL,
-  ip_add VARCHAR2(255) NOT NULL,
-  qty NUMBER(10) NOT NULL,
-  p_price NUMBER(10, 2) NOT NULL,
-  size VARCHAR2(255) NOT NULL,
-  CONSTRAINT fk_cart_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-  CONSTRAINT fk_cart_product_id FOREIGN KEY (p_id) REFERENCES products(product_id)
-);
 
 --inserts
 INSERT INTO cart (cart_id, customer_id, p_id, ip_add, qty, p_price, size)
@@ -235,18 +363,7 @@ VALUES (5, 5, 105, '192.168.1.5', 1, 40.25, 'M');
 
 
 
--- Table: pending_orders
-CREATE TABLE pending_orders (
-  order_id NUMBER(10) PRIMARY KEY,
-  customer_id NUMBER(10) NOT NULL,
-  invoice_no NUMBER(10) NOT NULL,
-  product_id NUMBER(10) NOT NULL,
-  qty NUMBER(10) NOT NULL,
-  size VARCHAR2(255) NOT NULL,
-  order_status VARCHAR2(255) NOT NULL,
-  CONSTRAINT fk_pending_orders_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-  CONSTRAINT fk_pending_orders_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
+
 
 --inserts 
 INSERT INTO pending_orders (order_id, customer_id, invoice_no, product_id, qty, size, order_status)
@@ -265,18 +382,6 @@ INSERT INTO pending_orders (order_id, customer_id, invoice_no, product_id, qty, 
 VALUES (5, 5, 12349, 105, 1, 'M', 'En Proceso');
 
 
-
--- Table: coupons
-CREATE TABLE coupons (
-  coupon_id NUMBER(10) PRIMARY KEY,
-  product_id NUMBER(10) NOT NULL,
-  coupon_title VARCHAR2(255) NOT NULL,
-  coupon_price NUMBER(10, 2) NOT NULL,
-  coupon_code VARCHAR2(255) NOT NULL,
-  coupon_limit NUMBER(10) NOT NULL,
-  coupon_used NUMBER(10) NOT NULL,
-  CONSTRAINT fk_coupons_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
 --inserts
 INSERT INTO coupons (coupon_id, product_id, coupon_title, coupon_price, coupon_code, coupon_limit, coupon_used)
 VALUES (1, 101, 'Descuento de Verano', 10.00, 'VERANO10', 100, 0);
@@ -296,15 +401,6 @@ VALUES (5, 105, 'Oferta de Primavera', 25.00, 'PRIMAVERA25', 50, 0);
 
 
 
--- Table: bundle_product_relation
-CREATE TABLE bundle_product_relation (
-  rel_id NUMBER(10) PRIMARY KEY,
-  rel_title VARCHAR2(255) NOT NULL,
-  product_id NUMBER(10) NOT NULL,
-  bundle_id NUMBER(10) NOT NULL,
-  CONSTRAINT fk_bundle_product_relation_product_id FOREIGN KEY (product_id) REFERENCES products(product_id),
-  CONSTRAINT fk_bundle_product_relation_bundle_id FOREIGN KEY (bundle_id) REFERENCES bundle_product_relation(bundle_id)
-);
 
 --inserts
 INSERT INTO bundle_product_relation (rel_id, rel_title, product_id, bundle_id)
@@ -325,14 +421,6 @@ VALUES (5, 'Relación 5', 105, 205);
 
 
 
--- Table: coupon_product_relation
-CREATE TABLE coupon_product_relation (
-  coupon_id NUMBER(10) NOT NULL,
-  product_id NUMBER(10) NOT NULL,
-  PRIMARY KEY (coupon_id, product_id),
-  CONSTRAINT fk_coupon_product_relation_coupon_id FOREIGN KEY (coupon_id) REFERENCES coupons(coupon_id),
-  CONSTRAINT fk_coupon_product_relation_product_id FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
 --inserts
 INSERT INTO coupon_product_relation (coupon_id, product_id)
 VALUES (1, 101);
@@ -350,14 +438,7 @@ INSERT INTO coupon_product_relation (coupon_id, product_id)
 VALUES (5, 105);
 
 
--- Table: bundle_product_relation_mapping
-CREATE TABLE bundle_product_relation_mapping (
-  product_id NUMBER(10) NOT NULL,
-  bundle_id NUMBER(10) NOT NULL,
-  PRIMARY KEY (product_id, bundle_id),
-  CONSTRAINT fk_bundle_product_relation_mapping_product_id FOREIGN KEY (product_id) REFERENCES products(product_id),
-  CONSTRAINT fk_bundle_product_relation_mapping_bundle_id FOREIGN KEY (bundle_id) REFERENCES bundle_product_relation(bundle_id)
-);
+
 --inserts
 INSERT INTO bundle_product_relation_mapping (product_id, bundle_id)
 VALUES (101, 201);
@@ -376,13 +457,6 @@ VALUES (105, 205);
 
 
 
--- Table: about_us
-CREATE TABLE about_us (
-  about_id NUMBER(10) PRIMARY KEY,
-  about_heading VARCHAR2(255) NOT NULL,
-  about_short_desc VARCHAR2(4000) NOT NULL,
-  about_desc CLOB NOT NULL
-);
 --inserts
 INSERT INTO about_us (about_id, about_heading, about_short_desc, about_desc)
 VALUES (1, 'Nuestra Historia', 'Descubre cómo comenzamos nuestra empresa.', 'Somos una empresa fundada en 20XX con la misión de proporcionar productos y servicios de calidad a nuestros clientes. Desde entonces, hemos estado comprometidos con la excelencia y la satisfacción del cliente.');
@@ -399,14 +473,6 @@ VALUES (4, 'Nuestros Valores', 'Conoce los valores que guían nuestro trabajo di
 INSERT INTO about_us (about_id, about_heading, about_short_desc, about_desc)
 VALUES (5, 'Nuestro Compromiso', 'Descubre nuestro compromiso con la comunidad y el medio ambiente.', 'Estamos comprometidos a ser una empresa socialmente responsable y a contribuir positivamente a la comunidad y al medio ambiente. Nos esforzamos por minimizar nuestro impacto ambiental y apoyar iniciativas benéficas.');
 
-
--- Table: contact_us
-CREATE TABLE contact_us (
-  contact_id NUMBER(10) PRIMARY KEY,
-  contact_email VARCHAR2(255) NOT NULL,
-  contact_heading VARCHAR2(255) NOT NULL,
-  contact_desc CLOB NOT NULL
-);
 
 --inserts
 INSERT INTO contact_us (contact_id, contact_email, contact_heading, contact_desc)
@@ -426,15 +492,7 @@ VALUES (5, 'media@example.com', 'Contacto de Medios', '¿Eres un miembro de los 
 
 
 
--- Table: store
-CREATE TABLE store (
-  store_id NUMBER(10) PRIMARY KEY,
-  store_title VARCHAR2(255) NOT NULL,
-  store_image VARCHAR2(255) NOT NULL,
-  store_desc CLOB NOT NULL,
-  store_button VARCHAR2(255) NOT NULL,
-  store_url VARCHAR2(255) NOT NULL
-);
+
 
 --inserts
 INSERT INTO store (store_id, store_title, store_image, store_desc, store_button, store_url)
@@ -453,14 +511,6 @@ INSERT INTO store (store_id, store_title, store_image, store_desc, store_button,
 VALUES (5, 'Tienda de Hogar', 'home_store.jpg', 'Descubre nuestra selección de productos para el hogar que harán que tu espacio sea aún más acogedor.', 'Explorar', '/store/home');
 
 
--- Table: terms
-CREATE TABLE terms (
-  term_id NUMBER(10) PRIMARY KEY,
-  term_title VARCHAR2(100) NOT NULL,
-  term_link VARCHAR2(100) NOT NULL,
-  term_desc CLOB NOT NULL
-);
-
 --inserts
 INSERT INTO terms (term_id, term_title, term_link, term_desc)
 VALUES (1, 'Términos de Uso', '/terms_of_use', 'Lee nuestros términos de uso para entender las condiciones bajo las cuales puedes utilizar nuestros servicios.');
@@ -477,18 +527,6 @@ VALUES (4, 'Política de Cookies', '/cookie_policy', 'Lee nuestra política de c
 INSERT INTO terms (term_id, term_title, term_link, term_desc)
 VALUES (5, 'Términos y Condiciones', '/terms_and_conditions', 'Consulta nuestros términos y condiciones generales para conocer las reglas y restricciones relacionadas con el uso de nuestros servicios y productos.');
 
-
--- Table: payments
-CREATE TABLE payments (
-  payment_id NUMBER(10) PRIMARY KEY,
-  invoice_no NUMBER(10) NOT NULL,
-  amount NUMBER(10, 2) NOT NULL,
-  payment_mode VARCHAR2(255) NOT NULL,
-  ref_no NUMBER(10) NOT NULL,
-  code NUMBER(10) NOT NULL,
-  payment_date DATE NOT NULL
-);
-
 --inserts
 INSERT INTO payments (payment_id, invoice_no, amount, payment_mode, ref_no, code, payment_date)
 VALUES (1, 1001, 50.00, 'Tarjeta de Crédito', 123456, 987654, TO_DATE('2024-04-10', 'YYYY-MM-DD'));
@@ -504,8 +542,6 @@ VALUES (4, 1004, 120.25, 'Tarjeta de Débito', 456789, 789012, TO_DATE('2024-04-
 
 INSERT INTO payments (payment_id, invoice_no, amount, payment_mode, ref_no, code, payment_date)
 VALUES (5, 1005, 200.00, 'Efectivo', 321098, 567890, TO_DATE('2024-04-14', 'YYYY-MM-DD'));
-
-
 
 -- Foreign key from product_categories to products
 ALTER TABLE product_categories
@@ -551,7 +587,7 @@ ADD FOREIGN KEY (bundle_id) REFERENCES bundle_product_relation(bundle_id);
 ALTER TABLE pending_orders
 ADD FOREIGN KEY (product_id) REFERENCES products(product_id);
 
-CREATE OR REPLACE PROCEDURE change_password(
+create or replace NONEDITIONABLE PROCEDURE change_password(
     p_customer_email IN VARCHAR2,
     p_old_password IN VARCHAR2,
     p_new_password IN VARCHAR2,
@@ -567,35 +603,26 @@ BEGIN
         p_msg := 'Your New Password does not match';
         RETURN;
     END IF;
-    
+
     -- Obtener la contraseña actual del cliente
     SELECT customer_pass INTO v_old_password
     FROM customers
     WHERE customer_email = p_customer_email;
-    
-    -- Verificar que la contraseña antigua coincida
-    IF NOT dbms_crypto.compare(p_old_password, v_old_password) = 0 THEN
-        p_msg := 'Your Current Password is not valid try again';
-        RETURN;
-    END IF;
-    
-    -- Generar el hash de la nueva contraseña
-    v_hashed_password := dbms_crypto.hash(p_new_password, dbms_crypto.hash_sha256);
-    
+
     -- Actualizar la contraseña en la tabla de clientes
     UPDATE customers
     SET customer_pass = v_hashed_password
     WHERE customer_email = p_customer_email;
-    
+
     p_msg := 'Success';
-    
+
 EXCEPTION
     WHEN OTHERS THEN
         p_msg := 'An error occurred. Please try again later.';
 END;
 /
 
-CREATE OR REPLACE PROCEDURE confirm_payment(
+create or replace NONEDITIONABLE PROCEDURE confirm_payment(
     p_order_id IN NUMBER,
     p_invoice_no IN VARCHAR2,
     p_amount IN NUMBER,
@@ -610,17 +637,17 @@ BEGIN
     -- Insertar el pago en la tabla de pagos
     INSERT INTO payments (invoice_no, amount, payment_mode, ref_no, code, payment_date)
     VALUES (p_invoice_no, p_amount, p_payment_mode, p_ref_no, p_code, p_payment_date);
-    
+
     -- Actualizar el estado del pedido en la tabla de órdenes de clientes
     UPDATE customer_orders
     SET order_status = 'Complete'
     WHERE order_id = p_order_id;
-    
+
     -- Actualizar el estado del pedido en la tabla de órdenes pendientes
     UPDATE pending_orders
     SET order_status = 'Complete'
     WHERE order_id = p_order_id;
-    
+
     p_msg := 'Success';
 EXCEPTION
     WHEN OTHERS THEN
@@ -628,7 +655,7 @@ EXCEPTION
 END;
 /
 
-CREATE OR REPLACE PROCEDURE customer_login(
+create or replace NONEDITIONABLE PROCEDURE customer_login(
     p_customer_email IN VARCHAR2,
     p_customer_pass IN VARCHAR2,
     p_login_status OUT VARCHAR2
@@ -641,7 +668,7 @@ BEGIN
     FROM customers
     WHERE customer_email = p_customer_email
     AND customer_pass = p_customer_pass;
-    
+
     IF v_customer_count = 0 THEN
         p_login_status := 'password or email is wrong';
     ELSE
@@ -650,7 +677,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE delete_customer_account(
+create or replace NONEDITIONABLE PROCEDURE delete_customer_account(
     p_customer_email IN VARCHAR2,
     p_success OUT VARCHAR2
 )
@@ -667,7 +694,7 @@ BEGIN
     END IF;
 END;
 /
-CREATE OR REPLACE PROCEDURE delete_wishlist_item(
+create or replace NONEDITIONABLE PROCEDURE delete_wishlist_item(
     p_wishlist_id IN NUMBER,
     p_success OUT VARCHAR2
 )
@@ -685,7 +712,7 @@ BEGIN
 END;
 /
 -- Procedimiento almacenado para obtener los detalles del cliente
-CREATE OR REPLACE PROCEDURE get_customer_details(
+create or replace NONEDITIONABLE PROCEDURE get_customer_details(
     p_email IN VARCHAR2,
     p_customer_id OUT VARCHAR2,
     p_customer_name OUT VARCHAR2,
@@ -704,7 +731,7 @@ END get_customer_details;
 /
 
 -- Procedimiento almacenado para confirmar el correo electrónico del cliente
-CREATE OR REPLACE PROCEDURE confirm_email(
+create or replace NONEDITIONABLE PROCEDURE confirm_email(
     p_confirm_code IN VARCHAR2
 ) AS
 BEGIN
@@ -714,65 +741,8 @@ BEGIN
     COMMIT;
 END confirm_email;
 /
--- Procedimiento almacenado para enviar el correo electrónico de confirmación nuevamente
-CREATE OR REPLACE PROCEDURE send_confirmation_email(
-    p_email IN VARCHAR2,
-    p_customer_name IN VARCHAR2,
-    p_confirm_code IN VARCHAR2
-) AS
-    v_subject VARCHAR2(100) := 'Email Confirmation Message';
-    v_from VARCHAR2(100) := 'your_email@example.com';
-    v_message CLOB;
-    v_headers VARCHAR2(200);
-BEGIN
-    -- Construir el mensaje de correo electrónico
-    v_message := '<h2>Email Confirmation By YourWebsite.com ' || p_customer_name || '</h2><a href="localhost/ecom_store/customer/my_account.php?' || p_confirm_code || '">Click Here To Confirm Email</a>';
 
-    -- Construir los encabezados del correo electrónico
-    v_headers := 'From: ' || v_from || CHR(13) || CHR(10);
-    v_headers := v_headers || 'Content-type: text/html; charset=iso-8859-1' || CHR(13) || CHR(10);
-
-    -- Enviar el correo electrónico
-    UTL_MAIL.send(
-        sender => v_from,
-        recipients => p_email,
-        subject => v_subject,
-        message => v_message,
-        mime_type => 'text/html',
-        priority => 1
-    );
-
-    COMMIT;
-END send_confirmation_email;
-/
-CREATE OR REPLACE PROCEDURE get_customer_id (
-    p_customer_email IN VARCHAR2,
-    p_customer_id OUT NUMBER
-) AS
-BEGIN
-    SELECT customer_id INTO p_customer_id
-    FROM customers
-    WHERE customer_email = p_customer_email;
-END;
-/
-CREATE OR REPLACE PROCEDURE get_customer_orders (
-    p_customer_id IN NUMBER,
-    p_order_id OUT SYS.ODCINUMBERLIST,
-    p_due_amount OUT SYS.ODCINUMBERLIST,
-    p_invoice_no OUT SYS.ODCINUMBERLIST,
-    p_qty OUT SYS.ODCINUMBERLIST,
-    p_size OUT SYS.ODCIVARCHAR2LIST,
-    p_order_date OUT SYS.ODCIVARCHAR2LIST,
-    p_order_status OUT SYS.ODCIVARCHAR2LIST
-) AS
-BEGIN
-    SELECT order_id, due_amount, invoice_no, qty, size, TO_CHAR(order_date, 'YYYY-MM-DD'), order_status
-    BULK COLLECT INTO p_order_id, p_due_amount, p_invoice_no, p_qty, p_size, p_order_date, p_order_status
-    FROM customer_orders
-    WHERE customer_id = p_customer_id;
-END;
-/
-CREATE OR REPLACE PROCEDURE get_customer_id(
+create or replace NONEDITIONABLE PROCEDURE get_customer_id(
     p_customer_email IN VARCHAR2,
     p_customer_id OUT NUMBER
 )
@@ -783,7 +753,24 @@ BEGIN
     WHERE customer_email = p_customer_email;
 END;
 /
-CREATE OR REPLACE PROCEDURE get_customer_wishlist(
+create or replace NONEDITIONABLE PROCEDURE get_customer_orders (
+    p_customer_id IN NUMBER,
+    p_order_id OUT SYS.ODCINUMBERLIST,
+    p_due_amount OUT SYS.ODCINUMBERLIST,
+    p_invoice_no OUT SYS.ODCINUMBERLIST,
+    p_qty OUT SYS.ODCINUMBERLIST,
+    p_talla OUT SYS.ODCIVARCHAR2LIST,
+    p_order_status OUT SYS.ODCIVARCHAR2LIST
+) AS
+BEGIN
+    SELECT order_id, due_amount, invoice_no, qty, talla, order_status
+    BULK COLLECT INTO p_order_id, p_due_amount, p_invoice_no, p_qty, p_talla, p_order_status
+    FROM customer_orders
+    WHERE customer_id = p_customer_id;
+END;
+/
+
+create or replace NONEDITIONABLE PROCEDURE get_customer_wishlist(
     p_customer_id IN NUMBER,
     p_wishlist_id OUT SYS.ODCINUMBERLIST,
     p_product_id OUT SYS.ODCINUMBERLIST
@@ -797,7 +784,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE update_customer (
+create or replace NONEDITIONABLE PROCEDURE update_customer (
     p_customer_id IN NUMBER,
     p_customer_name IN VARCHAR2,
     p_customer_email IN VARCHAR2,
@@ -820,20 +807,9 @@ BEGIN
     COMMIT;
 END;
 /
-CREATE OR REPLACE PROCEDURE get_customer_wishlist(
-    p_customer_id IN NUMBER,
-    p_wishlist_id OUT SYS.ODCINUMBERLIST,
-    p_product_id OUT SYS.ODCINUMBERLIST
-)
-AS
-BEGIN
-    SELECT wishlist_id, product_id
-    BULK COLLECT INTO p_wishlist_id, p_product_id
-    FROM wishlist
-    WHERE customer_id = p_customer_id;
-END;
-/
-CREATE OR REPLACE PROCEDURE get_product_details(
+  
+
+create or replace NONEDITIONABLE PROCEDURE get_product_details(
     p_product_id IN NUMBER,
     p_product_title OUT VARCHAR2,
     p_product_url OUT VARCHAR2,
@@ -848,13 +824,11 @@ BEGIN
 END;
 /
 -- Procedimiento para obtener la cantidad de elementos en el carrito
-CREATE OR REPLACE PROCEDURE get_items_count
+create or replace NONEDITIONABLE PROCEDURE get_items_count
 IS
   v_ip_add VARCHAR2(50);
   v_count_items NUMBER;
 BEGIN
-  -- Obtener la dirección IP real del usuario
-  v_ip_add := get_real_user_ip();
 
   -- Consultar la base de datos para obtener los elementos del carrito para esta dirección IP
   SELECT COUNT(*) INTO v_count_items
@@ -867,7 +841,7 @@ END get_items_count;
 /
 
 
-CREATE OR REPLACE PROCEDURE GET_PRODUCTS_PAGINATED (
+create or replace NONEDITIONABLE PROCEDURE GET_PRODUCTS_PAGINATED (
     p_manufacturer_id IN NUMBER DEFAULT NULL,
     p_category_id IN NUMBER DEFAULT NULL,
     p_page_number IN NUMBER,
@@ -883,8 +857,7 @@ BEGIN
 
     -- Consulta para obtener los productos filtrados y paginados
     FOR product_row IN (
-        SELECT *
-        FROM (
+        SELECT * FROM (
             SELECT 
                 p.*,
                 ROW_NUMBER() OVER (ORDER BY product_id) AS row_num
@@ -892,25 +865,25 @@ BEGIN
                 products p
             WHERE 
                 (p_manufacturer_id IS NULL OR manufacturer_id = p_manufacturer_id)
-                AND (p_category_id IS NULL OR category_id = p_category_id)
+                AND (p_category_id IS NULL OR cat_id = p_category_id) -- Corregido el nombre de la columna
         )
         WHERE 
             row_num BETWEEN v_start_index AND v_end_index
     )
     LOOP
         -- Devolver los resultados (puedes modificar esto según tu estructura de datos)
-        DBMS_OUTPUT.PUT_LINE('Product ID: ' || product_row.product_id || ', Product Name: ' || product_row.product_name);
+        DBMS_OUTPUT.PUT_LINE('Product ID: ' || product_row.product_id || ', Product Title: ' || product_row.product_title);
         -- Agrega más columnas según tus necesidades
     END LOOP;
 END;
 /
-
-CREATE OR REPLACE PROCEDURE Get_Paginator_Paginated (
-    p_manufacturer_id    IN NUMBER DEFAULT NULL,
-    p_p_cat_id           IN NUMBER DEFAULT NULL,
-    p_cat_id             IN NUMBER DEFAULT NULL,
-    p_per_page           IN NUMBER DEFAULT 6,
-    p_page               IN NUMBER DEFAULT 1
+  
+create or replace NONEDITIONABLE PROCEDURE Get_Paginator_Paginated (
+    p_manufacturer_id IN NUMBER DEFAULT NULL,
+    p_p_cat_id IN NUMBER DEFAULT NULL,
+    p_cat_id IN NUMBER DEFAULT NULL,
+    p_per_page IN NUMBER DEFAULT 6,
+    p_page IN NUMBER DEFAULT 1
 ) AS
     per_page NUMBER := p_per_page;
     start_from NUMBER := (p_page - 1) * per_page;
@@ -928,13 +901,22 @@ BEGIN
     total_pages := CEIL(total_records / per_page);
 
     -- Generar el HTML para la paginación
-    DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=1' || CASE WHEN p_manufacturer_id IS NOT NULL THEN '&man[]=' || p_manufacturer_id ELSE '' END || CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat[]=' || p_p_cat_id ELSE '' END || CASE WHEN p_cat_id IS NOT NULL THEN '&cat[]=' || p_cat_id ELSE '' END || '">First Page</a></li>');
+    DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=1' ||
+        CASE WHEN p_manufacturer_id IS NOT NULL THEN '&manufacturer_id=' || p_manufacturer_id ELSE '' END ||
+        CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat_id=' || p_p_cat_id ELSE '' END ||
+        CASE WHEN p_cat_id IS NOT NULL THEN '&cat_id=' || p_cat_id ELSE '' END || '">First Page</a></li>');
 
-    FOR i IN 1..5 -- Ejemplo de 5 páginas
-        DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=' || i || CASE WHEN p_manufacturer_id IS NOT NULL THEN '&man[]=' || p_manufacturer_id ELSE '' END || CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat[]=' || p_p_cat_id ELSE '' END || CASE WHEN p_cat_id IS NOT NULL THEN '&cat[]=' || p_cat_id ELSE '' END || '">' || i || '</a></li>');
+    FOR i IN 1..5 LOOP -- Ejemplo de 5 páginas
+        DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=' || i ||
+            CASE WHEN p_manufacturer_id IS NOT NULL THEN '&manufacturer_id=' || p_manufacturer_id ELSE '' END ||
+            CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat_id=' || p_p_cat_id ELSE '' END ||
+            CASE WHEN p_cat_id IS NOT NULL THEN '&cat_id=' || p_cat_id ELSE '' END || '">' || i || '</a></li>');
     END LOOP;
 
-    DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=' || total_pages || CASE WHEN p_manufacturer_id IS NOT NULL THEN '&man[]=' || p_manufacturer_id ELSE '' END || CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat[]=' || p_p_cat_id ELSE '' END || CASE WHEN p_cat_id IS NOT NULL THEN '&cat[]=' || p_cat_id ELSE '' END || '">Last Page</a></li>');
+    DBMS_OUTPUT.PUT_LINE('<li><a href="shop.php?page=' || total_pages ||
+        CASE WHEN p_manufacturer_id IS NOT NULL THEN '&manufacturer_id=' || p_manufacturer_id ELSE '' END ||
+        CASE WHEN p_p_cat_id IS NOT NULL THEN '&p_cat_id=' || p_p_cat_id ELSE '' END ||
+        CASE WHEN p_cat_id IS NOT NULL THEN '&cat_id=' || p_cat_id ELSE '' END || '">Last Page</a></li>');
 END Get_Paginator_Paginated;
 /
 
@@ -951,7 +933,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE get_paginator
+create or replace NONEDITIONABLE PROCEDURE get_paginator
 AS
 BEGIN
   -- Aquí puedes calcular la paginación y generar el HTML correspondiente para los enlaces de paginación
@@ -961,7 +943,8 @@ BEGIN
   END LOOP;
 END;
 /
-CREATE OR REPLACE PROCEDURE get_products
+  
+create or replace NONEDITIONABLE PROCEDURE get_products
 AS
 BEGIN
   FOR product IN (SELECT * FROM products)
@@ -972,216 +955,127 @@ BEGIN
 END;
 /
 
-/*FUNTIÓN*/
-
-/*change_password: Esta función permite a un cliente cambiar su contraseña. Verifica que las contraseñas nuevas coincidan, 
-valida la contraseña actual del cliente y actualiza la contraseña en la tabla de clientes.*/
-CREATE OR REPLACE FUNCTION change_password(
-  p_customer_email IN VARCHAR2,
-  p_old_password IN VARCHAR2,
-  p_new_password IN VARCHAR2,
-  p_new_password_again IN VARCHAR2
-) RETURN VARCHAR2 IS
-  v_hashed_password VARCHAR2(255);
-  v_old_password VARCHAR2(255);
+-- Trigger
+--activar esto
+SET SERVEROUTPUT ON;
+--luego esto
+CREATE OR REPLACE TRIGGER trigger_after_insert_product_categories
+AFTER INSERT ON product_categories
+FOR EACH ROW
 BEGIN
-  -- Verificar que las contraseñas nuevas coincidan
-  IF p_new_password <> p_new_password_again THEN
-    RETURN 'Las contraseñas nuevas no coinciden';
-  END IF;
+  DBMS_OUTPUT.PUT_LINE('Se ha insertado una nueva fila en la tabla product_categories.');
+END;
 
-  -- Obtener la contraseña actual del cliente
-  SELECT customer_pass INTO v_old_password FROM customers WHERE customer_email = p_customer_email;
+-- Trigger
+CREATE OR REPLACE TRIGGER trigger_after_update_product_categories
+AFTER UPDATE ON product_categories
+FOR EACH ROW
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Se ha actualizado una fila en la tabla product_categories.');
+END;
 
-  -- Verificar que la contraseña antigua coincida
-  IF NOT dbms_crypto.compare(p_old_password, v_old_password) = 0 THEN
-    RETURN 'La contraseña actual no es válida';
-  END IF;
+-- Trigger
+CREATE OR REPLACE TRIGGER trigger_after_delete_product_categories
+AFTER DELETE ON product_categories
+FOR EACH ROW
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Se ha eliminado una fila de la tabla product_categories.');
+END;
 
-  -- Generar el hash de la nueva contraseña
-  v_hashed_password := dbms_crypto.hash(p_new_password, dbms_crypto.hash_sha256);
+-- Trigger
+CREATE OR REPLACE TRIGGER trigger_after_insert_categories
+AFTER INSERT ON categories
+FOR EACH ROW
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Se ha insertado una nueva fila en la tabla categories con ID: ' || :new.cat_id);
+  --se muestra el id
+END;
 
-  -- Actualizar la contraseña en la tabla de clientes
-  UPDATE customers SET customer_pass = v_hashed_password WHERE customer_email = p_customer_email;
+-- trigger
+CREATE OR REPLACE TRIGGER trigger_after_delete_categories
+AFTER DELETE ON categories
+FOR EACH ROW
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Se ha eliminado una fila de la tabla categories con ID: ' || :old.cat_id);
+END;
 
-  RETURN 'Contraseña cambiada correctamente';
+
+-- funcion para que de el nombre de la categoria de productos por medio del id
+create or replace NONEDITIONABLE FUNCTION get_category_title(category_id_in IN NUMBER)
+RETURN VARCHAR2
+IS
+  category_title VARCHAR2(255);
+BEGIN
+  SELECT p_cat_title INTO category_title
+  FROM product_categories
+  WHERE p_cat_id = category_id_in;
+
+  RETURN category_title;
 EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al cambiar la contraseña';
+  WHEN NO_DATA_FOUND THEN
+    RETURN NULL; -- Devolver NULL si no se encuentra ninguna categor a con el ID dado
 END;
 
-/*confirm_payment: Utilizada para confirmar un pago de un pedido. Inserta el pago en la tabla de pagos, actualiza el estado 
-del pedido a 'Complete' en la tabla de órdenes de clientes y en las órdenes pendientes.*/
-
-CREATE OR REPLACE FUNCTION confirm_payment(
-  p_order_id IN NUMBER,
-  p_invoice_no IN VARCHAR2,
-  p_amount IN NUMBER,
-  p_payment_mode IN VARCHAR2,
-  p_ref_no IN VARCHAR2,
-  p_code IN VARCHAR2,
-  p_payment_date IN DATE
-) RETURN VARCHAR2 IS
+--create or replace NONEDITIONABLE FUNCTION count_product_categories
+RETURN NUMBER
+IS
+  total_count NUMBER;
 BEGIN
-  -- Insertar el pago en la tabla de pagos
-  INSERT INTO payments (invoice_no, amount, payment_mode, ref_no, code, payment_date)
-  VALUES (p_invoice_no, p_amount, p_payment_mode, p_ref_no, p_code, p_payment_date);
+  SELECT COUNT(*)
+  INTO total_count
+  FROM product_categories;
 
-  -- Actualizar el estado del pedido en la tabla de órdenes de clientes
-  UPDATE customer_orders SET order_status = 'Complete' WHERE order_id = p_order_id;
+  RETURN total_count;
+END;
 
-  -- Actualizar el estado del pedido en la tabla de órdenes pendientes
-  UPDATE pending_orders SET order_status = 'Complete' WHERE order_id = p_order_id;
+-- Funcion para por medio del id me de el nombre del faricante
+create or replace NONEDITIONABLE FUNCTION get_manufacturer_name(manufacturer_id_in IN NUMBER)
+RETURN VARCHAR2
+IS
+  manufacturer_name VARCHAR2(255);
+BEGIN
+  SELECT manufacturer_title INTO manufacturer_name
+  FROM manufacturers
+  WHERE manufacturer_id = manufacturer_id_in;
 
-  RETURN 'Pago confirmado correctamente';
+  RETURN manufacturer_name;
 EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al confirmar el pago';
+  WHEN NO_DATA_FOUND THEN
+    RETURN NULL; -- Devolver NULL si no se encuentra ning n fabricante con el ID que se inserto
 END;
 
-/*customer_login: Verifica las credenciales de inicio de sesión de un cliente. Comprueba si el correo electrónico 
-y la contraseña coinciden en la base de datos de clientes.*/
 
-CREATE OR REPLACE FUNCTION customer_login(
-  p_customer_email IN VARCHAR2,
-  p_customer_pass IN VARCHAR2
-) RETURN VARCHAR2 IS
-  v_customer_count NUMBER;
+-- funcion para saber el numero total de fabricantes que hay.
+create or replace NONEDITIONABLE FUNCTION count_manufacturers
+RETURN NUMBER
+IS
+  total_count NUMBER;
 BEGIN
-  -- Verificar las credenciales del cliente
-  SELECT COUNT(*) INTO v_customer_count FROM customers WHERE customer_email = p_customer_email AND customer_pass = p_customer_pass;
+  SELECT COUNT(*) INTO total_count
+  FROM manufacturers;
 
-  IF v_customer_count = 0 THEN
-    RETURN 'Contraseña o email incorrectos';
-  ELSE
-    RETURN 'Inicio de sesión exitoso';
-  END IF;
+  RETURN total_count;
+END;
+
+
+-- funcion que me da toda la informacion de un fabricante dando el id
+create or replace NONEDITIONABLE FUNCTION get_manufacturer_info(manufacturer_id_in IN NUMBER)
+RETURN manufacturers%ROWTYPE
+IS
+  manufacturer_info manufacturers%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO manufacturer_info
+  FROM manufacturers
+  WHERE manufacturer_id = manufacturer_id_in;
+
+  RETURN manufacturer_info;
 EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al iniciar sesión';
+  WHEN NO_DATA_FOUND THEN
+    NULL; 
 END;
 
-/*delete_customer_account: Elimina la cuenta de un cliente. Borra la información del cliente de la base de 
-datos y verifica si la eliminación fue exitosa.*/
-
-CREATE OR REPLACE FUNCTION delete_customer_account(
-  p_customer_email IN VARCHAR2
-) RETURN VARCHAR2 IS
-BEGIN
-  -- Eliminar la cuenta del cliente
-  DELETE FROM customers WHERE customer_email = p_customer_email;
-
-  -- Verificar si la cuenta ha sido eliminada correctamente
-  IF SQL%ROWCOUNT > 0 THEN
-    RETURN 'Cuenta eliminada correctamente';
-  ELSE
-    RETURN 'Error al eliminar la cuenta';
-  END IF;
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al eliminar la cuenta';
-END;
-
-/*delete_wishlist_item: Elimina un elemento de la lista de deseos de un cliente. Elimina el artículo 
-de la tabla de lista de deseos y verifica si se eliminó correctamente.*/
-
-CREATE OR REPLACE FUNCTION delete_wishlist_item(
-  p_wishlist_id IN NUMBER
-) RETURN VARCHAR2 IS
-BEGIN
-  -- Eliminar el elemento de la lista de deseos
-  DELETE FROM wishlist WHERE wishlist_id = p_wishlist_id;
-
-  -- Verificar si el elemento ha sido eliminado correctamente
-  IF SQL%ROWCOUNT > 0 THEN
-    RETURN 'Elemento eliminado correctamente';
-  ELSE
-    RETURN 'Error al eliminar el elemento';
-  END IF;
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al eliminar el elemento';
-END;
-
-/*get_customer_details: Obtiene los detalles de un cliente. Recupera información como el ID, nombre, país, ciudad, 
-contacto y dirección del cliente basado en su correo electrónico.*/
-
-CREATE OR REPLACE FUNCTION get_customer_details(
-  p_customer_email IN VARCHAR2
-) RETURN SYS_REFCURSOR IS
-  v_customer_details SYS_REFCURSOR;
-BEGIN
-  OPEN v_customer_details FOR
-  SELECT customer_id, customer_name, customer_country, customer_city, customer_contact, customer_address, customer_image
-  FROM customers
-  WHERE customer_email = p_customer_email;
-
-  RETURN v_customer_details;
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN NULL;
-END;
-
-/*confirm_email: Confirma el correo electrónico de un cliente. Actualiza el código de confirmación del 
-cliente en la base de datos para confirmar su dirección de correo electrónico.*/
-
-CREATE OR REPLACE FUNCTION confirm_email(
-  p_customer_email IN VARCHAR2
-) RETURN VARCHAR2 IS
-BEGIN
-  -- Actualizar el código de confirmación del cliente en la base de datos para confirmar su dirección de correo electrónico
-  UPDATE customers SET email_confirmed = 'Y' WHERE customer_email = p_customer_email;
-
-  RETURN 'Correo electrónico confirmado correctamente';
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 'Ha ocurrido un error al confirmar el correo electrónico';
-END;
-
-/*get_ related_products
-Esta función recupera los productos relacionados para un ID de producto determinado. Se basa en la tabla bundle_product_relation, que asocia productos con paquetes. 
-La función toma un product_id como entrada y devuelve un cursor de referencia que contiene los productos relacionados que pertenecen 
-al mismo paquete que el ID del producto dado.*/
-
-CREATE OR REPLACE FUNCTION get_related_products(p_product_id IN NUMBER)
-RETURN SYS_REFCURSOR IS
-  v_related_products SYS_REFCURSOR;
-BEGIN
-  OPEN v_related_products FOR
-  SELECT bpr.product_id, p.product_title, p.product_price
-  FROM bundle_product_relation bpr
-  JOIN products p ON bpr.product_id = p.product_id
-  WHERE bpr.bundle_id = (SELECT bundle_id FROM bundle_product_relation WHERE product_id = p_product_id);
-
-  RETURN v_related_products;
-END;
-
-/*get_bundle_product_details: Esta función recupera los detalles de un paquete de productos, incluido el título del paquete, el ID del producto, 
-el título del producto y el precio de cada producto del paquete.*/
-
-CREATE OR REPLACE FUNCTION get_bundle_product_details(
-  p_bundle_id IN NUMBER
-) RETURN SYS_REFCURSOR IS
-  v_bundle_product_details SYS_REFCURSOR;
-BEGIN
-  OPEN v_bundle_product_details FOR
-  SELECT bpr.rel_title AS bundle_title,
-         p.product_id,
-         p.product_title,
-         p.product_price
-  FROM bundle_product_relation bpr
-  JOIN products p ON bpr.product_id = p.product_id
-  WHERE bpr.bundle_id = p_bundle_id;
-
-  RETURN v_bundle_product_details;
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN NULL;
-END;
-
-/*get_related_products: Esta función toma un ID de producto como entrada y devuelve una lista de productos relacionados que pertenecen al mismo paquete que el producto dado.
-
-CREATE OR REPLACE FUNCTION get_related_products(p_product_id IN NUMBER)
+create or replace NONEDITIONABLE FUNCTION get_related_products(p_product_id IN NUMBER)
 RETURN SYS_REFCURSOR IS
   v_related_products SYS_REFCURSOR;
 BEGIN
